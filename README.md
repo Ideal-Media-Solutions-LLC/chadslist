@@ -19,7 +19,7 @@
   </ol>
 </details>
 
-## *See [Project Board](https://trello.com/b/m1UGNsQm/amaranth-project-catwalk) for current project status.*
+## *See [Project Board](https://trello.com/b/yY2RbvWd/agile-sprint-board) for current project status.*
 
 ## About The Project
 
