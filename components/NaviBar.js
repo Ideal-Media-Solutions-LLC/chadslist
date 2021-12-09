@@ -1,13 +1,12 @@
 import {useState} from 'react';
 import Link from 'next/link';
-import CloseButton from 'react-bootstrap/CloseButton';
+
 
 const NaviBar = (props) => {
 
 
   return (
     <div >
-      <CloseButton />
       <div> > </div>
       <div>
         <Link href="/">
@@ -23,6 +22,11 @@ const NaviBar = (props) => {
         <Link href="/claim">
          <a>My Claims</a>
          </Link>
+      </div>
+      <div>
+        <Link href="/post">
+         <a>Post an Item</a>
+        </Link>
       </div>
       <div>
         <Link href="/">
