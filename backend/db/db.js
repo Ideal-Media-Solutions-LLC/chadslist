@@ -18,6 +18,8 @@ const User = sequelize.define('User', {
     // Maybe have a user location (Like they most recently signed in from)
     location: DataTypes.INTEGER,
     // I'm not sure how we will want to track charity status? A boolean?
+    status: DataTypes.STRING,
+    password: DataTypes.STRING,
   }
 );
 
@@ -108,7 +110,7 @@ const Message = sequelize.define('Message', {
     },
     from: DataTypes.INTEGER,
     to: DataTypes.INTEGER,
-    message: DataTypes.STRING
+    message: DataTypes.TEXT
   },
   {
     indexes: [
@@ -133,7 +135,7 @@ User.hasMany(Item, {foreignKey: 'donorId'});
 Item.belongsTo(User);
 
 // Each claimer (User) can have many claims
-User.hasMany(Claim, {foreignKey: 'claimantId'});
+User.hasMany(Claim, {foreignKey: 'claimerId'});
 Claim.belongsTo(User);
 
 // Each Item can have many claims
