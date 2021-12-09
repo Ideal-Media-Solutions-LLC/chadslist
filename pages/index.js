@@ -4,7 +4,9 @@ import NaviBar from '../components/NaviBar.js';
 import { button } from 'react-bootstrap';
 import Image from 'next/image';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import {Button} from 'react-bootstrap';
 import Filter from '../components/Filter.js';
+import Search from '../components/Search.js';
 import { useState } from 'react';
 
 const HomePage = (props) => {
@@ -24,8 +26,9 @@ const HomePage = (props) => {
       <div>
         <Image src='/Chads_list_2.svg' width='640' height='100' />
       </div>
+       <Search />
       <NaviBar />
-      <button onClick={() => handleClick()}>filter</button>
+      <Button onClick={() => handleClick()}>filter</Button>
       {isClick ? <Filter /> : <></>}
       {view === 'list' ? <p onClick={() => ChangeView('map')}>Show Map</p> : <p onClick={() => ChangeView('list')}>Show List</p>}
       {view === 'map' && <MapView />}
