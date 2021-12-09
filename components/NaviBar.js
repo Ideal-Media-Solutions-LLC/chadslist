@@ -1,39 +1,21 @@
 import {useState} from 'react';
 import Link from 'next/link';
+import {Nav} from 'react-bootstrap';
 
 
 const NaviBar = (props) => {
 
 
   return (
-    <div >
-      <div> > </div>
-      <div>
-        <Link href="/">
-        <a>Home</a>
-        </Link>
-      </div>
-      <div>
-        <Link href="/donation">
-        <a>My Donations</a>
-        </Link>
-      </div>
-      <div>
-        <Link href="/claim">
-         <a>My Claims</a>
-         </Link>
-      </div>
-      <div>
-        <Link href="/post">
-         <a>Post an Item</a>
-        </Link>
-      </div>
-      <div>
-        <Link href="/">
-         <a>LogOut</a>
-        </Link>
-      </div>
-    </div>
+    <Nav defaultActiveKey="/" className="flex-column">
+    <Nav.Link href="/">Home</Nav.Link>
+    <Nav.Link href="/donations">My Donations</Nav.Link>
+    <Nav.Link href="/Claims">My Claims</Nav.Link>
+    <Nav.Link href="/posts">Post an Item</Nav.Link>
+    <Nav.Link eventKey="disabled" disabled>
+      LogOut
+    </Nav.Link>
+  </Nav>
   )
 }
 
