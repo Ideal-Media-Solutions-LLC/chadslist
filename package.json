@@ -7,8 +7,12 @@
     "backend": "nodemon ./backend/server.js"
   },
   "dependencies": {
+    "@googlemaps/js-api-loader": "^1.12.11",
+    "@googlemaps/map-loader": "^0.2.0",
+    "@googlemaps/react-wrapper": "^1.1.16",
     "bootstrap": "^5.1.3",
     "express": "^4.17.1",
+    "module": "^1.2.5",
     "next": "^12.0.7",
     "pg": "^8.7.1",
     "pg-hstore": "^2.3.4",
