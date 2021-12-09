@@ -161,7 +161,7 @@ module.exports = {
 
 const testConnection = async () => {
   try {
-    await sequelize.sync({force: true});
+    // await sequelize.sync();
     console.log('Syncing complete');
   } catch (error) {
     console.error('Unable to sync to the database:', error);
