@@ -17,9 +17,7 @@ const HomePage = (props) => {
     setView(input);
   }
 
-  const handleClick = () => {
-    setFilter(!showFilter);
-  }
+  const handleClick = () => setFilter(!showFilter)
   const closeFilter = () => setFilter(false)
 
   const naviShow = () => setNavi(!showNavi);
@@ -34,6 +32,7 @@ const HomePage = (props) => {
         <Button href='/SignUp' >SignUp</Button>
         <Button href='/Login' >Login</Button>
       </div>
+      <Search />
       <div>
         <Button onClick={naviShow} >menu</Button>
         <Offcanvas show={showNavi} onHide={closeNavi} >
