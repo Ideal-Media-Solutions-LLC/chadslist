@@ -1,4 +1,5 @@
 import {useState} from 'react';
+import Image from 'next/image';
 
 // import { GoogleMap } from 'map-loader';
 import {mapsAPI} from '../tempConfig.js'
@@ -24,8 +25,13 @@ const MapView = (props) => {
   const [list, setList] = useState(false);
 
   return (
+<<<<<<< HEAD
     <div> Maps View here
 
+=======
+    <div>
+      <Image src='/MapViewPlaceHolder.png' width='640' height='780'/>
+>>>>>>> main
     </div>
   )
 }
