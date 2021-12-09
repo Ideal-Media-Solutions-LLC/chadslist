@@ -5,23 +5,27 @@ const NaviBar = (props) => {
 
 
   return (
-    <div>
+    <div >
       <div> > </div>
       <div>
         <Link href="/">
         <a>Home</a>
+        </Link>
       </div>
       <div>
-        <Link href="/">
+        <Link href="/donation">
         <a>My Donations</a>
+        </Link>
       </div>
       <div>
-        <Link href="/">
+        <Link href="/claim">
          <a>My Claims</a>
+         </Link>
       </div>
       <div>
         <Link href="/">
          <a>LogOut</a>
+        </Link>
       </div>
     </div>
   )
