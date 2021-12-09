@@ -1,6 +1,7 @@
 import ListView from '../components/ListView.js';
 import MapView from '../components/MapView.js';
 import NaviBar from '../components/NaviBar.js';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { useState } from 'react';
 
 const HomePage = (props) => {
