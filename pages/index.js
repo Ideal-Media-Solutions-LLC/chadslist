@@ -1,6 +1,8 @@
 import ListView from '../components/ListView.js';
 import MapView from '../components/MapView.js';
 import NaviBar from '../components/NaviBar.js';
+import { button } from 'react-bootstrap';
+import Image from 'next/image';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Button} from 'react-bootstrap';
 import Filter from '../components/Filter.js';
@@ -21,11 +23,13 @@ const HomePage = (props) => {
 
   return (
     <div>
-      Welcome back to Next.js!
-      <Search />
+      <div>
+        <Image src='/Chads_list_2.svg' width='640' height='100' />
+      </div>
+       <Search />
       <NaviBar />
-      <Button  onClick={() => handleClick()}>filter</Button>
-      {isClick? <Filter handleClick={handleClick} />:<></>}
+      <Button onClick={() => handleClick()}>filter</Button>
+      {isClick ? <Filter /> : <></>}
       {view === 'list' ? <p onClick={() => ChangeView('map')}>Show Map</p> : <p onClick={() => ChangeView('list')}>Show List</p>}
       {view === 'map' && <MapView />}
       {view === 'list' && <ListView />}
