@@ -10,8 +10,8 @@ const NaviBar = (props) => {
     <div>
       <Nav defaultActiveKey="/" className="flex-column">
         <Nav.Link href="/">Home</Nav.Link>
-        <Nav.Link href="/donations">My Donations</Nav.Link>
-        <Nav.Link href="/Claims">My Claims</Nav.Link>
+        <Nav.Link href="/history/donations">My Donations</Nav.Link>
+        <Nav.Link href="/history/claims">My Claims</Nav.Link>
         <Nav.Link href="/posts">Post an Item</Nav.Link>
         <Nav.Link eventKey="disabled" disabled>
           LogOut
