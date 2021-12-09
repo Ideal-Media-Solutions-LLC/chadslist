@@ -36,7 +36,7 @@ const HomePage = (props) => {
       </div>
       <div>
         <Button onClick={naviShow} >menu</Button>
-        <Offcanvas show={showNavi} onHide={closeNavi} >
+        <Offcanvas placement='end' show={showNavi} onHide={closeNavi} >
           <Offcanvas.Header closeButton></Offcanvas.Header>
           <NaviBar />
         </Offcanvas>

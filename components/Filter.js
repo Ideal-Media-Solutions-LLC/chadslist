@@ -2,7 +2,7 @@ import { Nav, Button, Navbar, Collapse, Fade } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { useState } from 'react';
 
-import ItemView from './ItemView.js'
+import ItemView from './ItemView.js';
 
 const Filter = ({handleClick}) => {
   const [show, setShow] = useState(true);
@@ -35,7 +35,7 @@ const Filter = ({handleClick}) => {
             <Nav.Link eventKey="filter-9">Pet Supplies</Nav.Link>
             <Nav.Link eventKey="filter-10">Sporting Goods</Nav.Link>
           </Nav>
-          <ItemView />
+          {/* <ItemView /> */}
         </div>
       </Collapse>
     </>
