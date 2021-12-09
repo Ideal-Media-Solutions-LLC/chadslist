@@ -7,12 +7,15 @@
     "backend": "nodemon ./backend/server.js"
   },
   "dependencies": {
-    "express": "^4.17.1",
     "bootstrap": "^5.1.3",
+    "express": "^4.17.1",
     "next": "^12.0.7",
+    "pg": "^8.7.1",
+    "pg-hstore": "^2.3.4",
     "react": "^17.0.2",
     "react-bootstrap": "^2.0.3",
-    "react-dom": "^17.0.2"
+    "react-dom": "^17.0.2",
+    "sequelize": "^6.12.0-beta.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"
