@@ -1,6 +1,6 @@
 const { Sequelize, DataTypes } = require('sequelize');
 
-const sequelize = new Sequelize('chadslist', 'mievro', '', {
+const sequelize = new Sequelize('chadslist', 'postgres', '123456', {
   host: 'localhost',
   dialect: 'postgres'
 })
@@ -15,6 +15,8 @@ const User = sequelize.define('User', {
     userName: DataTypes.STRING,
     email: DataTypes.STRING,
     photoUrl: DataTypes.STRING,
+    status: DataTypes.STRING,
+    password: DataTypes.STRING,
     // Maybe have a user location (Like they most recently signed in from)
     location: DataTypes.INTEGER,
     // I'm not sure how we will want to track charity status? A boolean?
@@ -152,6 +154,9 @@ Message.belongsTo(User);
 User.hasMany(Message, {foreignKey: 'to'});
 Message.belongsTo(User);
 
+module.exports = {
+  User
+}
 
 
 const testConnection = async () => {
