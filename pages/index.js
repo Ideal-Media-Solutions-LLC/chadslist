@@ -5,6 +5,7 @@ import { Button, Offcanvas } from 'react-bootstrap';
 import Image from 'next/image';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Filter from '../components/Filter.js';
+import Search from '../components/Search.js';
 import { useState } from 'react';
 
 const HomePage = (props) => {
