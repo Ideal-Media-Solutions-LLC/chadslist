@@ -4,8 +4,16 @@ const jwt = require('jsonwebtoken');
 const { User } = require('../db/db.js');
 
 const register = (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
     const { username, email, password, status } = req.body;
+
+    const isUser = User.findAll({
+      where: {
+        username: username
+      }
+    })
+
+    console.log(isUser);
 
     const newUser = User.create({
       username,
