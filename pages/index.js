@@ -44,7 +44,8 @@ const HomePage = (props) => {
       <Offcanvas show={showFilter} onHide={closeFilter} >
           <Offcanvas.Header closeButton></Offcanvas.Header>
           <Filter />
-        </Offcanvas>
+      </Offcanvas>
+
       {view === 'list' ? <p onClick={() => ChangeView('map')}>Show Map</p> : <p onClick={() => ChangeView('list')}>Show List</p>}
       {view === 'map' && <MapView />}
       {view === 'list' && <ListView />}
