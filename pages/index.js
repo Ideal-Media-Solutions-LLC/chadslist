@@ -2,7 +2,9 @@ import ListView from '../components/ListView.js';
 import MapView from '../components/MapView.js';
 import NaviBar from '../components/NaviBar.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import {Button} from 'react-bootstrap';
 import Filter from '../components/Filter.js';
+import Search from '../components/Search.js';
 import { useState } from 'react';
 
 const HomePage = (props) => {
@@ -20,9 +22,10 @@ const HomePage = (props) => {
   return (
     <div>
       Welcome back to Next.js!
+      <Search />
       <NaviBar />
-      <button  onClick={() => handleClick()}>filter</button>
-      {isClick? <Filter/>:<></>}
+      <Button  onClick={() => handleClick()}>filter</Button>
+      {isClick? <Filter handleClick={handleClick} />:<></>}
       {view === 'list' ? <p onClick={() => ChangeView('map')}>Show Map</p> : <p onClick={() => ChangeView('list')}>Show List</p>}
       {view === 'map' && <MapView />}
       {view === 'list' && <ListView />}
