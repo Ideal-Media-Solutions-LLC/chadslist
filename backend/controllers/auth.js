@@ -33,7 +33,22 @@ const register = async(req, res) => {
 
 }
 
+const login = async (req, res) => {
+
+  // find user by login
+  const { email, password } = req.body
+  // use bcrypt to compare password with hashed password
+  const isUser = await User.findOne({ email })
+
+  if (isUser) {
+    const passwordMatch = await bcrypt.compare(password, isUser.password);
+  }
+  // if correct, send access token back to client
+  console.log('testing')
+}
+
 
 module.exports = {
   register,
+  login
 };
