@@ -7,77 +7,124 @@ const sequelize = new Sequelize('chadslist', 'mievro', '', {
 
 
 const User = sequelize.define('User', {
-  id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true
-  },
-  userName: DataTypes.STRING,
-  email: DataTypes.STRING,
-  photoUrl: DataTypes.STRING,
-  // Maybe have a user location (Like they most recently signed in from)
-  location: DataTypes.INTEGER,
-  // I'm not sure how we will want to track charity status? A boolean?
-});
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
+    },
+    userName: DataTypes.STRING,
+    email: DataTypes.STRING,
+    photoUrl: DataTypes.STRING,
+    // Maybe have a user location (Like they most recently signed in from)
+    location: DataTypes.INTEGER,
+    // I'm not sure how we will want to track charity status? A boolean?
+  }
+);
 
 const Item = sequelize.define('Item', {
-  id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
+    },
+    name: DataTypes.STRING,
+    description: DataTypes.STRING,
+    // Right now we just will be able to support a single picture. Make a sepparate image table to support multiple pictures?
+    imageUrl: DataTypes.STRING,
+    // Have the item location be based off the users current signed in location but they can change it if they want to
+    location: DataTypes.INTEGER,
+    claimed: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    },
+    // We might also do a separate category table and then have this be a foreign key
+    category: DataTypes.STRING,
+    donorId: DataTypes.INTEGER
   },
-  name: DataTypes.STRING,
-  description: DataTypes.STRING,
-  // Right now we just will be able to support a single picture. Make a sepparate image table to support multiple pictures?
-  imageUrl: DataTypes.STRING,
-  // Have the item location be based off the users current signed in location but they can change it if they want to
-  location: DataTypes.INTEGER,
-  claimed: {
-    type: DataTypes.BOOLEAN,
-    defaultValue: false
-  },
-  // We might also do a separate category table and then have this be a foreign key
-  category: DataTypes.STRING,
-  donorId: DataTypes.INTEGER
-})
+  {
+    indexes: [
+      {
+        name: 'itemDonorIndex',
+        using: 'HASH',
+        fields: ['donorId']
+      }
+    ]
+  }
+);
 
 const Claim = sequelize.define('Claim', {
-  id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
+    },
+    claimerId: DataTypes.INTEGER,
+    itemId: DataTypes.INTEGER,
+    status: DataTypes.STRING,
+    // I don't think we need to do a date or anything because sequelize will automatically put a created_at date
   },
-  claimerId: DataTypes.INTEGER,
-  itemId: DataTypes.INTEGER,
-  status: DataTypes.STRING,
-  // I don't think we need to do a date or anything because sequelize will automatically put a created_at date
-})
+  {
+    indexes: [
+      {
+        name: 'claimClaimerIndex',
+        using: 'HASH',
+        fields: ['claimerId']
+      },
+      {
+        name: 'claimItemIndex',
+        using: 'HASH',
+        fields: ['itemId']
+      },
+    ]
+  }
+);
 
 const Receipt = sequelize.define('Receipt', {
-  id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
+    },
+    claimId: DataTypes.INTEGER,
+    condition: DataTypes.STRING,
+    value: DataTypes.INTEGER
   },
-  // We have a couple routes we can go here. Either have the Claim id, the item id, or both. For now I'm just going to do claim id
-  claimId: DataTypes.INTEGER,
-  condition: DataTypes.STRING,
-  value: DataTypes.INTEGER
-})
+  {
+    indexes: [
+      {
+        name: 'receiptClaimIndex',
+        using: 'HASH',
+        fields: ['claimId']
+      }
+    ]
+  }
+);
 
 const Message = sequelize.define('Message', {
-  // We have a couple different routes we can go with this as well. For now I'm just going to go with having each message be sepparate instead of having a chat log. That way we can have a date associated with each message
-  id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
+    },
+    from: DataTypes.INTEGER,
+    to: DataTypes.INTEGER,
+    message: DataTypes.STRING
   },
-  // I'm not sure if we want to differentiate between claimant and donor... probably it would be a good idea so I will. I can imagine functionality that it would help with.
-  from: DataTypes.INTEGER,
-  to: DataTypes.INTEGER,
-  // Probably don't actually need to have a time since sequelize automatically adds a created_at
-  message: DataTypes.STRING
-})
+  {
+    indexes: [
+      {
+        name: 'messageFromIndex',
+        using: 'HASH',
+        fields: ['from']
+      },
+      {
+        name: 'messageToIndex',
+        using: 'HASH',
+        fields: ['to']
+      }
+    ]
+  }
+);
 
 
 // Setting up associations (Relationships)
