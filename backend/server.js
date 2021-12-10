@@ -3,11 +3,10 @@ const cors = require('cors');
 const authRoutes = require('./routes/authRoutes.js');
 require("dotenv").config();
 const claimRoutes = require('./routes/claimRoutes.js');
+const db = require ('./db/db.js');
 
 const app = express();
 const port = 3001;
-
-// require("dotenv").config();
 
 app.use(cors());
 app.use(express.json());
