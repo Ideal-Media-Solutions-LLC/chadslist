@@ -8,14 +8,37 @@ const Conversation = sequelize.define('conversation', {
     primaryKey: true,
     type: DataTypes.INTEGER,
     autoIncrement: true
+  },
+  donorId: {
+    type: DataTypes.INTEGER
+  },
+  claimantId: {
+    type: DataTypes.INTEGER
   }
-});
+  },
+  {
+  indexes: [
+    {
+      name: 'donorIdIndex',
+      using: 'HASH',
+      fields: ['donorId']
+    },
+    {
+      name: 'claimantIdIndex',
+      using: 'HASH',
+      fields: ['claimantId']
+    }
+  ]
+  }
+);
 
 
 Conversation.hasMany(Message)
 Message.belongsTo(Conversation)
 
-User.hasMany(Conversation)
+User.hasMany(Conversation, {foreignKey: 'donorId'})
+User.hasMany(Conversation, {foreignKey: 'claimantId'})
+
 Conversation.belongsTo(User)
 
 

@@ -3,6 +3,7 @@ const cors = require('cors');
 const authRoutes = require('./routes/authRoutes.js');
 require("dotenv").config();
 const claimRoutes = require('./routes/claimRoutes.js');
+const addItemRoutes = require('./routes/addItemRoutes.js');
 const db = require ('./db/db.js');
 
 const app = express();
