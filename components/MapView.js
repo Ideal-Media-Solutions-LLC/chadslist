@@ -1,7 +1,5 @@
 import React from 'react'
 import { GoogleMap, LoadScriptNext, Marker } from '@react-google-maps/api';
-import {mapsAPI} from '../tempConfig.js'
-import { MdPlace } from 'react-icons/md';
 
 //TODO: Remove after real/formatted data is provided
 //SampleTest data for showing markers
@@ -19,6 +17,7 @@ const items = [
 
 function MapView(props) {
 
+  //Current Place holder data
   const position = { lat: 47.61483, lng: -122.3146 }
   const containerStyle = {
     width: '400px',
@@ -32,11 +31,11 @@ function MapView(props) {
 
   const onLoad = marker => {
     console.log('marker: ', marker)
-
   }
+
   return (
     <LoadScriptNext
-      googleMapsApiKey={mapsAPI}
+      googleMapsApiKey={process.env.mapAPI}
     >
       <GoogleMap
         mapContainerStyle={containerStyle}
@@ -46,7 +45,6 @@ function MapView(props) {
         { /* Child components, such as markers, info windows, etc. */ }
       {items.map( (item, index) => {
         return (
-
           <Marker
             onLoad={onLoad}
             position={item.coordinates}
