@@ -6,12 +6,7 @@ import { useState } from 'react';
 const Filter = (props) => {
   return (
     <>
-      <InputGroup>
-        <Image src='/Chads_list_2.svg' width='200' height='60' />
-        <Button>sign up</Button>
-        <Button>login</Button>
-      </InputGroup>
-
+      <Image src='/Chads_list_2.svg' width='150' height='60' />
       <Nav defaultActiveKey="/" className="flex-column">
         <Navbar.Brand >Select Category</Navbar.Brand>
         <InputGroup>
@@ -64,9 +59,9 @@ const Filter = (props) => {
           <Nav.Link eventKey="filter-10">Sporting Goods</Nav.Link>
         </InputGroup>
       </Nav>
-      {/* <ItemView /> */}
     </>
   )
 }
 
 export default Filter;
+
