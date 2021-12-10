@@ -14,6 +14,7 @@ app.use('/auth', authRoutes);
 
 
 app.post('/claim', claimRoutes);
+app.post('/additem', addItemRoutes);
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
