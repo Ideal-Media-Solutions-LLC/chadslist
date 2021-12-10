@@ -1,7 +1,7 @@
 import { Button, Card } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { useState } from 'react';
-import { CgCloseO} from "react-icons/cg";
+import { CgCloseO} from "react-icons";
 
 const ItemView = (props) => {
   const [map, setMap] = useState(false);
