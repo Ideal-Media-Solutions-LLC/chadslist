@@ -1,0 +1,17 @@
+const sequelize = require('./db.js');
+const User = require('./models/User.js');
+const Item = require('./models/Item.js');
+const Message = require('./models/Message.js');
+const Receipt = require('./models/Receipt.js');
+const Claim = require('./models/Claim.js');
+
+const testConnection = async () => {
+  try {
+    await sequelize.sync();
+    console.log('Syncing complete');
+  } catch (error) {
+    console.error('Unable to sync to the database:', error);
+  }
+}
+
+testConnection();
