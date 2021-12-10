@@ -14,7 +14,7 @@ import {
 
 const AuthState = (props) => {
   const initialState = {
-    user: {},
+    user: null,
     loading: true
   }
   const [state, dispatch] = useReducer(AuthReducer, initialState)
@@ -47,8 +47,23 @@ const AuthState = (props) => {
       })
   }
 
-  const loginUser = (email, password) => {
+  const loginUser = (form) => {
+    const { email, password } = form
+    axios.post(`${apiURL}/auth/login`, {
+      email,
+      password
+    })
+    .then((result) => {
 
+      dispatch({
+        type: LOGIN_USER,
+        payload: result.data
+      })
+      router.push('/')
+    })
+    .catch((err) => {
+      console.log(err)
+    })
   }
 
   const logoutUser = () => {
