@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 const saltRounds = 8;
 const jwt = require('jsonwebtoken');
-const { User } = require('../db/db.js');
+const User = require('../db/models/User.js');
 
 const register = async(req, res) => {
   // console.log(req.body);
