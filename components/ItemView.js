@@ -1,20 +1,16 @@
-import { Button, Card } from 'react-bootstrap';
+import { Button, Card, CloseButton } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { useState } from 'react';
-import { CgCloseO} from "react-icons";
 
 const ItemView = (props) => {
-  const [map, setMap] = useState(false);
 
   return (
     <>
-      <div>ItemView Here</div>
-      <Card style={{ width: '18rem' }}>
-        <CgCloseO />
+      <Card style={{ width: '24.9rem' }}>
         <Card.Img variant="top" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Gull_portrait_ca_usa.jpg/1280px-Gull_portrait_ca_usa.jpg" />
         <Card.Body>
           <Card.Title>Item Name</Card.Title>
-          <Card.Text>Price</Card.Text>
+          <Card.Text>Value</Card.Text>
           <Card.Text>Location</Card.Text>
           <Button variant="primary">Claim</Button>
           <Button variant="primary">Message</Button>

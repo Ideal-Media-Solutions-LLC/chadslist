@@ -4,10 +4,11 @@ const Item = require('./models/Item.js');
 const Message = require('./models/Message.js');
 const Receipt = require('./models/Receipt.js');
 const Claim = require('./models/Claim.js');
+const Conversation = require('./models/Conversation.js');
 
 const testConnection = async () => {
   try {
-    await sequelize.sync();
+    await sequelize.sync({ force: true });
     console.log('Syncing complete');
   } catch (error) {
     console.error('Unable to sync to the database:', error);
