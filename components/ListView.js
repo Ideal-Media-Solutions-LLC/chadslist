@@ -36,7 +36,7 @@ const ListView = (props) => {
         </Row>
       </Container>
 
-      <Modal centered show={item} size='sm' onHide={closeItem}>
+      <Modal centered show={item} size='md' onHide={closeItem}>
         <Modal.Header closeButton></Modal.Header>
         <ItemView />
       </Modal>

@@ -6,7 +6,7 @@ const ItemView = (props) => {
 
   return (
     <>
-      <Card style={{ width: '18rem' }}>
+      <Card style={{ width: '24.9rem' }}>
         <Card.Img variant="top" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Gull_portrait_ca_usa.jpg/1280px-Gull_portrait_ca_usa.jpg" />
         <Card.Body>
           <Card.Title>Item Name</Card.Title>
