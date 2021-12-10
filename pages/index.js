@@ -11,7 +11,6 @@ import { useState } from 'react';
 const HomePage = (props) => {
   const [view, setView] = useState('list');
   const [showFilter, setFilter] = useState(false);
-  const [showNavi, setNavi] = useState(false);
 
   const ChangeView = (input) => {
     setView(input);
@@ -20,28 +19,12 @@ const HomePage = (props) => {
   const handleClick = () => setFilter(!showFilter)
   const closeFilter = () => setFilter(false)
 
-  const naviShow = () => setNavi(!showNavi);
-  const closeNavi = () => setNavi(false);
 
   return (
     <div>
       <Container>
         <Col>
-          <div>
-            <Image src='/Chads_list_2.svg' width='640' height='100' />
-          </div>
-          <div>
-            <Button href='/SignUp' >SignUp</Button>
-            <Button href='/Login' >Login</Button>
-          </div>
           <Search />
-          <div>
-            <Button onClick={naviShow} >menu</Button>
-            <Offcanvas placement='end' show={showNavi} onHide={closeNavi} >
-              <Offcanvas.Header closeButton></Offcanvas.Header>
-              <NaviBar />
-            </Offcanvas>
-          </div>
           <Button onClick={handleClick}>filter</Button>
           <Offcanvas show={showFilter} onHide={closeFilter} >
             <Offcanvas.Header closeButton></Offcanvas.Header>

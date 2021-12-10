@@ -52,8 +52,6 @@ const PostItem = (props) => {
     <div>
       <Container>
         <Col>
-          <img src="/Chads_List_2.svg" alt="chadslist_logo" width={400} />
-          <br></br>
           <br></br>
           <h2>Post an Item</h2>
           <br></br>
