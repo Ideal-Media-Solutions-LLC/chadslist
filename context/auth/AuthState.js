@@ -20,12 +20,14 @@ const AuthState = (props) => {
   const [state, dispatch] = useReducer(AuthReducer, initialState)
   const router = useRouter();
 
-  const registerUser = async (email, password, username, status) => {
-
+  const registerUser = async (form) => {
+    console.log(form)
+      const { userName, email, password, photoUrl, status } = form
       axios.post(`${apiURL}/auth/register`, {
-        username,
+        userName,
         email,
         password,
+        photoUrl,
         status
       })
       .then((result) => {
