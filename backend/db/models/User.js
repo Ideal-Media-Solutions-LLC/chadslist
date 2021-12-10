@@ -12,7 +12,8 @@ const User = sequelize.define('User', {
     photoUrl: DataTypes.STRING,
     status: DataTypes.STRING,
     // Maybe have a user location (Like they most recently signed in from)
-    location: DataTypes.INTEGER,
+    longitude: DataTypes.FLOAT,
+    latitude: DataTypes.FLOAT,
     password: DataTypes.STRING,
   }
 );
