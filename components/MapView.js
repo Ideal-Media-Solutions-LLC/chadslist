@@ -48,6 +48,7 @@ function MapView(props) {
           <Marker
             onLoad={onLoad}
             position={item.coordinates}
+            key={index}
           />
         )
       })}
