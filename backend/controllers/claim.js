@@ -6,13 +6,16 @@ const claim = async (req, res) => {
   const status = 'Ongoing';
   const UserId = req.body.UserId;
   const claim = await Claim.create({ claimerId, itemId, status, UserId })
+    .then(() => {
+      const item = await Item.update({ claimed: true }, {
+        where: {
+          id: itemId
+        }
+      });
+      res.status(201).end();
+    })
     .catch(err => console.log(err));
-  const item = await Item.update({ claimed: true }, {
-    where: {
-      id: itemId
-    }
-  });
-  res.status(201).end();
+  res.status(500).end()
 };
 
 module.exports = {
