@@ -9,12 +9,12 @@ const ListView = (props) => {
 
   // dummy data to show List
   const [list, setList] = useState([
-    { name: 'item', img: '/apparel_2.svg' },
-    { name: 'item', img: '/apparel_2.svg' },
-    { name: 'item', img: '/apparel_2.svg' },
-    { name: 'item', img: '/apparel_2.svg' },
-    { name: 'item', img: '/apparel_2.svg' },
-    { name: 'item', img: '/apparel_2.svg' },
+    { name: 'item', img: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Gull_portrait_ca_usa.jpg/1280px-Gull_portrait_ca_usa.jpg" },
+    { name: 'item', img: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Gull_portrait_ca_usa.jpg/1280px-Gull_portrait_ca_usa.jpg" },
+    { name: 'item', img: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Gull_portrait_ca_usa.jpg/1280px-Gull_portrait_ca_usa.jpg" },
+    { name: 'item', img: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Gull_portrait_ca_usa.jpg/1280px-Gull_portrait_ca_usa.jpg" },
+    { name: 'item', img: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Gull_portrait_ca_usa.jpg/1280px-Gull_portrait_ca_usa.jpg" },
+    { name: 'item', img: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Gull_portrait_ca_usa.jpg/1280px-Gull_portrait_ca_usa.jpg" },
   ]);
 
   const viewItem = () => setItem(true);
@@ -25,7 +25,7 @@ const ListView = (props) => {
     <div>
       <Container>
         <Row sm={4} md={4}>
-          {list.map((item, index) => <Col md={4}>
+          {list.map((item, index) => <Col md={5}>
             <Card onClick={viewItem} style={{ width: '18rem' }}>
               <Card.Img variant="top" src={item.img} />
               <Card.Body>
@@ -36,11 +36,9 @@ const ListView = (props) => {
         </Row>
       </Container>
 
-      <Modal show={item} fullscreen={true} onHide={closeItem}>
-        <Modal.Header closeButton>
-          <Modal.Title>Modal</Modal.Title>
-        </Modal.Header>
-        {/* <ItemView /> */}
+      <Modal centered show={item} size='sm' onHide={closeItem}>
+        <Modal.Header closeButton></Modal.Header>
+        <ItemView />
       </Modal>
     </div>
   )
