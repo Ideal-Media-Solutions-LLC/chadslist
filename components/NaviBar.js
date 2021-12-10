@@ -12,7 +12,7 @@ const NaviBar = (props) => {
         <Nav.Link href="/">Home</Nav.Link>
         <Nav.Link href="/history/donations">My Donations</Nav.Link>
         <Nav.Link href="/history/claims">My Claims</Nav.Link>
-        <Nav.Link href="/posts">Post an Item</Nav.Link>
+        <Nav.Link href="/postItem/PostItem">Post an Item</Nav.Link>
         <Nav.Link eventKey="disabled" disabled>
           LogOut
         </Nav.Link>
