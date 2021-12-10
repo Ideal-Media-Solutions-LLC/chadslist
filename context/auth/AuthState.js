@@ -14,7 +14,7 @@ import {
 
 const AuthState = (props) => {
   const initialState = {
-    user: {},
+    user: null,
     loading: true
   }
   const [state, dispatch] = useReducer(AuthReducer, initialState)
