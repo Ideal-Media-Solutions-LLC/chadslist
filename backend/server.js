@@ -4,6 +4,7 @@ const authRoutes = require('./routes/authRoutes.js');
 require("dotenv").config();
 const claimRoutes = require('./routes/claimRoutes.js');
 const addItemRoutes = require('./routes/addItemRoutes.js');
+const chatRoutes = require('./routes/chatRoutes.js');
 const db = require ('./db/db.js');
 
 const app = express();
@@ -13,9 +14,9 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/auth', authRoutes);
-app.use('/claim', claimRoutes);
-app.use('/additem', addItemRoutes);
-
+app.use('/chat', chatRoutes);
+app.post('/claim', claimRoutes);
+app.post('/additem', addItemRoutes);
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
