@@ -42,7 +42,11 @@ const startChat = (req, res) => {
         donorId,
         claimantId
       })
+      res.sendStatus(201);
     }
+  })
+  .catch((err) => {
+    res.sendStatus({ message: 'Error has occured'})
   })
 }
 
@@ -65,6 +69,7 @@ const createMessage = (req, res) => {
         userId: claimantId,
         conversationId: conversation.dataValues.id
       })
+      res.sendStatus(201);
     } else {
       res.sendStatus(403);
     }
