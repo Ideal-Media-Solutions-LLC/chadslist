@@ -26,9 +26,16 @@ const startChat = (req, res) => {
         where: {
           conversationId: conversation.dataValues.id
         }
+      }, {
+        order: [
+          ['createdAt', 'DESC']
+        ]
       })
       .then((messages) => {
-        console.log(messages)
+        const data = messages.map((message) => {
+          return message
+        })
+        res.json(data)
       })
     } else {
       Conversation.create({
@@ -55,7 +62,8 @@ const createMessage = (req, res) => {
     if(conversation) {
       Message.create({
         message,
-        userId: claimantId
+        userId: claimantId,
+        conversationId: conversation.dataValues.id
       })
     } else {
       res.sendStatus(403);
