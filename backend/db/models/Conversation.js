@@ -2,7 +2,7 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../db.js');
 const User = require('./User.js');
 
-const Conversation = sequelize.define('conversation', {
+const Conversation = sequelize.define('Conversation', {
     id: {
       primaryKey: true,
       type: DataTypes.INTEGER,
@@ -34,10 +34,10 @@ const Conversation = sequelize.define('conversation', {
 
 
 User.hasMany(Conversation, {foreignKey: 'donorId'})
-Conversation.belongsTo(User)
+// Conversation.belongsTo(User)
 
 User.hasMany(Conversation, {foreignKey: 'claimantId'})
-Conversation.belongsTo(User)
+// Conversation.belongsTo(User)
 
 
 

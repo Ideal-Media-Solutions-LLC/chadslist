@@ -1,4 +1,5 @@
 const Item = require('../db/models/Item.js');
+
 const additem = async (req, res) => {
   const name = req.body.name;
   const description = req.body.description;
@@ -8,7 +9,7 @@ const additem = async (req, res) => {
   const donorId = req.body.donorId;
   const UserId = donorId;
   const item = await Item.create({ name, description, imageUrl, location, category, donorId })
-    .catch(err => console.log(err));
+    .catch(err => console.log('err at addItem', err));
   res.status(201).end();
 };
 

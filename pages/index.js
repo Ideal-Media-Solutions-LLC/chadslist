@@ -4,7 +4,7 @@ import NaviBar from '../components/NaviBar.js';
 import { Button, Offcanvas, Container, Col } from 'react-bootstrap';
 import Image from 'next/image';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Filter from '../components/Filter.js';
+import FilterList from '../components/FilterList.js';
 import Search from '../components/Search.js';
 import { useState } from 'react';
 
@@ -28,7 +28,7 @@ const HomePage = (props) => {
           <Button onClick={handleClick}>filter</Button>
           <Offcanvas show={showFilter} onHide={closeFilter} >
             <Offcanvas.Header closeButton></Offcanvas.Header>
-            <Filter />
+            <FilterList />
           </Offcanvas>
 
           {view === 'list' ? <p onClick={() => ChangeView('map')}>Show Map</p> : <p onClick={() => ChangeView('list')}>Show List</p>}
