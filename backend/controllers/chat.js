@@ -5,23 +5,40 @@ const { Op } = require('sequelize');
 
 
 const startChat = (req, res) => {
-  const { donorId, claimantId } = req.body;
-  console.log(donorId, claimantId)
+  const { senderId, receiverId } = req.body;
   //query for conversation based on IDs
+  const smallerId = senderId > receiverId ? receiverId : senderId
+  const largerId = senderId > receiverId ? senderId: receiverId
+
 
   Conversation.findOne({
     where: {
-      donorId: {
-        [Op.or]: [donorId, claimantId]
-      },
-      claimantId: {
-        [Op.or]: [donorId, claimantId]
-       }
+      [Op.and]: [
+        { smallerId: smallerId },
+        { largerId: largerId }
+      ]
     }
+    // where: {
+    //   donorId: {
+    //     [Op.or]: [donorId, claimantId]
+    //   },
+    //   claimantId: {
+    //     [Op.or]: [donorId, claimantId]
+    //    }
+    // }
+    // where: {
+    //   smallerId: {
+    //     [Op.or]: [smallerId, largerId]
+    //   },
+    //   largerId: {
+    //     [Op.or]: [smallerId, largerId]
+    //    }
+    // }
   })
   .then((conversation) => {
     if (conversation) {
-      console.log(conversation.dataValues.id)
+      console.log(conversation);
+      // console.log(conversation.dataValues.id)
       Message.findAll({
         where: {
           conversationId: conversation.dataValues.id
@@ -39,8 +56,8 @@ const startChat = (req, res) => {
       })
     } else {
       Conversation.create({
-        donorId,
-        claimantId
+        smallerId,
+        largerId
       })
       res.sendStatus(201);
     }
