@@ -21,7 +21,15 @@ const startChat = (req, res) => {
   })
   .then((conversation) => {
     if (conversation) {
-      console.log(conversation)
+      console.log(conversation.dataValues.id)
+      Message.findAll({
+        where: {
+          conversationId: conversation.dataValues.id
+        }
+      })
+      .then((messages) => {
+        console.log(messages)
+      })
     } else {
       Conversation.create({
         donorId,
