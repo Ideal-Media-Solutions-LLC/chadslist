@@ -8,35 +8,28 @@ const Message = sequelize.define('Message', {
     primaryKey: true,
     autoIncrement: true
   },
-  from: DataTypes.INTEGER,
-  to: DataTypes.INTEGER,
-  message: DataTypes.TEXT
+  message: DataTypes.TEXT,
+  userId: DataTypes.INTEGER
 },
 {
   indexes: [
     {
-      name: 'messageFromIndex',
+      name: 'userIdIndex',
       using: 'HASH',
-      fields: ['from']
+      fields: ['userId']
     },
-    {
-      name: 'messageToIndex',
-      using: 'HASH',
-      fields: ['to']
-    }
   ]
 }
 );
 
 // Setting up associations (Relationships)
 // Each message is from one user
-User.hasMany(Message, {foreignKey: 'from'});
-Message.belongsTo(User);
+// User.hasMany(Message, {foreignKey: 'from'});
+// Message.belongsTo(User);
 
 // Each message is to one user
-User.hasMany(Message, {foreignKey: 'to'});
+User.hasMany(Message, { foreignKey: 'userId' });
 Message.belongsTo(User);
-
 
 
 module.exports = Message;
