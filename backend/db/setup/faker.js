@@ -3,6 +3,7 @@ const faker = require('faker');
 const bcrypt = require('bcrypt');
 const User = require('../models/User.js');
 const Item = require('../models/Item.js');
+const Conversation = require('../models/Conversation.js');
 const Message = require('../models/Message.js');
 const Receipt = require('../models/Receipt.js');
 const Claim = require('../models/Claim.js');
@@ -39,13 +40,61 @@ const seedUser = async () => {
     console.log(error);
   }
 }
-seedUser();
+
 // New York: 40.72557420158411, -74.01148541130824
 // San Francisco: 37.962882809573145, -122.57822275079111
 // Seattle: 47.77658566128346, -122.41963026610908
 
 const seedItem = () => {
 
+}
+
+// <40 newYork
+// 40 -> 69 sf
+// >69 seattle
+
+const seedConversation = async () => {
+  try {
+    let conversations = [];
+    for (let i = 0; i < 30; i++) {
+      ny = {};
+      ny.id = i;
+      console.log('ny', ny.id)
+      // User from 0 to 20
+      ny.donorId = Math.floor(Math.random() * 20);
+      // User from 21 to 39 (So we don't accidently get a use messaging themselves)
+      ny.claimantId = Math.floor(Math.random() * (39 - 21 + 1) + 21);
+      conversations.push(ny);
+    }
+    // await Conversation.bulkCreate(newYork);
+    // let sf = [];
+    for (let i = 0; i < 30; i++) {
+      sf = {};
+      sf.id = i + 31;
+      console.log('sf', sf.id)
+      // User from 0 to 20
+      sf.donorId = Math.floor(Math.random() * (55 - 40 + 1) + 40);
+      // User from 21 to 39 (So we don't accidently get a use messaging themselves)
+      sf.claimantId = Math.floor(Math.random() * (60 - 56 + 1) + 56);
+      conversations.push(sf);
+    }
+    // await Conversation.bulkCreate(sf);
+    let seattle = [];
+    for (let i = 0; i < 30; i++) {
+      seattle = {};
+      seattle.id = i + 61;
+      console.log('seattle', seattle.id)
+      // User from 0 to 20
+      seattle.donorId = Math.floor(Math.random() * (85 - 70 + 1) + 70);
+      // User from 21 to 39 (So we don't accidently get a use messaging themselves)
+      seattle.claimantId = Math.floor(Math.random() * (99 - 86 + 1) + 86);
+      conversations.push(seattle);
+    }
+    // await Conversation.bulkCreate(seattle);
+    await Conversation.bulkCreate(conversations);
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 const seedMessage = () => {
@@ -59,3 +108,13 @@ const seedReceipt = () => {
 const seedClaim = () => {
 
 }
+
+
+const seedAll = async() => {
+  await User.sync({force: true});
+  await Conversation.sync({force: true})
+  await seedUser();
+  await seedConversation();
+}
+
+seedAll();
