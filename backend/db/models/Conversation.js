@@ -1,7 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../db.js');
 const User = require('./User.js');
-const Message = require('./Message.js');
 const Item = require('./Item.js');
 
 const Conversation = sequelize.define('conversation', {
@@ -37,16 +36,11 @@ const Conversation = sequelize.define('conversation', {
 );
 
 
-Conversation.hasMany(Message)
-Message.belongsTo(Conversation)
 
 User.hasMany(Conversation, {foreignKey: 'smallerId'})
 User.hasMany(Conversation, {foreignKey: 'largerId'})
 
 Conversation.belongsTo(User)
-
-Item.hasMany(Conversation)
-
 
 Item.hasMany(Conversation)
 
