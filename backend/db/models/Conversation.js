@@ -2,6 +2,7 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../db.js');
 const User = require('./User.js');
 const Message = require('./Message.js');
+const Item = require('./Item.js');
 
 const Conversation = sequelize.define('conversation', {
   id: {
@@ -9,24 +10,27 @@ const Conversation = sequelize.define('conversation', {
     type: DataTypes.INTEGER,
     autoIncrement: true
   },
-  donorId: {
+  smallerId: {
     type: DataTypes.INTEGER
   },
-  claimantId: {
+  largerId: {
+    type: DataTypes.INTEGER
+  },
+  itemId: {
     type: DataTypes.INTEGER
   }
   },
   {
   indexes: [
     {
-      name: 'donorIdIndex',
+      name: 'smallerIdIndex',
       using: 'HASH',
-      fields: ['donorId']
+      fields: ['smallerId']
     },
     {
-      name: 'claimantIdIndex',
+      name: 'largerIdIndex',
       using: 'HASH',
-      fields: ['claimantId']
+      fields: ['largerId']
     }
   ]
   }
@@ -36,10 +40,11 @@ const Conversation = sequelize.define('conversation', {
 Conversation.hasMany(Message)
 Message.belongsTo(Conversation)
 
-User.hasMany(Conversation, {foreignKey: 'donorId'})
-User.hasMany(Conversation, {foreignKey: 'claimantId'})
+User.hasMany(Conversation, {foreignKey: 'smallerId'})
+User.hasMany(Conversation, {foreignKey: 'largerId'})
 
 Conversation.belongsTo(User)
 
+Item.hasMany(Conversation)
 
 module.exports = Conversation;
