@@ -1,0 +1,26 @@
+.signup-form {
+  width: 100%;
+  max-width: 500px;
+  padding: 5%;
+  height: 100%;
+  margin: 5% auto;
+  border: solid;
+  border-width: 5px;
+  border-radius: 5%;
+  background-color: #FEFCFB;
+}
+
+.login-signup-redirect {
+  margin-top: 5%;
+  margin-left: 15%;
+}
+
+.signup-button {
+  background-color: #1282A2;
+  margin: auto;
+}
+
+.login-button {
+  background-color: #001F54;
+  margin-left: 5%;
+}

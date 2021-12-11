@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Button, Offcanvas, Container, Col, Row } from 'react-bootstrap';
 import NaviBar from '../components/NaviBar.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import '../styles/signup.css';
 
 function MyApp({ Component, pageProps }) {
 
