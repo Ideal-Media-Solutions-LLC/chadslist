@@ -67,6 +67,7 @@ const AuthState = (props) => {
   }
 
   const logoutUser = () => {
+    localStorage.removeItem('token');
     dispatch({
       type: LOGOUT_USER,
       payload: null
