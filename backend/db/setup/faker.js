@@ -1,6 +1,7 @@
 const sequelize = require('../db.js');
 const faker = require('faker');
 const bcrypt = require('bcrypt');
+const { resetDB } = require('./setup.js');
 const User = require('../models/User.js');
 const Item = require('../models/Item.js');
 const Conversation = require('../models/Conversation.js');
@@ -234,15 +235,16 @@ const seedClaim = async () => {
 
 const seedAll = async() => {
   try {
-    // await User.sync({force: true});
-    // await Conversation.sync({force: true})
-    // await Item.sync({force: true});
-    // await Claim.sync({force: true});
+    // await resetDB();
+    await User.sync({force: true});
+    await Conversation.sync({force: true})
+    await Item.sync({force: true});
+    await Claim.sync({force: true});
     await Message.sync({force: true});
-    // await seedUser();
-    // await seedConversation();
-    // await seedItem();
-    // await seedClaim();
+    await seedUser();
+    await seedConversation();
+    await seedItem();
+    await seedClaim();
     await seedMessage();
   } catch (error) {
     console.log(error)
