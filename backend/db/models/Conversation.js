@@ -47,4 +47,7 @@ Conversation.belongsTo(User)
 
 Item.hasMany(Conversation)
 
+
+Item.hasMany(Conversation)
+
 module.exports = Conversation;
