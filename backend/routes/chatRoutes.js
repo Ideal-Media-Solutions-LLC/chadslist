@@ -4,5 +4,6 @@ const { startChat, createMessage } = require('../controllers/chat');
 
 router.post('/', startChat)
 router.post('/message', createMessage)
+router.get('/message', )
 
 module.exports = router
