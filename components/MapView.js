@@ -21,21 +21,13 @@ const items = [
 
 function MapView(props) {
 
-  // const {isLoaded, loadError} = useLoadScript({
-  //   googleMapsApiKey:process.env.mapAPI
-  // })
-
-  // if ( loadError) return 'Error Loading Maps';
-  // if ( !isLoaded) return 'Loading Maps';
-
   const [selected, setSelected] = useState(null)
-
 
 
   const position = { lat: 47.61483, lng: -122.3146 }
 
 
-  const containerStyle = {
+  const mapContainerStyle = {
     width: '400px',
     height: '400px'
   };
@@ -59,13 +51,18 @@ function MapView(props) {
   return (
     <LoadScript googleMapsApiKey={process.env.mapAPI} >
       <GoogleMap
-        mapContainerStyle={containerStyle}
+        // className='mapContainer'
+        mapContainerStyle={mapContainerStyle}
         center={center}
         zoom={13}
+        onClick={(e) => {
+          setSelected(null)}}
+
         options={{
           disableDefaultUI: true,
           zoomControl: true,
         }}
+
       >
         { /* Child components, such as markers, info windows, etc. */ }
         {items.map( (item, index) => {
@@ -82,15 +79,19 @@ function MapView(props) {
 
         {selected ? (
           <InfoWindow
-            options={{pixelOffset: new window.google.maps.Size(0, -45) }}
-            position={{lat: selected.coordinates.lat, lng: selected.coordinates.lng}}
-            onCloseClick={() => {
-              setSelected(null)
+            options={{
+              pixelOffset: new window.google.maps.Size(0, -45),
             }}
+
+            position={{lat: selected.coordinates.lat, lng: selected.coordinates.lng}}
+            // onCloseClick={() => {
+            //   setSelected(null) //OPEN LIST VIEW ITEM
+            // }}
           >
 
             <div style={infoWindowStyle}>
               <img style={{width: '100%', height: '100'}} src={selected.img_url} />
+              <div style={{'font-size': 'x-small'}}>{selected.name} </div>
             </div>
 
           </InfoWindow>
