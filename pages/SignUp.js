@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react';
-import { Container, Col, Form, Button } from 'react-bootstrap';
+import { Container, Col, Form, Button, Image } from 'react-bootstrap';
 import AuthContext from '../context/auth/AuthContext'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -31,14 +31,13 @@ const SignUp = (props) => {
 
   return (
     <>
-      <br></br>
-      <Container>
+      <Container className="signup-container">
         <Col>
-          <img src="/Chads_List_2.svg" alt="chadslist_logo" width={400}/>
-          <Form onSubmit={handleSubmit}>
+          <Form className="signup-form" onSubmit={handleSubmit}>
+          <Image className="login-logo" src="/Chads_List_2.svg" alt="chadslist_logo" width={300}/>
             <Form.Group controlId="formFile" className="mb-3">
               <Form.Label>Profile Photo</Form.Label>
-              <Form.Control type="file" name="photoUrl" value={form.photoUrl}/>
+              <Form.Control placeholder="Upload profile picture" type="file" name="photoUrl" value={form.photoUrl}/>
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Email address</Form.Label>
@@ -55,7 +54,7 @@ const SignUp = (props) => {
             </Form.Group>
             <Form.Group className="mb-3" controlId="formGroupPassword">
               <Form.Label>Repeat Password</Form.Label>
-              <Form.Control type="password" placeholder="Password" name="password2" value={form.password2} onChange={handleChange} required/>
+              <Form.Control type="password" placeholder="Re-enter password" name="password2" value={form.password2} onChange={handleChange} required/>
             </Form.Group>
             <Form.Group>
               <Form.Label>Are you a charity or an individual?</Form.Label>
@@ -66,8 +65,14 @@ const SignUp = (props) => {
             </Form.Group>
             <br></br>
             <Form.Group>
-              <Button variant="primary" type="submit">
-                Submit
+              <Button className="signup-button" variant="primary" type="submit">
+                Sign Up
+              </Button>
+            </Form.Group>
+            <Form.Group className="login-signup-redirect">
+              <Form.Label>Already have an account?</Form.Label>
+              <Button className="login-button" variant="primary" href='/Login'>
+                Login
               </Button>
             </Form.Group>
           </Form>
