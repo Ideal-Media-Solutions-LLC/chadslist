@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../db/models/User.js');
 
 const register = async(req, res) => {
-  // console.log(req.body);
+
     const { userName, email, password, accType } = req.body;
 
       const isUser = await User.findOne({ where: { userName: userName }});

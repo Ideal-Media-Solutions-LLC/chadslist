@@ -31,10 +31,10 @@ const Message = sequelize.define('message', {
 
 // Each message is to one user
 User.hasMany(Message, { foreignKey: 'userId' });
-Message.belongsTo(User);
+// Message.belongsTo(User);
 
 Conversation.hasMany(Message, { foreignKey: 'conversationId'})
-Message.belongsTo(Conversation)
+// Message.belongsTo(Conversation)
 
 
 module.exports = Message;

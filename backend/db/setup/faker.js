@@ -129,9 +129,9 @@ const seedConversation = async () => {
       ny.id = i;
       console.log('ny', ny.id)
       // User from 0 to 20
-      ny.donorId = Math.floor(Math.random() * 20);
+      ny.smallerId = Math.floor(Math.random() * 20);
       // User from 21 to 39 (So we don't accidently get a use messaging themselves)
-      ny.claimantId = Math.floor(Math.random() * (39 - 21 + 1) + 21);
+      ny.largerId = Math.floor(Math.random() * (39 - 21 + 1) + 21);
       conversations.push(ny);
     }
     // await Conversation.bulkCreate(newYork);
@@ -141,9 +141,9 @@ const seedConversation = async () => {
       sf.id = i + 30;
       console.log('sf', sf.id)
       // User from 0 to 20
-      sf.donorId = Math.floor(Math.random() * (55 - 40 + 1) + 40);
+      sf.smallerId = Math.floor(Math.random() * (55 - 40 + 1) + 40);
       // User from 21 to 39 (So we don't accidently get a use messaging themselves)
-      sf.claimantId = Math.floor(Math.random() * (60 - 56 + 1) + 56);
+      sf.largerId = Math.floor(Math.random() * (60 - 56 + 1) + 56);
       conversations.push(sf);
     }
     // await Conversation.bulkCreate(sf);
@@ -153,9 +153,9 @@ const seedConversation = async () => {
       seattle.id = i + 60;
       console.log('seattle', seattle.id)
       // User from 0 to 20
-      seattle.donorId = Math.floor(Math.random() * (85 - 70 + 1) + 70);
+      seattle.smallerId = Math.floor(Math.random() * (85 - 70 + 1) + 70);
       // User from 21 to 39 (So we don't accidently get a use messaging themselves)
-      seattle.claimantId = Math.floor(Math.random() * (99 - 86 + 1) + 86);
+      seattle.largerId = Math.floor(Math.random() * (99 - 86 + 1) + 86);
       conversations.push(seattle);
     }
     // await Conversation.bulkCreate(seattle);
@@ -172,7 +172,7 @@ const seedMessage = async () => {
     // A random number from 1 to 20 that will determine how many messages this conversation has
     let messageCount = Math.floor(Math.random() * (20 - 1) + 1);
     // Variables that will allow us to toggle between donor and claimant for each message
-    let sender = {true: 'donorId', false: 'claimantId'}
+    let sender = {true: 'smallerId', false: 'largerId'}
     let toggle = false
     for (let j = 0; j < messageCount; j++) {
       let message = {
