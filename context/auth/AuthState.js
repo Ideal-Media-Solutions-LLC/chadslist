@@ -22,13 +22,13 @@ const AuthState = (props) => {
 
   const registerUser = async (form) => {
     console.log(form)
-      const { userName, email, password, photoUrl, status } = form
+      const { userName, email, password, photoUrl, accType } = form
       axios.post(`${apiURL}/auth/register`, {
         userName,
         email,
         password,
         photoUrl,
-        status
+        accType
       })
       .then((result) => {
         // store token in memory instead of localstorage or cookies much more secure to XSS attacks
