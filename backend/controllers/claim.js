@@ -6,7 +6,7 @@ const claim = async (req, res) => {
   const status = 'Ongoing';
   const UserId = req.body.UserId;
   const claim = await Claim.create({ claimerId, itemId, status, UserId })
-    .then(() => {
+    .then(async () => {
       const item = await Item.update({ claimed: true }, {
         where: {
           id: itemId

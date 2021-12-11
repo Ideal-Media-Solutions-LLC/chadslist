@@ -1,5 +1,5 @@
 module.exports = {
   env: {
-    mapAPI: '<Google Maps API KEY>',
+    mapAPI: 'AIzaSyDeZv8ROOMzuCBXlr2rJcm4Bpy1f7peoyE',
   },
 }
