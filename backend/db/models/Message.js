@@ -10,7 +10,8 @@ const Message = sequelize.define('Message', {
     autoIncrement: true
   },
   message: DataTypes.TEXT,
-  userId: DataTypes.INTEGER
+  userId: DataTypes.INTEGER,
+  conversationId: DataTypes.INTEGER
 },
 {
   indexes: [
@@ -32,7 +33,7 @@ const Message = sequelize.define('Message', {
 User.hasMany(Message, { foreignKey: 'userId' });
 Message.belongsTo(User);
 
-Conversation.hasMany(Message)
+Conversation.hasMany(Message, { foreignKey: 'conversationId'})
 Message.belongsTo(Conversation)
 
 

@@ -165,10 +165,25 @@ const seedConversation = async () => {
 }
 
 const seedMessage = async () => {
-  // We have 0 - 89 conversations and we want to have messages in each of them so let's iterate from 0 - 89
+  let messages = [];
   for (let i = 0; i < 90; i++) {
-    // So we need to get the current conversation so that we can know who is part of the conversation
+    let conversation = await Conversation.findByPk(i);
+    // A random number from 1 to 20 that will determine how many messages this conversation has
+    let messageCount = Math.floor(Math.random() * (20 - 1) + 1);
+    // Variables that will allow us to toggle between donor and claimant for each message
+    let sender = {true: 'donorId', false: 'claimantId'}
+    let toggle = false
+    for (let j = 0; j < messageCount; j++) {
+      let message = {
+        message: faker.lorem.sentence(),
+        userId: conversation[sender[toggle]],
+        conversationId: i
+      }
+      messages.push(message);
+      toggle = !toggle;
+    }
   }
+  await Message.bulkCreate(messages);
 }
 
 const seedReceipt = () => {
@@ -218,14 +233,20 @@ const seedClaim = async () => {
 
 
 const seedAll = async() => {
-  await User.sync({force: true});
-  await Conversation.sync({force: true})
-  await Item.sync({force: true});
-  await Claim.sync({force: true});
-  await seedUser();
-  await seedConversation();
-  await seedItem();
-  await seedClaim();
+  try {
+    // await User.sync({force: true});
+    // await Conversation.sync({force: true})
+    // await Item.sync({force: true});
+    // await Claim.sync({force: true});
+    await Message.sync({force: true});
+    // await seedUser();
+    // await seedConversation();
+    // await seedItem();
+    // await seedClaim();
+    await seedMessage();
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 seedAll();

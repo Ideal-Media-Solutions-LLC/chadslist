@@ -18,12 +18,12 @@ const Conversation = sequelize.define('Conversation', {
   {
     indexes: [
       {
-        name: 'donorIdIndex',
+        name: 'conversationDonorIdIndex',
         using: 'HASH',
         fields: ['donorId']
       },
       {
-        name: 'claimantIdIndex',
+        name: 'conversationClaimantIdIndex',
         using: 'HASH',
         fields: ['claimantId']
       }
