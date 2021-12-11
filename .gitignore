@@ -1,6 +1,7 @@
 
 ## Next.js files
 .next
+next.config.js
 
 .DS_Store
 
