@@ -1,5 +1,6 @@
-import React from 'react'
-import { GoogleMap, LoadScriptNext, Marker } from '@react-google-maps/api';
+import React, {useState} from 'react'
+import { GoogleMap, LoadScript, Marker, InfoWindow} from '@react-google-maps/api';
+
 
 //TODO: Remove after real/formatted data is provided
 //SampleTest data for showing markers
@@ -15,10 +16,23 @@ const items = [
 ]
 
 
+
 function MapView(props) {
 
-  //Current Place holder data
+  // const {isLoaded, loadError} = useLoadScript({
+  //   googleMapsApiKey:process.env.mapAPI
+  // })
+
+  // if ( loadError) return 'Error Loading Maps';
+  // if ( !isLoaded) return 'Loading Maps';
+
+  const [selected, setSelected] = useState(null)
+
+
+
   const position = { lat: 47.61483, lng: -122.3146 }
+
+
   const containerStyle = {
     width: '400px',
     height: '400px'
@@ -34,27 +48,49 @@ function MapView(props) {
   }
 
   return (
-    <LoadScriptNext
+    <LoadScript
       googleMapsApiKey={process.env.mapAPI}
     >
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={center}
         zoom={13}
+        options={{
+          disableDefaultUI: true,
+          zoomControl: true,
+        }}
       >
         { /* Child components, such as markers, info windows, etc. */ }
       {items.map( (item, index) => {
         return (
-          <Marker
-            onLoad={onLoad}
-            position={item.coordinates}
-            key={index}
-          />
-        )
-      })}
+        <Marker
+          key={index}
+          onLoad={onLoad}
+          position={item.coordinates}
+          onClick={(e)=> {
+            setSelected(item)}}
+        />
+        )}
+        )})}
+
+          {selected ? (
+          <InfoWindow
+            options={{
+              pixelOffset: new window.google.maps.Size(0, -45),
+             }}
+            position={{lat: selected.coordinates.lat, lng: selected.coordinates.lng}}
+
+            onCloseClick={() => {
+              setSelected(null)
+            }}
+          >
+          <div>INFO</div>
+          </InfoWindow>
+          ) : null}
+
 
       </GoogleMap>
-    </LoadScriptNext>
+    // </LoadScript>
   )
 }
 
