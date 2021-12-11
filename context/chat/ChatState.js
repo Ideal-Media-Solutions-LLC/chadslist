@@ -3,6 +3,10 @@ import ChatReducer from './ChatReducer.js';
 import { useReducer } from 'react';
 import axios from 'axios';
 
+import {
+  GET_MESSAGES
+} from '../types.js';
+
 const API_URL = 'http://localhost:3001/chat'
 
 const ChatState = (props) => {
@@ -18,11 +22,15 @@ const ChatState = (props) => {
       receiverId
     })
     .then((result) => {
-      console.log(result)
+      console.log(result.data)
     })
     .catch((err) => {
       console.log(err)
     })
+  }
+
+  const createMessage = (userId, conversationId, text) => {
+    axios.post(API_URL)
   }
 
   return (
