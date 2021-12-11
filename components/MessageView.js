@@ -6,7 +6,7 @@ import ChatContext from '../context/chat/ChatContext';
 const API_URL = 'http://localhost:3001/chat'
 
 const MessageView = ({socket, user1, user2, id }) => {
-  const { savedMessages } = useContext(ChatContext);
+  const { savedMessages, createMessage } = useContext(ChatContext);
   const [message, setMessage] = useState('');
   const [messageList, setMessageList] = useState([]);
   // const [savedMessages, setSavedMessages] = useState([]);
@@ -43,12 +43,15 @@ const MessageView = ({socket, user1, user2, id }) => {
         fakeConvoId: id,
         username: user1,
         message: message,
-        time: new Date(Date.now()).getHour() + ':' + new Date(Date.now()).getMinutes()
+        // time: new Date(Date.now()).getHour() + ':' + new Date(Date.now()).getMinutes()
       }
 
       await socket.emit("send_msg", messageData)
 
+      createMessage(11, 38, message)
       setMessageList([...messageList, messageData])
+
+
       //clear out the input box
       // setMessage("")
     }

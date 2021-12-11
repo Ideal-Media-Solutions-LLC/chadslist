@@ -33,12 +33,23 @@ const ChatState = (props) => {
     })
   }
 
-  const createMessage = (userId, conversationId, text) => {
-    axios.post(API_URL)
+  const createMessage = (senderId, receiverId, message) => {
+    console.log(senderId, receiverId, message)
+    axios.post(`${API_URL}/message`, {
+      message,
+      senderId,
+      receiverId
+    })
+    .then((result) => {
+      console.log(result.data)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
   }
 
   return (
-    <ChatContext.Provider value={{ savedMessages: state.savedMessages, getMessages }}>
+    <ChatContext.Provider value={{ savedMessages: state.savedMessages, getMessages, createMessage }}>
       {props.children}
     </ChatContext.Provider>
   )
