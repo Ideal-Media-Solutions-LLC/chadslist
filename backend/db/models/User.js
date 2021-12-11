@@ -25,5 +25,6 @@ const User = sequelize.define('User', {
 // Message.belongsTo(Conversation);
 // Conversation.hasMany(Message);
 
+// User.sync({force: true});
 
 module.exports = User;
