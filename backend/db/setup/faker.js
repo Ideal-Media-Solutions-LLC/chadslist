@@ -70,7 +70,7 @@ const seedConversation = async () => {
     // let sf = [];
     for (let i = 0; i < 30; i++) {
       sf = {};
-      sf.id = i + 31;
+      sf.id = i + 30;
       console.log('sf', sf.id)
       // User from 0 to 20
       sf.donorId = Math.floor(Math.random() * (55 - 40 + 1) + 40);
@@ -82,7 +82,7 @@ const seedConversation = async () => {
     let seattle = [];
     for (let i = 0; i < 30; i++) {
       seattle = {};
-      seattle.id = i + 61;
+      seattle.id = i + 60;
       console.log('seattle', seattle.id)
       // User from 0 to 20
       seattle.donorId = Math.floor(Math.random() * (85 - 70 + 1) + 70);
@@ -97,8 +97,11 @@ const seedConversation = async () => {
   }
 }
 
-const seedMessage = () => {
-
+const seedMessage = async () => {
+  // We have 0 - 89 conversations and we want to have messages in each of them so let's iterate from 0 - 89
+  for (let i = 0; i < 90; i++) {
+    // So we need to get the current conversation so that we can know who is part of the conversation
+  }
 }
 
 const seedReceipt = () => {
