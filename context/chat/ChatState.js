@@ -11,7 +11,7 @@ const API_URL = 'http://localhost:3001/chat'
 
 const ChatState = (props) => {
   const initialState = {
-    messageList: []
+    savedMessages: []
   }
 
   const [state, dispatch] = useReducer(ChatReducer, initialState)
@@ -38,7 +38,7 @@ const ChatState = (props) => {
   }
 
   return (
-    <ChatContext.Provider value={{ messageList: state.messageList, getMessages }}>
+    <ChatContext.Provider value={{ savedMessages: state.savedMessages, getMessages }}>
       {props.children}
     </ChatContext.Provider>
   )

@@ -7,7 +7,7 @@ export default(state, action) => {
     case GET_MESSAGES:
       return {
         ...state,
-        messageList: action.payload
+        savedMessages: action.payload
       }
     default:
       return state
