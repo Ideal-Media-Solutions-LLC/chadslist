@@ -10,28 +10,26 @@ const MessageView = ({socket, user1, user2, id }) => {
   const [messageList, setMessageList] = useState([]);
   const [savedMessages, setSavedMessages] = useState([]);
 
-  useEffect(() => {
-    axios.post(API_URL, {
-      senderId: user1,
-      receiverId: user2
-    })
-    .then((result) => {
-      setSavedMessages(result.data);
-    })
-    .catch((err) => {
-      console.log(err)
-    })
-  }, [])
-
-  // const getMessages = () => {
-  //   socket.on('receive_msg', data => {
-  //     setSavedMessages([...messageList, data])
+  // useEffect(() => {
+  //   axios.post(API_URL, {
+  //     senderId: user1,
+  //     receiverId: user2
   //   })
-  // }
+  //   .then((result) => {
+  //     setSavedMessages(result.data);
+  //   })
+  //   .catch((err) => {
+  //     console.log(err)
+  //   })
+  // }, [])
 
-  // useEffect(() => {getMessages},[socket]);
+  const getMessages = () => {
+    socket.on('receive_msg', data => {
+      setMessageList([...messageList, data])
+    })
+  }
 
-  const input = (e) => setMessage(e.target.value);
+  useEffect(getMessages,[socket]);
 
   const sendMsg = async (e) => {
     console.log('invoked', message);
@@ -41,41 +39,47 @@ const MessageView = ({socket, user1, user2, id }) => {
         fakeConvoId: id,
         username: user1,
         message: message,
-        time: new Date(Date.now()).getHour() + ':' + new Date(Date.now()).getMinutes()
+        // time: new Date(Date.now()).getHour() + ':' + new Date(Date.now()).getMinutes()
       }
 
       await socket.emit("send_msg", messageData)
 
       setMessageList([...messageList, messageData])
       //clear out the input box
-      // setMessage("")
+      setMessage('');
     }
 
     // axios.post('http://localhost:3001/chat', {claimantId: 1, message: message})
     // .then(() => console.log('MSG sent'))
     // .catch(err => console.log(err));
-
-    e.target.reset();
   }
 
   return (
     <div>
-      Messages
-      <Form
-        style={{position:'absolute', bottom:'20px', width:'70%', left:'15%'}}
-        onSubmit={sendMsg}>
-        <InputGroup className="mb-3">
-          <FormControl
-            onChange={input}
-            placeholder="Messages"
-            aria-label="Messages"
-            aria-describedby="basic-addon2"
-          />
-          <Button type='submit' variant="outline-secondary" id="button-addon2">
-            send
-          </Button>
-        </InputGroup>
-      </Form>
+        <h3>Chat</h3>
+      <div>
+        {messageList.map((msg, index) =>  <p key={index} >{msg.message}</p>)}
+      </div>
+      {/* input bar */}
+      <div>
+        <Form
+          style={{ position: 'absolute', bottom: '20px', width: '70%', left: '15%' }}
+          onSubmit={sendMsg}>
+          <InputGroup className="mb-3">
+            <FormControl
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              placeholder="Messages"
+              aria-label="Messages"
+              aria-describedby="basic-addon2"
+            />
+            <Button type='submit' variant="outline-secondary" id="button-addon2">
+              send
+            </Button>
+          </InputGroup>
+        </Form>
+      </div>
+
     </div>
   )
 }
