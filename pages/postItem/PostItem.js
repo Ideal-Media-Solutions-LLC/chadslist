@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Container, Col, Form, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import axios from 'axios';
 
 const PostItem = (props) => {
 
@@ -13,7 +14,9 @@ const PostItem = (props) => {
 
   const handlePost = (e) => {
     e.preventDefault();
-    console.log(input);
+    axios.post('http://localhost:3001/additem', input)
+    .then(() => console.log('item added'))
+    .catch(err => console.log('add item err', err));
   }
 
   const nameChanger = (e) => {

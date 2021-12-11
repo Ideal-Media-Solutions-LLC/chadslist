@@ -1,6 +1,6 @@
 import AuthState from '../context/auth/AuthState';
 import { useState } from 'react';
-import { Button, Offcanvas, Container, Col } from 'react-bootstrap';
+import { Button, Offcanvas, Container, Col, Row } from 'react-bootstrap';
 import NaviBar from '../components/NaviBar.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -13,22 +13,24 @@ function MyApp({ Component, pageProps }) {
   return (
     <AuthState>
       <Container>
-        <div>
-          <img src='/Chads_list_2.svg' width='640' height='100' />
-        </div>
-        <div>
-          <Button href='/SignUp' >SignUp</Button>
-          <Button href='/Login' >Login</Button>
-        </div>
-        <Col>
-          <Button onClick={naviShow} >menu</Button>
-          <Offcanvas placement='end' show={showNavi} onHide={closeNavi} >
-            <Offcanvas.Header closeButton></Offcanvas.Header>
-            <NaviBar />
-          </Offcanvas>
-          <Component {...pageProps} />
-        </Col>
+        <Row>
+          <Col>
+            <img src='/Chads_list_2.svg' width='640' height='100' />
+          </Col>
+          <Col>
+            <Button href='/SignUp' >SignUp</Button>
+            <Button href='/Login' >Login</Button>
+          </Col>
+          <Col>
+            <img onClick={naviShow} src='https://i0.wp.com/css-tricks.com/wp-content/uploads/2012/10/threelines.png' width='70' height='50' />
+            <Offcanvas placement='end' show={showNavi} onHide={closeNavi} >
+              <Offcanvas.Header closeButton></Offcanvas.Header>
+              <NaviBar />
+            </Offcanvas>
+          </Col>
+        </Row>
       </Container>
+      <Component {...pageProps} />
 
     </AuthState>
   )
