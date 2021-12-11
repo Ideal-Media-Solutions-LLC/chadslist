@@ -18,6 +18,25 @@ const claim = async (req, res) => {
   res.status(500).end()
 };
 
+const unclaim = async (req, res) => {
+  const { claimantId, itemId } = req.query;
+  console.log(claimantId);
+  await Claim.destroy({
+    where: {
+      claimerid: claimantId;
+    }
+  })
+    .then(() => {
+      await Item.update({ claimed:false }, {
+        where: {
+          id: itemId
+        }
+      })
+    })
+    .catch(err => console.log(err));
+};
+
 module.exports = {
   claim,
+  unclaim
 };
