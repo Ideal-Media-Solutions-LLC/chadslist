@@ -1,7 +1,8 @@
-import { Nav, Button, Navbar, InputGroup } from 'react-bootstrap';
+import { Nav, InputGroup } from 'react-bootstrap';
 import Image from 'next/image';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { useState } from 'react';
+import axios from 'axios';
 
 const Filter = ({filter}) => {
 
