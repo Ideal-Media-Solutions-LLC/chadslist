@@ -22,6 +22,7 @@ const register = async(req, res) => {
         //  await newUser.save();
         const accessToken = await jwt.sign({ userName: newUser.userName }, process.env.TOKEN_KEY);
         return res.status(201).json({
+          id: newUser.id,
           userName,
           email,
           status,
@@ -50,6 +51,7 @@ const login = async (req, res) => {
       const accessToken = await jwt.sign({ userName: isUser.userName }, process.env.TOKEN_KEY);
 
       return res.status(201).json({
+        id: isUser.id,
         userName: isUser.userName,
         email: isUser.email,
         status: isUser.status,

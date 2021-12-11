@@ -25,7 +25,7 @@ const ListView = (props) => {
     <div>
       <Container>
         <Row sm={4} md={4}>
-          {list.map((item, index) => <Col md={5}>
+          {list.map((item, index) => <Col key={index} md={5}>
             <Card onClick={viewItem} style={{ width: '18rem' }}>
               <Card.Img variant="top" src={item.img} />
               <Card.Body>
