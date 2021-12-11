@@ -63,7 +63,8 @@ let categories = [
   'Sporting Goods'
 ];
 
-let itemStatus = ['unclaimed', 'unclaimed', 'processing', 'claimed'];
+// this is to generate more cases of unclaimed than the other two status
+let itemStatus = ['unclaimed', 'unclaimed', 'claimed', 'complete'];
 
 let coordinates = {
   ny: {
@@ -172,8 +173,45 @@ const seedReceipt = () => {
 
 }
 
-const seedClaim = () => {
+const seedClaim = async () => {
+  try {
+    let claims = [];
+    let index = 0;
+    for (var i = 0; i < 100; i++) {
+      if (items[i].status !== 'unclaimed') {
+        claims[index] = {};
+        claims[index].id = index;
+        claims[index].itemId = i;
+        claims[index].status = items[i].status;
 
+        // generate claimerId that belongs to the same area
+        // created slightly different situations for the three areas so that we can testing different situations
+        if (i < 40) {
+          // for NY, all items claimed by userId = 1
+          claims[index].claimerId = 1;
+        } else if (i >= 40 && i < 70) {
+          // for SF, items claimed by two users, with userId = 40 or 50
+          if (i % 2 === 1) {
+            claims[index].claimerId = 40
+          } else {
+            claims[index].claimerId = 50;
+          }
+        } else {
+          // for SA, random userId within SA that is not the same as the donorId
+          let donorId = items[i].donorId;
+          let randomId = Math.floor(Math.random() * 31 + 70);
+          while (randomId === donorId) {
+            randomId = Math.floor(Math.random() * 31 + 70);
+          }
+          claims[index].claimerId = randomId;
+        }
+        index++;
+      }
+    }
+    await Claim.bulkCreate(claims);
+  } catch (error) {
+    console.log('error adding data for claims', error);
+  }
 }
 
 
@@ -181,9 +219,11 @@ const seedAll = async() => {
   await User.sync({force: true});
   await Conversation.sync({force: true})
   await Item.sync({force: true});
+  await Claim.sync({force: true});
   await seedUser();
   await seedConversation();
   await seedItem();
+  await seedClaim();
 }
 
 seedAll();
