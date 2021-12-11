@@ -36,7 +36,7 @@ const Item = sequelize.define('Item', {
 // Setting up associations (Relationships)
 // Each donor (User) can have many donations (Items)
 User.hasMany(Item, {foreignKey: 'donorId'});
-Item.belongsTo(User);
+// Item.belongsTo(User);
 
 
 
