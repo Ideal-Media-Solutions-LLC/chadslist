@@ -68,27 +68,29 @@ const startChat = (req, res) => {
 }
 
 const createMessage = (req, res) => {
-  const { message, donorId, claimantId } = req.body
+  const { message, senderId, receiverId } = req.body;
+  const smallerId = senderId > receiverId ? receiverId : senderId
+  const largerId = senderId > receiverId ? senderId: receiverId
+
   Conversation.findOne({
     where: {
-      donorId: {
-        [Op.or]: [donorId, claimantId]
-      },
-      claimantId: {
-        [Op.or]: [donorId, claimantId]
-       }
+      [Op.and]: [
+        { smallerId: smallerId },
+        { largerId: largerId }
+      ]
     }
   })
   .then((conversation) => {
     if(conversation) {
       Message.create({
         message,
-        userId: claimantId,
+        userId: senderId,
         conversationId: conversation.dataValues.id
+      }).then(() => {
+        res.sendStatus(201);
       })
-      res.sendStatus(201);
     } else {
-      res.sendStatus(403);
+      res.sendStatus(403).json({ message: 'Conversation does not exist'});
     }
   })
   .catch((err) => {
