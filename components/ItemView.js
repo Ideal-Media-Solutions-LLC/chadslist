@@ -9,14 +9,20 @@ const ItemView = (props) => {
   const [Message, setMessage] = useState (false);
   const showMessage = () => setMessage(true);
   const closeMessage = () => setMessage(false);
+  const [isClaim, setIsClaim] = useState(false)
 
 
   const handleClaimClick = () => {
-    const claim = () => {
-      axios.post('http://localhost:3001/claim')
-      .then()
-      .catch();
-    }
+    axios.post('http://localhost:3001/claim', {
+      claimerId: '',
+      itemId: '',
+      status: '',
+      UserId: '',
+    })
+    .then(() => console.log('claim success'))
+    .catch(err => console.log('claim err', err));
+
+    setIsClaim(!isClaim)
   }
 
 
@@ -28,7 +34,7 @@ const ItemView = (props) => {
           <Card.Title>Item Name</Card.Title>
           <Card.Text>Value</Card.Text>
           <Card.Text>Location</Card.Text>
-          <Button variant="primary" onClick={handleClaimClick}>Claim</Button>
+          <Button variant={isClaim? "secondary":"primary"} onClick={handleClaimClick}>{isClaim? "Unclaim":"Claim"}</Button>
           <Button onClick={showMessage} variant="primary">Message</Button>
           <Card.Text>
             Item's Detail
@@ -37,7 +43,7 @@ const ItemView = (props) => {
       </Card>
 
       <Modal centered show={Message} fullscreen={true} onHide={closeMessage} >
-        <Modal.Header closeButton></Modal.Header>
+        <Modal.Header closeButton>Message</Modal.Header>
         <MessageView />
       </Modal>
     </>

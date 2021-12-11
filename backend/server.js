@@ -11,11 +11,11 @@ const port = 3001;
 
 app.use(cors());
 app.use(express.json());
+
 app.use('/auth', authRoutes);
+app.use('/claim', claimRoutes);
+app.use('/additem', addItemRoutes);
 
-
-app.post('/claim', claimRoutes);
-app.post('/additem', addItemRoutes);
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
