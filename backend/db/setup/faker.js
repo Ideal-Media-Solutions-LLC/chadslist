@@ -217,9 +217,9 @@ const seedClaim = async () => {
         } else {
           // for SA, random userId within SA that is not the same as the donorId
           let donorId = items[i].donorId;
-          let randomId = Math.floor(Math.random() * 31 + 70);
+          let randomId = Math.floor(Math.random() * 30 + 70);
           while (randomId === donorId) {
-            randomId = Math.floor(Math.random() * 31 + 70);
+            randomId = Math.floor(Math.random() * 30 + 70);
           }
           claims[index].claimerId = randomId;
         }
