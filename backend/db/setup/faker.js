@@ -18,7 +18,6 @@ const seedUser = async () => {
       users[i].userName = faker.internet.userName();
       users[i].email = faker.internet.email();
       users[i].photoUrl = faker.image.people();
-
       if (i % 10 === 0) {
         users[i].status = 'charity';
       } else {
