@@ -41,8 +41,10 @@ const startChat = (req, res) => {
       Conversation.create({
         donorId,
         claimantId
+      }).then(() => {
+        res.sendStatus(201);
       })
-      res.sendStatus(201);
+
     }
   })
   .catch((err) => {
