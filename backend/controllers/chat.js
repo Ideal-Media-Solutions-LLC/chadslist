@@ -18,27 +18,9 @@ const startChat = (req, res) => {
         { largerId: largerId }
       ]
     }
-    // where: {
-    //   donorId: {
-    //     [Op.or]: [donorId, claimantId]
-    //   },
-    //   claimantId: {
-    //     [Op.or]: [donorId, claimantId]
-    //    }
-    // }
-    // where: {
-    //   smallerId: {
-    //     [Op.or]: [smallerId, largerId]
-    //   },
-    //   largerId: {
-    //     [Op.or]: [smallerId, largerId]
-    //    }
-    // }
   })
   .then((conversation) => {
     if (conversation) {
-      console.log(conversation);
-      // console.log(conversation.dataValues.id)
       Message.findAll({
         where: {
           conversationId: conversation.dataValues.id
@@ -58,8 +40,9 @@ const startChat = (req, res) => {
       Conversation.create({
         smallerId,
         largerId
+      }).then(() => {
+        res.sendStatus(201);
       })
-      res.sendStatus(201);
     }
   })
   .catch((err) => {
@@ -86,8 +69,8 @@ const createMessage = (req, res) => {
         message,
         userId: senderId,
         conversationId: conversation.dataValues.id
-      }).then(() => {
-        res.sendStatus(201);
+      }).then((data) => {
+        res.json(data);
       })
     } else {
       res.sendStatus(403).json({ message: 'Conversation does not exist'});
