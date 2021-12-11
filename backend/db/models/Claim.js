@@ -34,7 +34,7 @@ const Claim = sequelize.define('Claim', {
 // Setting up associations (Relationships)
 // Each claimer (User) can have many claims
 User.hasMany(Claim, {foreignKey: 'claimerId'});
-Claim.belongsTo(User);
+// Claim.belongsTo(User);
 
 // Each Item can have many claims
 Item.hasMany(Claim, {foreignKey: 'itemId'});
