@@ -5,7 +5,7 @@ const User = require('../db/models/User.js');
 
 const register = async(req, res) => {
   // console.log(req.body);
-    const { userName, email, password, status } = req.body;
+    const { userName, email, password, accType } = req.body;
 
       const isUser = await User.findOne({ where: { userName: userName }});
 
@@ -16,7 +16,7 @@ const register = async(req, res) => {
           userName,
           email,
           password: passwordHash,
-          status,
+          accType,
          })
 
         //  await newUser.save();
@@ -25,7 +25,7 @@ const register = async(req, res) => {
           id: newUser.id,
           userName,
           email,
-          status,
+          accType,
           accessToken
         })
       } else {
@@ -54,7 +54,7 @@ const login = async (req, res) => {
         id: isUser.id,
         userName: isUser.userName,
         email: isUser.email,
-        status: isUser.status,
+        accType: isUser.accType,
         accessToken
       })
     }
