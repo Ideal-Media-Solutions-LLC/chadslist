@@ -4,7 +4,7 @@ const User = require('./User.js');
 const Item = require('./User.js');
 const Receipt = require('./Receipt.js');
 
-const Claim = sequelize.define('Claim', {
+const Claim = sequelize.define('claim', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,

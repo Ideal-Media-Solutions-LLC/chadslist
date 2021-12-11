@@ -8,7 +8,7 @@ const Conversation = require('../models/Conversation.js');
 
 module.exports.resetDB = async () => {
   try {
-    await sequelize.drop({cascade: true});
+    await sequelize.drop({ cascade: true });
     await sequelize.sync({ force: true });
     console.log('Syncing complete');
   } catch (error) {

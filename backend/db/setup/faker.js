@@ -235,7 +235,7 @@ const seedClaim = async () => {
 
 const seedAll = async() => {
   try {
-    // await resetDB();
+    await resetDB();
     await User.sync({force: true});
     await Conversation.sync({force: true})
     await Item.sync({force: true});

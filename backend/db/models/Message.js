@@ -3,7 +3,7 @@ const sequelize = require('../db.js');
 const User = require('./User.js');
 const Conversation = require('./Conversation.js');
 
-const Message = sequelize.define('Message', {
+const Message = sequelize.define('message', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
