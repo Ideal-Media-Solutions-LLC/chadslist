@@ -4,6 +4,9 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import { useState } from 'react';
 import axios from 'axios';
 
+import io from "socket.io-client";
+const socket = io.connect("http://localhost:3200");
+
 const ItemView = (props) => {
 
   const [Message, setMessage] = useState (false);
@@ -25,6 +28,20 @@ const ItemView = (props) => {
     setIsClaim(!isClaim)
   }
 
+    const fakeUser1 = {
+      username: 'fakeUser1',
+    }
+
+    const fakeUser2 = {
+      username: 'fakeUser2',
+    }
+
+    const fakeConvoId = 99;
+
+    const joinRoom = () => {
+      socket.emit("join_chat", fakeConvoId)
+    }
+
 
   return (
     <>
@@ -35,7 +52,10 @@ const ItemView = (props) => {
           <Card.Text>Value</Card.Text>
           <Card.Text>Location</Card.Text>
           <Button variant={isClaim? "secondary":"primary"} onClick={handleClaimClick}>{isClaim? "Unclaim":"Claim"}</Button>
-          <Button onClick={showMessage} variant="primary">Message</Button>
+          <Button onClick={() => {
+            showMessage();
+            joinRoom();
+            }} variant="primary">Message</Button>
           <Card.Text>
             Item's Detail
           </Card.Text>
@@ -44,7 +64,7 @@ const ItemView = (props) => {
 
       <Modal centered show={Message} fullscreen={true} onHide={closeMessage} >
         <Modal.Header closeButton>Message</Modal.Header>
-        <MessageView />
+        <MessageView user1={fakeUser1} user2={fakeUser2} id={fakeConvoId} socket={socket}/>
       </Modal>
     </>
   )
