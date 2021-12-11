@@ -22,7 +22,11 @@ const ChatState = (props) => {
       receiverId
     })
     .then((result) => {
-      console.log(result.data)
+
+      dispatch({
+        type: GET_MESSAGES,
+        payload: result.data
+      })
     })
     .catch((err) => {
       console.log(err)

@@ -57,7 +57,7 @@ const ItemView = (props) => {
           <Button onClick={() => {
             showMessage();
             joinRoom();
-            getMessages(1, 2);
+            getMessages(11, 38);
             }} variant="primary">Message</Button>
           <Card.Text>
             Item's Detail
