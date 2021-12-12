@@ -4,7 +4,8 @@ import { useReducer } from 'react';
 import axios from 'axios';
 
 import {
-  GET_MESSAGES
+  GET_MESSAGES,
+  UPDATE_MESSAGES
 } from '../types.js';
 
 const API_URL = 'http://localhost:3001/chat'
@@ -34,14 +35,17 @@ const ChatState = (props) => {
   }
 
   const createMessage = (senderId, receiverId, message) => {
-    console.log(senderId, receiverId, message)
     axios.post(`${API_URL}/message`, {
       message,
       senderId,
       receiverId
     })
     .then((result) => {
-      console.log(result.data)
+
+      dispatch({
+        type: UPDATE_MESSAGES,
+        payload: result.data
+      })
     })
     .catch((err) => {
       console.log(err)
