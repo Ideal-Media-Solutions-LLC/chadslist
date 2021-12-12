@@ -196,7 +196,7 @@ const seedClaim = async () => {
     for (var i = 0; i < 100; i++) {
       if (items[i].status !== 'unclaimed') {
         claims[index] = {};
-        claims[index].itemId = i;
+        claims[index].itemId = i + 1;
         claims[index].status = items[i].status;
 
         // generate claimerId that belongs to the same area

@@ -14,7 +14,7 @@ const getItemsInRadius = async (req, res) => {
     let minLat = searchLatitude - radiusInDegrees;
     let maxLong = searchLongitude + radiusInDegrees;
     let minLong = searchLongitude - radiusInDegrees;
-  
+
     let items = await Item.findAll({
       where: {
         longitude: {
@@ -28,6 +28,7 @@ const getItemsInRadius = async (req, res) => {
         donorId: {
           [Op.ne]: userId
         },
+        status: 'unclaimed'
       }
     });
     res.status(200).send(items);

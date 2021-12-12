@@ -15,6 +15,7 @@ const Item = sequelize.define('item', {
   // Have the item location be based off the users current signed in location but they can change it if they want to
   longitude: DataTypes.FLOAT,
   latitude: DataTypes.FLOAT,
+  status: DataTypes.STRING,
   claimed: {
     type: DataTypes.BOOLEAN,
     defaultValue: false
