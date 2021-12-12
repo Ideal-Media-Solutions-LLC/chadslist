@@ -3,7 +3,7 @@ const Item = require('../db/models/Item.js');
 
 const getItemsInRadius = async (req, res) => {
   try {
-    let userId = parseInt(req.query.userId)
+    let userId = parseInt(req.query.userId) || 0;
     let radiusInMiles = parseInt(req.query.radius) || 10;
     let radiusInDegrees = radiusInMiles / 69;
     // Location the search is centered around
