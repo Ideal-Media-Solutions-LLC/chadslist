@@ -1,14 +1,40 @@
+const { Op } = require('sequelize');
 const Item = require('../db/models/Item.js');
 
 const getItemsInRadius = async (req, res) => {
-  debugger;
-  // Get the radius that we want to select items from within (default 10)
-  let radiusInMiles = req.params.radius || 10;
-  // We need to convert the radius from miles to degrees so we can compare it to the location of each item
-  let radiusInDegrees = radiusInMiles / 69;
-  // Get the user somehow or the location that we are centering our search on
-  let searchLocation = req.params.location;
-  // Make a query that gets all items that are within the specified radius, that aren't claimed and that aren't the current user's donations
+  try {
+    let userId = parseInt(req.query.userId)
+    let radiusInMiles = parseInt(req.query.radius) || 10;
+    let radiusInDegrees = radiusInMiles / 69;
+    // Location the search is centered around
+    let searchLatitude = parseFloat(req.query.latitude);
+    let searchLongitude = parseFloat(req.query.longitude);
+    // The max and min latitudes and longitudes we want to receive
+    let maxLat = searchLatitude + radiusInDegrees;
+    let minLat = searchLatitude - radiusInDegrees;
+    let maxLong = searchLongitude + radiusInDegrees;
+    let minLong = searchLongitude - radiusInDegrees;
+  
+    let items = await Item.findAll({
+      where: {
+        longitude: {
+          [Op.lt]: maxLong,
+          [Op.gt]: minLong,
+        },
+        latitude: {
+          [Op.lt]: maxLat,
+          [Op.gt]: minLat,
+        },
+        donorId: {
+          [Op.ne]: userId
+        },
+      }
+    });
+    res.status(200).send(items);
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(400);
+  }
 };
 
 module.exports = {
