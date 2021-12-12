@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
-import { InputGroup, Button, FormControl, Form } from 'react-bootstrap';
+import { InputGroup, Button, FormControl, Form, Popover, Row } from 'react-bootstrap';
 import axios from 'axios';
+
+import ChatMsg from '@mui-treasury/components/chatMsg/ChatMsg';
 
 const API_URL = 'http://localhost:3001/chat'
 
-const MessageView = ({socket, user1, user2, id }) => {
+const MessageView = ({ socket, user1, user2, id }) => {
 
   const [message, setMessage] = useState('');
   const [messageList, setMessageList] = useState([]);
@@ -29,15 +31,15 @@ const MessageView = ({socket, user1, user2, id }) => {
     })
   }
 
-  useEffect(getMessages,[socket]);
+  useEffect(getMessages, [socket]);
 
   const sendMsg = async (e) => {
     console.log('invoked', message);
     e.preventDefault();
-    if(message !== ''){
-      const messageData ={
+    if (message !== '') {
+      const messageData = {
         fakeConvoId: id,
-        username: user1,
+        username: user1.username,
         message: message,
         // time: new Date(Date.now()).getHour() + ':' + new Date(Date.now()).getMinutes()
       }
@@ -54,12 +56,18 @@ const MessageView = ({socket, user1, user2, id }) => {
     // .catch(err => console.log(err));
   }
 
+
+   const testMsg = messageList.map((msg) => msg.message);
+
+
   return (
     <div>
-        <h3>Chat</h3>
-      <div>
-        {messageList.map((msg, index) =>  <p key={index} >{msg.message}</p>)}
-      </div>
+      {/* <div>
+        {messageList.map((msg, index) => <p>{msg.username}:{msg.message}</p>)}
+      </div> */}
+
+      <ChatMsg messages={testMsg} />
+
       {/* input bar */}
       <div>
         <Form
@@ -79,7 +87,6 @@ const MessageView = ({socket, user1, user2, id }) => {
           </InputGroup>
         </Form>
       </div>
-
     </div>
   )
 }
