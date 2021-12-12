@@ -13,7 +13,8 @@ const Item = sequelize.define('item', {
   // Right now we just will be able to support a single picture. Make a sepparate image table to support multiple pictures?
   imageUrl: DataTypes.STRING,
   // Have the item location be based off the users current signed in location but they can change it if they want to
-  location: DataTypes.INTEGER,
+  longitude: DataTypes.FLOAT,
+  latitude: DataTypes.FLOAT,
   claimed: {
     type: DataTypes.BOOLEAN,
     defaultValue: false
