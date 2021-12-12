@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const Claim = require('../db/models/Claim.js');
 const Item = require('../db/models/Item.js');
 const claim = async (req, res) => {
@@ -20,18 +21,18 @@ const claim = async (req, res) => {
 
 const unclaim = async (req, res) => {
   const { claimantId, itemId } = req.query;
-  console.log(claimantId);
-  await Claim.destroy({
+  item = await Claim.destroy({
     where: {
-      claimerid: claimantId;
+      [Op.and]: [{claimerId: claimantId}, { status: 'claimed' }]
     }
   })
-    .then(() => {
-      await Item.update({ claimed:false }, {
+    .then(async () => {
+      await Item.update({ claimed: false }, {
         where: {
           id: itemId
         }
       })
+      res.status(200).end();
     })
     .catch(err => console.log(err));
 };
