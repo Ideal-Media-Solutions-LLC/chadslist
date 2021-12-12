@@ -8,7 +8,7 @@ const claim = async (req, res) => {
   const UserId = req.body.UserId;
   const claim = await Claim.create({ claimerId, itemId, status, UserId })
     .then(async () => {
-      const item = await Item.update({ claimed: true }, {
+      const item = await Item.update({ claimed: false }, {
         where: {
           id: itemId
         }
