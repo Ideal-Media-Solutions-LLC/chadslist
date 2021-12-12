@@ -66,7 +66,7 @@ const ItemView = (props) => {
       </Card>
 
       <Modal centered show={Message} fullscreen={true} onHide={closeMessage} >
-        <Modal.Header closeButton>Message</Modal.Header>
+        <Modal.Header closeButton>UserName</Modal.Header>
         <MessageView user1={fakeUser1} user2={fakeUser2} id={fakeConvoId} socket={socket}/>
       </Modal>
     </>
