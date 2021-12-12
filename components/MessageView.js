@@ -34,7 +34,7 @@ const MessageView = ({socket, user1, user2, id }) => {
 
       await socket.emit("send_msg", messageData)
 
-      createMessage(11, 38, message)
+      createMessage(38, 11, message)
       setMessageList([...messageList, messageData])
 
 
