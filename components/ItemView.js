@@ -1,14 +1,14 @@
 import { Button, Card, CloseButton, Modal } from 'react-bootstrap';
 import MessageView from './MessageView.js';
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import axios from 'axios';
-
+import ChatContext from '../context/chat/ChatContext';
 import io from "socket.io-client";
 const socket = io.connect("http://localhost:3200");
 
 const ItemView = (props) => {
-
+  const { getMessages } = useContext(ChatContext);
   const [Message, setMessage] = useState (false);
   const showMessage = () => setMessage(true);
   const closeMessage = () => setMessage(false);
@@ -38,6 +38,8 @@ const ItemView = (props) => {
 
     const fakeConvoId = 99;
 
+
+
     const joinRoom = () => {
       socket.emit("join_chat", fakeConvoId)
     }
@@ -55,6 +57,7 @@ const ItemView = (props) => {
           <Button onClick={() => {
             showMessage();
             joinRoom();
+            getMessages(11, 38);
             }} variant="primary">Message</Button>
           <Card.Text>
             Item's Detail

@@ -7,6 +7,7 @@ const { Op } = require('sequelize');
 const startChat = (req, res) => {
   const { senderId, receiverId } = req.body;
   //query for conversation based on IDs
+  console.log(senderId, receiverId)
   const smallerId = senderId > receiverId ? receiverId : senderId
   const largerId = senderId > receiverId ? senderId: receiverId
 
@@ -43,10 +44,13 @@ const startChat = (req, res) => {
       }).then(() => {
         res.sendStatus(201);
       })
+      .catch((err) => {
+        res.sendStatus(401).json({ message: 'Error'})
+      })
     }
   })
   .catch((err) => {
-    res.sendStatus({ message: 'Error has occured'})
+    res.sendStatus(401).json({ message: 'Error has occured'})
   })
 }
 

@@ -1,4 +1,5 @@
 import AuthState from '../context/auth/AuthState';
+import ChatState from '../context/chat/ChatState';
 import { useState } from 'react';
 import { Button, Offcanvas, Container, Col, Row } from 'react-bootstrap';
 import NaviBar from '../components/NaviBar.js';
@@ -13,6 +14,7 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <AuthState>
+      <ChatState>
       <Container>
         <Row>
           <Col>
@@ -32,7 +34,7 @@ function MyApp({ Component, pageProps }) {
         </Row>
       </Container>
       <Component {...pageProps} />
-
+      </ChatState>
     </AuthState>
   )
 }
