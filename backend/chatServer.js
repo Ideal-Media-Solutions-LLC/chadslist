@@ -28,6 +28,7 @@ io.on('connection', (socket) => {
   socket.on("send_msg", (messageData) =>{
     socket.to(messageData.fakeConvoId).emit("receive_msg", messageData);
   })
+
   socket.on('disconnect', () => console.log('disconnected', socket.id))
 });
 
