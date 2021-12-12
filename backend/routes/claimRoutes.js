@@ -1,7 +1,8 @@
 const express = require('express');
-const { claim } = require('../controllers/claim.js');
+const { claim, unclaim } = require('../controllers/claim.js');
 const router = express.Router();
 
-router.post('/claim', claim);
+router.post('/', claim);
+router.delete('/', unclaim)
 
 module.exports = router;

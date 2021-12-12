@@ -20,11 +20,19 @@ const io = new Server (server, {
 
 io.on('connection', (socket) => {
   console.log('connected', socket.id);
+  socket.on("join_chat", fakeConvoId => {
+    socket.join(fakeConvoId);
+    console.log(`User with ID: ${socket.id} joined convo: ${fakeConvoId}`);
+  })
+
+  socket.on("send_msg", (messageData) =>{
+    socket.to(messageData.fakeConvoId).emit("receive_msg", messageData);
+  })
   socket.on('disconnect', () => console.log('disconnected', socket.id))
 });
 
 
 server.listen(PORT, () => {
-  console.log(`Backend listening at http://localhost:${PORT}`);
+  console.log(`chat Server listening at http://localhost:${PORT}`);
 });
 
