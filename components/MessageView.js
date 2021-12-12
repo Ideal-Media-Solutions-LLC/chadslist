@@ -1,29 +1,17 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { InputGroup, Button, FormControl, Form, Popover, Row } from 'react-bootstrap';
 import axios from 'axios';
+import ChatContext from '../context/chat/ChatContext';
 
 import ChatMsg from '@mui-treasury/components/chatMsg/ChatMsg';
 
 const API_URL = 'http://localhost:3001/chat'
 
-const MessageView = ({ socket, user1, user2, id }) => {
-
+const MessageView = ({socket, user1, user2, id }) => {
+  const { savedMessages, createMessage } = useContext(ChatContext);
   const [message, setMessage] = useState('');
   const [messageList, setMessageList] = useState([]);
-  const [savedMessages, setSavedMessages] = useState([]);
-
-  // useEffect(() => {
-  //   axios.post(API_URL, {
-  //     senderId: user1,
-  //     receiverId: user2
-  //   })
-  //   .then((result) => {
-  //     setSavedMessages(result.data);
-  //   })
-  //   .catch((err) => {
-  //     console.log(err)
-  //   })
-  // }, [])
+  // const [savedMessages, setSavedMessages] = useState([]);
 
   const getMessages = () => {
     socket.on('receive_msg', data => {
@@ -46,7 +34,10 @@ const MessageView = ({ socket, user1, user2, id }) => {
 
       await socket.emit("send_msg", messageData)
 
+      createMessage(11, 38, message)
       setMessageList([...messageList, messageData])
+
+
       //clear out the input box
       setMessage('');
     }
