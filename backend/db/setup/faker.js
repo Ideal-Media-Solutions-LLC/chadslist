@@ -154,10 +154,8 @@ const seedConversation = async () => {
       conversations.push(seattle);
     }
     // await Conversation.bulkCreate(seattle);
-    debugger;
     await Conversation.bulkCreate(conversations);
   } catch (error) {
-    debugger;
     console.log(error);
   }
 }
@@ -167,7 +165,6 @@ const seedMessage = async () => {
   for (let i = 1; i < 91; i++) {
     let conversation = await Conversation.findByPk(i);
     // A random number from 1 to 20 that will determine how many messages this conversation has
-    debugger;
     let messageCount = Math.floor(Math.random() * (20 - 1) + 1);
     // Variables that will allow us to toggle between donor and claimant for each message
     let sender = {true: 'smallerId', false: 'largerId'}
