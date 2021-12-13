@@ -14,6 +14,8 @@ const getItemsInRadius = async (req, res) => {
     let minLat = searchLatitude - radiusInDegrees;
     let maxLong = searchLongitude + radiusInDegrees;
     let minLong = searchLongitude - radiusInDegrees;
+    let allCategory =['Apparel', 'Electronics', 'Entertainment','Garden and Outdoor', 'Hobbies', 'Home Goods','Musical Instruments', 'Office Supplies','Pet Supplies', 'Sporting Goods']
+    let searchCategory = req.query.category || allCategory;
 
     let items = await Item.findAll({
       where: {
@@ -28,6 +30,7 @@ const getItemsInRadius = async (req, res) => {
         donorId: {
           [Op.ne]: userId
         },
+        category: searchCategory,
         status: 'unclaimed'
       }
     });
