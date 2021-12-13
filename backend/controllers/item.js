@@ -42,6 +42,11 @@ const getItemsInRadius = async (req, res) => {
   }
 };
 
+const createItem = (req, res) => {
+  console.log(req.body)
+}
+
 module.exports = {
   getItemsInRadius,
+  createItem
 };
