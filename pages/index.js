@@ -9,7 +9,7 @@ import Search from '../components/Search.js';
 import { useState, useEffect } from 'react';
 import { FaMapMarkedAlt } from "react-icons/fa";
 import { RiLayoutGridFill } from "react-icons/ri";
-
+import {LoadScript} from '@react-google-maps/api';
 
 
 const HomePage = (props) => {
@@ -25,6 +25,23 @@ const HomePage = (props) => {
 
   const handleClick = () => setFilter(!showFilter)
   const closeFilter = () => setFilter(false)
+
+
+  const getLocationFromAddress = (address) => {
+    address = address || 'New York City'; //TODO: Remove default in Production
+
+    const Geocoder = new window.google.maps.Geocoder();
+
+    Geocoder.geocode({address : address}, (result, status) => {
+      const lat = result[0].geometry.location.lat()
+      const lng = result[0].geometry.location.lng()
+      if (status === 'OK') {
+        console.log(`'${address}' geocoded to \nlat: ${lat} \nlng: ${lng}`)
+      } else {
+        console.log(status, `Was not able to retrieve geocode from '${address}`)
+      }
+    })
+  }
 
 
   useEffect(() => {
@@ -45,31 +62,33 @@ const HomePage = (props) => {
 
   return (
     <div>
-      <Container>
-        <Row>
-          <Col md="auto">
-            <Button onClick={handleClick}>filter</Button>
-            <Offcanvas show={showFilter} onHide={closeFilter} >
-              <Offcanvas.Header closeButton></Offcanvas.Header>
-              <FilterList />
-            </Offcanvas>
-          </Col>
+      <LoadScript googleMapsApiKey={process.env.mapAPI}>
+        <Container>
+          <Row>
+            <Col md="auto">
+              <Button onClick={handleClick}>filter</Button>
+              <Offcanvas show={showFilter} onHide={closeFilter} >
+                <Offcanvas.Header closeButton></Offcanvas.Header>
+                <FilterList />
+              </Offcanvas>
+            </Col>
 
+            <Col>
+              <Search />
+            </Col>
+
+            <Col xs lg="2">
+              {view === 'list'
+                ? <FaMapMarkedAlt size='40' onClick={() => ChangeView('map')} />
+                : <RiLayoutGridFill size='40' onClick={() => ChangeView('list')} />}
+            </Col>
+          </Row>
           <Col>
-            <Search />
+            {view === 'map' && <MapView />}
+            {view === 'list' && <ListView />}
           </Col>
-
-          <Col xs lg="2">
-            {view === 'list'
-              ? <FaMapMarkedAlt size='40' onClick={() => ChangeView('map')} />
-              : <RiLayoutGridFill size='40' onClick={() => ChangeView('list')} />}
-          </Col>
-        </Row>
-        <Col>
-          {view === 'map' && <MapView />}
-          {view === 'list' && <ListView />}
-        </Col>
-      </Container>
+        </Container>
+      </LoadScript>
     </div>
   )
 }
