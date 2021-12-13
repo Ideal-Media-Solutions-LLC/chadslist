@@ -4,6 +4,7 @@ const authRoutes = require('./routes/authRoutes.js');
 const claimRoutes = require('./routes/claimRoutes.js');
 const addItemRoutes = require('./routes/addItemRoutes.js');
 const chatRoutes = require('./routes/chatRoutes.js');
+const itemRoutes = require('./routes/itemRoutes.js');
 const historyRoutes = require('./routes/historyRoutes.js');
 require("dotenv").config();
 const db = require ('./db/db.js');
@@ -22,7 +23,8 @@ app.use('/chat', chatRoutes);
 app.use('/claim', claimRoutes);
 app.use('/history', historyRoutes);
 app.post('/additem', addItemRoutes);
-
+app.use('/items', itemRoutes);
+app.get('/history/*', historyRoutes);
 
 app.get('/', (req, res) => {
   res.send('Hello World!');

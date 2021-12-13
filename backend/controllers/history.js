@@ -4,7 +4,7 @@ const User = require('../db/models/User.js');
 const Receipt = require('../db/models/Receipt.js');
 
 const getDonateHis = async (req, res) => {
-  const donorId = req.body.userId;
+  const donorId = req.query.userId;
   // console.log('donorId', donorId);
   await Item.findAll({
     where: {
@@ -21,7 +21,7 @@ const getDonateHis = async (req, res) => {
 }
 
 const getClaimHis = async (req, res) => {
-  const claimerId = req.body.userId;
+  const claimerId = req.query.userId;
   await Claim.findAll({
     where: {
       claimerId
