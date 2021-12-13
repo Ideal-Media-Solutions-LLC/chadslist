@@ -18,7 +18,7 @@ const Receipt = sequelize.define('receipt', {
         name: 'receiptClaimIndex',
         using: 'HASH',
         fields: ['claimId']
-      }
+      },
       {
         name: 'receiptDonorIndex',
         using: 'HASH',
