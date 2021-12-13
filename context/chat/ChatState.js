@@ -1,12 +1,11 @@
 import ChatContext from './ChatContext.js';
 import ChatReducer from './ChatReducer.js';
-import { useReducer } from 'react';
+import { useReducer, useEffect } from 'react';
 import axios from 'axios';
 
 import {
   GET_MESSAGES,
   UPDATE_MESSAGES,
-  SET_CONVERSATION
 } from '../types.js';
 
 const API_URL = 'http://localhost:3001/chat'
@@ -19,25 +18,20 @@ const ChatState = (props) => {
 
   const [state, dispatch] = useReducer(ChatReducer, initialState)
 
+  // useEffect(() => {
+  //   getMessages(11,73)
+  // }, [state.conversationId])
+
   const getMessages = (senderId, receiverId) => {
     axios.post(API_URL, {
       senderId,
       receiverId
     })
     .then((result) => {
-      if(typeof result === 'object') {
-        console.log(result)
-        dispatch({
-          type: SET_CONVERSATION,
-          payload: result.data.conversationId
-        })
-      } else {
         dispatch({
           type: GET_MESSAGES,
           payload: result.data
         })
-      }
-
     })
     .catch((err) => {
       console.log(err)

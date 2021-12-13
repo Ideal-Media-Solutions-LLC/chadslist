@@ -1,7 +1,6 @@
 import {
   GET_MESSAGES,
   UPDATE_MESSAGES,
-  SET_CONVERSATION
 } from '../types';
 
 export default(state, action) => {
@@ -9,17 +8,13 @@ export default(state, action) => {
     case GET_MESSAGES:
       return {
         ...state,
-        savedMessages: action.payload
+        savedMessages: action.payload.data,
+        conversationId: action.payload.conversationId
       }
     case UPDATE_MESSAGES:
       return {
         ...state,
         savedMessages: [...state.savedMessages, action.payload]
-      }
-    case SET_CONVERSATION:
-      return {
-        ...state,
-        conversationId: action.payload
       }
     default:
       return state

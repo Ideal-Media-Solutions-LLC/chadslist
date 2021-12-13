@@ -6,4 +6,3 @@ export const LOGOUT_USER = 'LOGOUT_USER';
 // CHAT
 export const GET_MESSAGES = 'GET_MESSAGES';
 export const UPDATE_MESSAGES = 'UPDATE_MESSAGES';
-export const SET_CONVERSATION = 'SET_CONVERSATION';
