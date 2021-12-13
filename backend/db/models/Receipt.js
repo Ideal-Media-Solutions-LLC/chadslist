@@ -8,6 +8,7 @@ const Receipt = sequelize.define('receipt', {
       autoIncrement: true
     },
     claimId: DataTypes.INTEGER,
+    donorId: DataTypes.INTEGER,
     condition: DataTypes.STRING,
     value: DataTypes.INTEGER
   },
@@ -17,6 +18,11 @@ const Receipt = sequelize.define('receipt', {
         name: 'receiptClaimIndex',
         using: 'HASH',
         fields: ['claimId']
+      },
+      {
+        name: 'receiptDonorIndex',
+        using: 'HASH',
+        fields: ['donorId']
       }
     ]
   }
