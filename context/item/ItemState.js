@@ -44,8 +44,12 @@ const ItemState = (props) => {
     })
   }
 
+  const createItem = (form) => {
+    console.log(form)
+  }
+
   return (
-    <ItemContext.Provider value={{ itemList: state.itemList, currentLocation: state.currentLocation, getItemsInRadius }}>
+    <ItemContext.Provider value={{ itemList: state.itemList, currentLocation: state.currentLocation, getItemsInRadius, createItem }}>
       {props.children}
     </ItemContext.Provider>
   )
