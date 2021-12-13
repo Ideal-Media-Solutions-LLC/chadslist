@@ -6,16 +6,17 @@ import Image from 'next/image';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import FilterList from '../components/FilterList.js';
 import Search from '../components/Search.js';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { FaMapMarkedAlt } from "react-icons/fa";
 import { RiLayoutGridFill } from "react-icons/ri";
-
+import { getItemsInRadius } from '../context/item/ItemContext';
+import ItemContext from '../context/item/ItemContext'
 
 
 const HomePage = (props) => {
   const [view, setView] = useState('list');
   const [showFilter, setFilter] = useState(false);
-
+  const { getItemsInRadius } = useContext(ItemContext)
   const SF_LOCATION = { lat: 37.962882809573145, lng: -122.57822275079111}
   const [currentLocation, setCurrentLocation] = useState(SF_LOCATION)
 
@@ -37,6 +38,8 @@ const HomePage = (props) => {
           lat: result.coords.latitude,
           lng: result.coords.longitude,
         })
+        getItemsInRadius(result.coords.latitude, result.coords.longitude)
+
         console.log(currentLocation)
       }
     })
