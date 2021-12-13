@@ -1,10 +1,16 @@
 # Rest API
 
-## Registration Endpoints
+## User Registration
 
 |Method|path|description|
 |----|----|----|
 |POST|`/auth/register`|Register a new user in the database|
+
+### Authentication
+Requires session cookie?
+
+### URL
+`GET /url`
 
 ### Request Query Parameters
 Parameters to be passed using query parameters
@@ -32,11 +38,17 @@ EXAMPLE NEEDED
 
 ***
 
-## Login Endpoints
+## User Login
 
 |Method|path|description|
 |----|----|----|
 |POST|`/auth/login`|Login a user if they exist and send an auth token back|
+
+### Authentication
+Requires session cookie?
+
+### URL
+`GET /url`
 
 
 ### Request Query Parameters

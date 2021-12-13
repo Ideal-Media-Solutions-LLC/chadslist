@@ -6,6 +6,12 @@
 |----|----|----|
 |POST|``|Create a new user in the database|
 
+### Authentication
+Requires session cookie?
+
+### URL
+`GET /url`
+
 
 ### Request Query Parameters
 Parameters to be passed using query parameters

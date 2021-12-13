@@ -6,6 +6,12 @@
 |----|----|----|
 |GET|`/history/donations`|Get a users past donations|
 
+### Authentication
+Requires session cookie?
+
+### URL
+`GET /url`
+
 
 ### Request Query Parameters
 Parameters to be passed using query parameters
@@ -36,6 +42,12 @@ EXAMPLE NEEDED
 |Method|path|description|
 |----|----|----|
 |GET|`/history/claims`|Get a users past claims|
+
+### Authentication
+Requires session cookie?
+
+### URL
+`GET /url`
 
 
 ### Request Query Parameters

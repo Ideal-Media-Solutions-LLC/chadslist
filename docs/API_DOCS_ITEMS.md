@@ -6,6 +6,12 @@
 |----|----|----|
 |GET|`/items`|Get all items within a designated radius of a designated location|
 
+### Authentication
+As of right now now authentication is needed to get the items.
+
+### URL
+`GET /items`
+
 ### Request Query Parameters
 Parameters to be passed using query parameters
 | Parameter |   Type  | Description | Requirement Type | Default Value |
