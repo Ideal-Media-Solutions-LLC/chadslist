@@ -41,8 +41,8 @@ const startChat = (req, res) => {
       Conversation.create({
         smallerId,
         largerId
-      }).then(() => {
-        res.sendStatus(201);
+      }).then((result) => {
+        return res.json({ conversationId: result.dataValues.id });
       })
       .catch((err) => {
         res.sendStatus(401).json({ message: 'Error'})

@@ -5,14 +5,16 @@ import axios from 'axios';
 
 import {
   GET_MESSAGES,
-  UPDATE_MESSAGES
+  UPDATE_MESSAGES,
+  SET_CONVERSATION
 } from '../types.js';
 
 const API_URL = 'http://localhost:3001/chat'
 
 const ChatState = (props) => {
   const initialState = {
-    savedMessages: []
+    savedMessages: [],
+    conversationId: null
   }
 
   const [state, dispatch] = useReducer(ChatReducer, initialState)
@@ -23,11 +25,19 @@ const ChatState = (props) => {
       receiverId
     })
     .then((result) => {
+      if(typeof result === 'object') {
+        console.log(result)
+        dispatch({
+          type: SET_CONVERSATION,
+          payload: result.data.conversationId
+        })
+      } else {
+        dispatch({
+          type: GET_MESSAGES,
+          payload: result.data
+        })
+      }
 
-      dispatch({
-        type: GET_MESSAGES,
-        payload: result.data
-      })
     })
     .catch((err) => {
       console.log(err)
@@ -53,7 +63,7 @@ const ChatState = (props) => {
   }
 
   return (
-    <ChatContext.Provider value={{ savedMessages: state.savedMessages, getMessages, createMessage }}>
+    <ChatContext.Provider value={{ savedMessages: state.savedMessages, conversationId: state.conversationId, getMessages, createMessage }}>
       {props.children}
     </ChatContext.Provider>
   )
