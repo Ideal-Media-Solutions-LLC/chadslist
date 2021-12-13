@@ -1,22 +1,18 @@
 import { useState, useContext } from 'react';
-import { Container, Col, Form, Button } from 'react-bootstrap';
-import AuthContext from '../context/auth/AuthContext'
+import { Container, Col, Form, Button, Image } from 'react-bootstrap';
+import AuthContext from '../context/auth/AuthContext';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Login = (props) => {
   const [form, setForm] = useState({
     email: '',
-    password: '',
-    password2: '',
+    password: ''
   })
 
   const { loginUser } = useContext(AuthContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    if (form.password !== form.password2) {
-      alert('Passwords are not matching. Try again')
-    }
 
     loginUser(form)
   }
@@ -27,27 +23,28 @@ const Login = (props) => {
   return (
     <>
       <br></br>
-      <Container>
+      <Container className="form-container">
         <Col>
-          <img src="/Chads_List_2.svg" alt="chadslist_logo" width={400}/>
-          <Form onSubmit={handleSubmit}>
+          <Form className="login-form" onSubmit={handleSubmit}>
+            <img className="login-logo" src="/Chads_List_2.svg" alt="chadslist_logo"/>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Email address</Form.Label>
               <Form.Control type="email" placeholder="Enter email" name="email" value={form.email} onChange={handleChange} required/>
-              <Form.Text className="text-muted"> We'll never share your email with anyone else. </Form.Text>
             </Form.Group>
             <Form.Group className="mb-3" controlId="formGroupPassword">
               <Form.Label>Password</Form.Label>
               <Form.Control type="password" placeholder="Password" name="password" value={form.password} onChange={handleChange} required/>
             </Form.Group>
-            <Form.Group className="mb-3" controlId="formGroupPassword">
-              <Form.Label>Repeat Password</Form.Label>
-              <Form.Control type="password" placeholder="Password" name="password2" value={form.password2} onChange={handleChange} required/>
-            </Form.Group>
             <br></br>
             <Form.Group>
-              <Button variant="primary" type="submit">
-                Submit
+              <Button id="login-button-login-form" variant="primary" type="submit">
+                Login
+              </Button>
+            </Form.Group>
+            <Form.Group className="login-signup-redirect">
+              <Form.Label>Don't have an account?</Form.Label>
+              <Button id="signup-button-redirect" variant="primary" href='/SignUp'>
+                Signup
               </Button>
             </Form.Group>
           </Form>
