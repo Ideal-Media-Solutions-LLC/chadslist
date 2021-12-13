@@ -19,6 +19,7 @@ const SignUp = (props) => {
     e.preventDefault();
 
     if (form.password !== form.password2) {
+
       alert('Passwords are not matching. Try again')
     } else {
       registerUser(form)

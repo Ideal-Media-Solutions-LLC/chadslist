@@ -2,7 +2,7 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../db.js');
 const User = require('./User.js');
 
-const Item = sequelize.define('Item', {
+const Item = sequelize.define('item', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -13,7 +13,9 @@ const Item = sequelize.define('Item', {
   // Right now we just will be able to support a single picture. Make a sepparate image table to support multiple pictures?
   imageUrl: DataTypes.STRING,
   // Have the item location be based off the users current signed in location but they can change it if they want to
-  location: DataTypes.INTEGER,
+  longitude: DataTypes.FLOAT,
+  latitude: DataTypes.FLOAT,
+  status: DataTypes.STRING,
   claimed: {
     type: DataTypes.BOOLEAN,
     defaultValue: false
@@ -36,7 +38,7 @@ const Item = sequelize.define('Item', {
 // Setting up associations (Relationships)
 // Each donor (User) can have many donations (Items)
 User.hasMany(Item, {foreignKey: 'donorId'});
-Item.belongsTo(User);
+// Item.belongsTo(User);
 
 
 
