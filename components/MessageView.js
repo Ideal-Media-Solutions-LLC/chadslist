@@ -2,12 +2,13 @@ import { useState, useEffect, useContext } from 'react';
 import { InputGroup, Button, FormControl, Form, Popover, Row } from 'react-bootstrap';
 import axios from 'axios';
 import ChatContext from '../context/chat/ChatContext';
+// import AuthContext from '../context/auth/AuthContext';
 
 import ChatMsg from '@mui-treasury/components/chatMsg/ChatMsg';
 
 const API_URL = 'http://localhost:3001/chat'
 
-const MessageView = ({socket, user1, user2, id }) => {
+const MessageView = ({socket, sender, receiver, id }) => {
   const { savedMessages, createMessage } = useContext(ChatContext);
   const [message, setMessage] = useState('');
   const [messageList, setMessageList] = useState([]);
@@ -21,8 +22,13 @@ const MessageView = ({socket, user1, user2, id }) => {
 
   useEffect(getMessages, [socket]);
 
-  const sender = 11;
-  const receiver = 38;
+  useEffect(() => {
+    if(savedMessages) {
+    setMessageList(savedMessages);
+    }
+  },[savedMessages])
+  // const sender = 11;
+  // const receiver = 55;
 
   const sendMsg = async (e) => {
     console.log('invoked', message);
@@ -30,7 +36,7 @@ const MessageView = ({socket, user1, user2, id }) => {
     if (message !== '') {
       const messageData = {
         fakeConvoId: id,
-        username: user1.username,
+        username: sender.username,
         message: message,
       }
 
@@ -51,7 +57,7 @@ const MessageView = ({socket, user1, user2, id }) => {
   return (
     <div>
       <div>
-        {savedMessages.map((msg) => msg.userId === sender ? <ChatMsg side={'right'} messages={[msg.message]}/> : <ChatMsg messages={[msg.message]}/>)}
+        {messageList && messageList.map((msg) => msg.userId === sender ? <ChatMsg side={'right'} messages={[msg.message]}/> : <ChatMsg messages={[msg.message]}/>)}
       </div>
 
       {/* input bar */}
