@@ -11,6 +11,7 @@ const startChat = (req, res) => {
   const smallerId = senderId > receiverId ? receiverId : senderId
   const largerId = senderId > receiverId ? senderId: receiverId
 
+  let conversationID;
 
   Conversation.findOne({
     where: {
@@ -22,6 +23,7 @@ const startChat = (req, res) => {
   })
   .then((conversation) => {
     if (conversation) {
+      conversationID = conversation.dataValues.id
       Message.findAll({
         where: {
           conversationId: conversation.dataValues.id
@@ -32,17 +34,18 @@ const startChat = (req, res) => {
         ]
       })
       .then((messages) => {
+        console.log(messages)
         const data = messages.map((message) => {
           return message
         })
-        res.json(data)
+        res.send({ conversationId: conversationID, data })
       })
     } else {
       Conversation.create({
         smallerId,
         largerId
-      }).then(() => {
-        res.sendStatus(201);
+      }).then((result) => {
+        return res.json({ conversationId: result.dataValues.id, data: [] });
       })
       .catch((err) => {
         res.sendStatus(401).json({ message: 'Error'})
