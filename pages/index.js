@@ -57,7 +57,6 @@ const HomePage = (props) => {
               <FilterList />
             </Offcanvas>
           </Col>
-
           <Col>
             <Search />
           </Col>
