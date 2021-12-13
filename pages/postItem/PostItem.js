@@ -1,43 +1,26 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Container, Col, Form, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
+import ItemContext from '../../context/item/ItemContext';
 
 const PostItem = (props) => {
+  const { currentLocation, createItem } = useContext(ItemContext);
 
-  const [input, setInput] = useState ({
-    ItemName: '',
-    Category: '',
-    Description: '',
+  const [form, setForm] = useState({
+    itemName: '',
+    category: '',
+    description: '',
     images: []
   })
 
   const handlePost = (e) => {
     e.preventDefault();
-    axios.post('http://localhost:3001/additem', input)
-    .then(() => console.log('item added'))
-    .catch(err => console.log('add item err', err));
+    createItem(form)
   }
 
-  const nameChanger = (e) => {
-    setInput({
-      ...input,
-      ItemName: e.target.value
-    })
-  }
-
-  const DescriptionChanger = (e) => {
-    setInput({
-      ...input,
-      Description: e.target.value
-    })
-  }
-
-  const categoryChanger = (e) => {
-    setInput({
-      ...input,
-      Category: e.target.value
-    })
+  const handleChange = ({ target: { name, value } }) => {
+    setForm({ ...form, [name]: value})
   }
 
   const imageChanger = (e) => {
@@ -45,8 +28,8 @@ const PostItem = (props) => {
 
     let url = URL.createObjectURL(images);
 
-    setInput({
-      ...input,
+    setForm({
+      ...form,
       images: url
     })
   }
@@ -65,11 +48,11 @@ const PostItem = (props) => {
             </Form.Group>
             <Form.Group className="mb-3" controlId="itemName">
               <Form.Label>Item Name:</Form.Label>
-              <Form.Control onChange={nameChanger} type='textarea' />
+              <Form.Control value={form.itemName} name="itemName" onChange={handleChange} type='textarea' />
             </Form.Group>
             <Form.Group className="mb-3" controlId="itemName">
               <Form.Label>Item Category:</Form.Label>
-              <Form.Select onChange={categoryChanger} aria-label="Floating label select example">
+              <Form.Select value={form.category} name="category" onChange={handleChange} aria-label="Floating label select example">
                 <option>Select Item Category</option>
                 <option value="Apparel">Apparel</option>
                 <option value="Electronics">Electronics</option>
@@ -84,7 +67,7 @@ const PostItem = (props) => {
             </Form.Group>
             <Form.Group className="mb-3" controlId="Description">
               <Form.Label>Item Description:</Form.Label>
-              <Form.Control onChange={DescriptionChanger} as='textarea' rows={4} />
+              <Form.Control value={form.description} name="description" onChange={handleChange} as='textarea' rows={4} />
             </Form.Group>
             <br></br>
             <Form.Group>
