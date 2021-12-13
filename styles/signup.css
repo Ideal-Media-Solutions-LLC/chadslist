@@ -1,7 +1,7 @@
-.signup-form {
+.login-form, .signup-form {
   width: 100%;
   max-width: 500px;
-  padding: 5%;
+  padding: 2%;
   height: 100%;
   margin: 5% auto;
   border: solid;
@@ -10,17 +10,65 @@
   background-color: #FEFCFB;
 }
 
-.login-signup-redirect {
+.login-logo {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  margin: auto;
   margin-top: 5%;
-  margin-left: 15%;
 }
 
-.signup-button {
+.login-signup-redirect {
+  margin-top: 7%;
+  margin-left: 15%;
+  margin-bottom: 5%;
+}
+
+#signup-button-signup-form, #signup-button-redirect {
   background-color: #1282A2;
   margin: auto;
 }
 
-.login-button {
+#signup-button-signup-form:hover, #signup-button-redirect:hover {
+  text-decoration: underline;
+}
+
+#login-button-login-form, #login-button-redirect {
   background-color: #001F54;
+  margin: auto;
+}
+
+#login-button-login-form:hover, #login-button-redirect:hover {
+  text-decoration: underline;
+}
+
+#signup-button-redirect, #login-button-redirect {
   margin-left: 5%;
+}
+
+#login-button-login-form:not(:disabled):not(:disabled):active, #login-button-redirect:not(:disabled):not(:disabled):active {
+  background-color: #001F54;
+}
+
+#signup-button-signup-form:not(:disabled):not(:disabled):active, #signup-button-redirect:not(:disabled):not(:disabled):active {
+  background-color: #1282A2;
+}
+
+.default-profile-pic {
+  display: flex;
+  justify-content: center;
+  margin: auto;
+  margin-top: 5%;
+  margin-bottom: 5%;
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+  padding: 5%;
+  text-align: center;
+}
+
+.form-control, .form-select {
+  display: flex;
+  justify-content: center;
+  margin: auto;
 }

@@ -21,6 +21,9 @@ const MessageView = ({socket, user1, user2, id }) => {
 
   useEffect(getMessages, [socket]);
 
+  const sender = 11;
+  const receiver = 38;
+
   const sendMsg = async (e) => {
     console.log('invoked', message);
     e.preventDefault();
@@ -29,14 +32,12 @@ const MessageView = ({socket, user1, user2, id }) => {
         fakeConvoId: id,
         username: user1.username,
         message: message,
-        // time: new Date(Date.now()).getHour() + ':' + new Date(Date.now()).getMinutes()
       }
 
       await socket.emit("send_msg", messageData)
 
-      createMessage(38, 11, message)
+      createMessage(sender, receiver, message)
       setMessageList([...messageList, messageData])
-
 
       //clear out the input box
       setMessage('');
@@ -47,17 +48,11 @@ const MessageView = ({socket, user1, user2, id }) => {
     // .catch(err => console.log(err));
   }
 
-
-   const testMsg = messageList.map((msg) => msg.message);
-
-
   return (
     <div>
-      {/* <div>
-        {messageList.map((msg, index) => <p>{msg.username}:{msg.message}</p>)}
-      </div> */}
-
-      <ChatMsg messages={testMsg} />
+      <div>
+        {savedMessages.map((msg) => msg.userId === sender ? <ChatMsg side={'right'} messages={[msg.message]}/> : <ChatMsg messages={[msg.message]}/>)}
+      </div>
 
       {/* input bar */}
       <div>
