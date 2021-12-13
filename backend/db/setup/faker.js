@@ -125,7 +125,7 @@ const seedConversation = async () => {
     for (let i = 0; i < 30; i++) {
       ny = {};
       // User from 0 to 20
-      ny.smallerId = Math.floor(Math.random() * 20);
+      ny.smallerId = Math.floor(Math.random() * 20) + 1;
       // User from 21 to 39 (So we don't accidently get a use messaging themselves)
       ny.largerId = Math.floor(Math.random() * (39 - 21 + 1) + 21);
       ny.itemId = Math.floor(Math.random() * (40) + 1);
