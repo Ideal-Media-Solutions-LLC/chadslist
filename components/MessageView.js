@@ -22,6 +22,11 @@ const MessageView = ({socket, sender, receiver, id }) => {
 
   useEffect(getMessages, [socket]);
 
+  useEffect(() => {
+    if(savedMessages) {
+    setMessageList(savedMessages);
+    }
+  },[savedMessages])
   // const sender = 11;
   // const receiver = 55;
 
@@ -52,7 +57,7 @@ const MessageView = ({socket, sender, receiver, id }) => {
   return (
     <div>
       <div>
-        {savedMessages.map((msg) => msg.userId === sender ? <ChatMsg side={'right'} messages={[msg.message]}/> : <ChatMsg messages={[msg.message]}/>)}
+        {messageList && messageList.map((msg) => msg.userId === sender ? <ChatMsg side={'right'} messages={[msg.message]}/> : <ChatMsg messages={[msg.message]}/>)}
       </div>
 
       {/* input bar */}
