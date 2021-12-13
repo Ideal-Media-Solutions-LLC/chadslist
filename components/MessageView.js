@@ -1,50 +1,78 @@
-import { useState, useEffect } from 'react';
-import { InputGroup, Button, FormControl, Form } from 'react-bootstrap';
+import { useState, useEffect, useContext } from 'react';
+import { InputGroup, Button, FormControl, Form, Popover, Row } from 'react-bootstrap';
 import axios from 'axios';
-import io from 'socket.io-client';
+import ChatContext from '../context/chat/ChatContext';
 
-const socket = io.connect('http://localhost:3001');
+import ChatMsg from '@mui-treasury/components/chatMsg/ChatMsg';
 
-const MessageView = (props) => {
+const API_URL = 'http://localhost:3001/chat'
 
+const MessageView = ({socket, user1, user2, id }) => {
+  const { savedMessages, createMessage } = useContext(ChatContext);
   const [message, setMessage] = useState('');
-  const [convo, setConvo] = useState([]);
+  const [messageList, setMessageList] = useState([]);
+  // const [savedMessages, setSavedMessages] = useState([]);
 
-  // const getMessages = () => {
-  //   axios.get('http://localhost:3001').then((data) => console.log('message', data.data));
-  // }
+  const getMessages = () => {
+    socket.on('receive_msg', data => {
+      setMessageList([...messageList, data])
+    })
+  }
 
-  const input = (e) => setMessage(e.target.value);
+  useEffect(getMessages, [socket]);
 
-  const sendMsg = (e) => {
+  const sender = 11;
+  const receiver = 38;
+
+  const sendMsg = async (e) => {
     console.log('invoked', message);
     e.preventDefault();
+    if (message !== '') {
+      const messageData = {
+        fakeConvoId: id,
+        username: user1.username,
+        message: message,
+      }
 
-    axios.post('http://localhost:3001/chat', {claimantId: 1, message: message})
-    .then(() => console.log('MSG sent'))
-    .catch(err => console.log(err));
+      await socket.emit("send_msg", messageData)
 
-    e.target.reset();
+      createMessage(sender, receiver, message)
+      setMessageList([...messageList, messageData])
+
+      //clear out the input box
+      setMessage('');
+    }
+
+    // axios.post('http://localhost:3001/chat', {claimantId: 1, message: message})
+    // .then(() => console.log('MSG sent'))
+    // .catch(err => console.log(err));
   }
 
   return (
     <div>
-      Messages
-      <Form
-        style={{position:'absolute', bottom:'20px', width:'70%', left:'15%'}}
-        onSubmit={sendMsg}>
-        <InputGroup className="mb-3">
-          <FormControl
-            onChange={input}
-            placeholder="Messages"
-            aria-label="Messages"
-            aria-describedby="basic-addon2"
-          />
-          <Button type='submit' variant="outline-secondary" id="button-addon2">
-            send
-          </Button>
-        </InputGroup>
-      </Form>
+      <div>
+        {savedMessages.map((msg) => msg.userId === sender ? <ChatMsg side={'right'} messages={[msg.message]}/> : <ChatMsg messages={[msg.message]}/>)}
+      </div>
+
+      {/* input bar */}
+      <div>
+        <Form
+          style={{ position: 'absolute', bottom: '20px', width: '70%', left: '15%' }}
+          onSubmit={sendMsg}>
+          <InputGroup className="mb-3">
+            <FormControl
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              placeholder="Messages"
+              aria-label="Messages"
+              aria-describedby="basic-addon2"
+            />
+            <Button type='submit' variant="outline-secondary" id="button-addon2">
+              send
+            </Button>
+          </InputGroup>
+        </Form>
+      </div>
     </div>
   )
 }

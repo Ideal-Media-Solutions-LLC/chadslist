@@ -10,7 +10,7 @@ const User = sequelize.define('user', {
     userName: DataTypes.STRING,
     email: DataTypes.STRING,
     photoUrl: DataTypes.STRING,
-    status: DataTypes.STRING,
+    accType: DataTypes.STRING,
     // Maybe have a user location (Like they most recently signed in from)
     longitude: DataTypes.FLOAT,
     latitude: DataTypes.FLOAT,

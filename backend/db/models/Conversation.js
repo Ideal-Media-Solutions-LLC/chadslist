@@ -1,44 +1,47 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../db.js');
 const User = require('./User.js');
+const Item = require('./Item.js');
 
 const Conversation = sequelize.define('conversation', {
-    id: {
-      primaryKey: true,
-      type: DataTypes.INTEGER,
-      autoIncrement: true
-    },
-    donorId: {
-      type: DataTypes.INTEGER
-    },
-    claimantId: {
-      type: DataTypes.INTEGER
-    }
+  id: {
+    primaryKey: true,
+    type: DataTypes.INTEGER,
+    autoIncrement: true
+  },
+  smallerId: {
+    type: DataTypes.INTEGER
+  },
+  largerId: {
+    type: DataTypes.INTEGER
+  },
+  itemId: {
+    type: DataTypes.INTEGER
+  }
   },
   {
-    indexes: [
-      {
-        name: 'conversationDonorIdIndex',
-        using: 'HASH',
-        fields: ['donorId']
-      },
-      {
-        name: 'conversationClaimantIdIndex',
-        using: 'HASH',
-        fields: ['claimantId']
-      }
-    ]
+  indexes: [
+    {
+      name: 'smallerIdIndex',
+      using: 'HASH',
+      fields: ['smallerId']
+    },
+    {
+      name: 'largerIdIndex',
+      using: 'HASH',
+      fields: ['largerId']
+    }
+  ]
   }
 );
 
 
 
-User.hasMany(Conversation, {foreignKey: 'donorId'})
-// Conversation.belongsTo(User)
+User.hasMany(Conversation, {foreignKey: 'smallerId'})
+User.hasMany(Conversation, {foreignKey: 'largerId'})
 
-User.hasMany(Conversation, {foreignKey: 'claimantId'})
-// Conversation.belongsTo(User)
+Conversation.belongsTo(User)
 
-
+Item.hasMany(Conversation)
 
 module.exports = Conversation;

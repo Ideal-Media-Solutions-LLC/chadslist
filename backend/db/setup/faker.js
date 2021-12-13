@@ -15,7 +15,6 @@ const seedUser = async () => {
     let users = [];
     for (let i = 0; i < 100; i++) {
       users[i] = {};
-      users[i].id = i;
       users[i].userName = faker.internet.userName();
       users[i].email = faker.internet.email();
       users[i].photoUrl = faker.image.people();
@@ -87,7 +86,6 @@ const seedItem = async () => {
   try {
     for (var i = 0; i < 100; i++) {
       items[i] = {};
-      items[i].id = i;
       items[i].name = faker.commerce.productName();
       items[i].description = faker.commerce.productDescription();
       items[i].imageUrl = faker.image.fashion();
@@ -126,36 +124,33 @@ const seedConversation = async () => {
     let conversations = [];
     for (let i = 0; i < 30; i++) {
       ny = {};
-      ny.id = i;
       console.log('ny', ny.id)
       // User from 0 to 20
-      ny.donorId = Math.floor(Math.random() * 20);
+      ny.smallerId = Math.floor(Math.random() * 20);
       // User from 21 to 39 (So we don't accidently get a use messaging themselves)
-      ny.claimantId = Math.floor(Math.random() * (39 - 21 + 1) + 21);
+      ny.largerId = Math.floor(Math.random() * (39 - 21 + 1) + 21);
       conversations.push(ny);
     }
     // await Conversation.bulkCreate(newYork);
     // let sf = [];
     for (let i = 0; i < 30; i++) {
       sf = {};
-      sf.id = i + 30;
       console.log('sf', sf.id)
       // User from 0 to 20
-      sf.donorId = Math.floor(Math.random() * (55 - 40 + 1) + 40);
+      sf.smallerId = Math.floor(Math.random() * (55 - 40 + 1) + 40);
       // User from 21 to 39 (So we don't accidently get a use messaging themselves)
-      sf.claimantId = Math.floor(Math.random() * (60 - 56 + 1) + 56);
+      sf.largerId = Math.floor(Math.random() * (60 - 56 + 1) + 56);
       conversations.push(sf);
     }
     // await Conversation.bulkCreate(sf);
     let seattle = [];
     for (let i = 0; i < 30; i++) {
       seattle = {};
-      seattle.id = i + 60;
       console.log('seattle', seattle.id)
       // User from 0 to 20
-      seattle.donorId = Math.floor(Math.random() * (85 - 70 + 1) + 70);
+      seattle.smallerId = Math.floor(Math.random() * (85 - 70 + 1) + 70);
       // User from 21 to 39 (So we don't accidently get a use messaging themselves)
-      seattle.claimantId = Math.floor(Math.random() * (99 - 86 + 1) + 86);
+      seattle.largerId = Math.floor(Math.random() * (99 - 86 + 1) + 86);
       conversations.push(seattle);
     }
     // await Conversation.bulkCreate(seattle);
@@ -167,12 +162,12 @@ const seedConversation = async () => {
 
 const seedMessage = async () => {
   let messages = [];
-  for (let i = 0; i < 90; i++) {
+  for (let i = 1; i < 91; i++) {
     let conversation = await Conversation.findByPk(i);
     // A random number from 1 to 20 that will determine how many messages this conversation has
     let messageCount = Math.floor(Math.random() * (20 - 1) + 1);
     // Variables that will allow us to toggle between donor and claimant for each message
-    let sender = {true: 'donorId', false: 'claimantId'}
+    let sender = {true: 'smallerId', false: 'largerId'}
     let toggle = false
     for (let j = 0; j < messageCount; j++) {
       let message = {
@@ -198,7 +193,6 @@ const seedClaim = async () => {
     for (var i = 0; i < 100; i++) {
       if (items[i].status !== 'unclaimed') {
         claims[index] = {};
-        claims[index].id = index;
         claims[index].itemId = i;
         claims[index].status = items[i].status;
 
