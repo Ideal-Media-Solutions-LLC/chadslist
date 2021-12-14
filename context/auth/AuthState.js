@@ -20,6 +20,10 @@ const AuthState = (props) => {
   const [state, dispatch] = useReducer(AuthReducer, initialState)
   const router = useRouter();
 
+  useEffect(() => {
+    autoLogin();
+  }, [])
+
   const registerUser = async (form) => {
     console.log(form)
       const { userName, email, password, photoUrl, accType } = form
@@ -54,7 +58,7 @@ const AuthState = (props) => {
       password
     })
     .then((result) => {
-
+      localStorage.setItem('token', result.data.accessToken)
       dispatch({
         type: LOGIN_USER,
         payload: result.data
@@ -74,6 +78,23 @@ const AuthState = (props) => {
     })
   }
 
+  const autoLogin = () => {
+    const token = localStorage.getItem('token');
+    axios.get(`${apiURL}/auth/verify`, {
+      headers: {
+        'x-auth-token': token
+      }
+    })
+    .then((result) => {
+      dispatch({
+        type: LOGIN_USER,
+        payload: result.data
+      })
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  }
 
 
   return (
