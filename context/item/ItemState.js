@@ -29,14 +29,24 @@ const ItemState = (props) => {
 
     axios.get(`${API_URL}/?radius=10&latitude=${lat}&longitude=${lng}`)
     .then((result) => {
-      const newObj = {
-        data: result.data,
+      const newData = result.data.map((result) => {
+        return result[1]
+      })
+
+      const obj = {
+        data: newData,
         lat: lat,
         lng: lng
       }
+
+      // const newObj = {
+      //   data: result.data,
+      //   lat: lat,
+      //   lng: lng
+      // }
       dispatch({
         type: SET_ITEM_LIST,
-        payload: newObj
+        payload: obj
       })
     })
     .catch((err) => {
