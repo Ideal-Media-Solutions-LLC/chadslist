@@ -5,8 +5,6 @@ import { useState, useContext } from 'react';
 import ItemContext from '../context/item/ItemContext';
 
 const Filter = ({filter, handleFilter}) => {
-  const { itemList } = useContext(ItemContext);
-
 
   return (
     <>
