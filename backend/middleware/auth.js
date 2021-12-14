@@ -18,7 +18,6 @@ const verifyUser = (req, res, next) => {
       return res.sendStatus(403)
     } else {
       // set request user to equal user returned from callback
-      console.log(user)
       req.user = user
       //move on from middleware
       next();
