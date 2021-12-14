@@ -60,7 +60,6 @@ const login = async (req, res) => {
     }
 
   } else {
-    debugger;
     res.status(401).send({ message: `Error logging in` });
   }
   // if correct, send access token back to client
