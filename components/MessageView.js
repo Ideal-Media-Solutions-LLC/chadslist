@@ -27,8 +27,6 @@ const MessageView = ({socket, sender, receiver, id }) => {
     setMessageList(savedMessages);
     }
   },[savedMessages])
-  // const sender = 11;
-  // const receiver = 55;
 
   const sendMsg = async (e) => {
     console.log('invoked', message);
@@ -45,13 +43,8 @@ const MessageView = ({socket, sender, receiver, id }) => {
       createMessage(sender, receiver, message)
       setMessageList([...messageList, messageData])
 
-      //clear out the input box
       setMessage('');
     }
-
-    // axios.post('http://localhost:3001/chat', {claimantId: 1, message: message})
-    // .then(() => console.log('MSG sent'))
-    // .catch(err => console.log(err));
   }
 
   return (
