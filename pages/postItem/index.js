@@ -1,12 +1,13 @@
 import { useState, useContext } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router'
 import { Container, Col, Form, Button, Image, Modal } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import ItemContext from '../../context/item/ItemContext';
 
 const PostItem = (props) => {
-  const { currentLocation, createItem } = useContext(ItemContext);
+  const { currentLocation, createItem, isPosted } = useContext(ItemContext);
 
   const [form, setForm] = useState({
     itemName: '',
@@ -15,13 +16,15 @@ const PostItem = (props) => {
     images: []
   })
 
+  const router = useRouter();
   const [show, setShow] = useState(false);
   const openModal = () => setShow(true);
   const closeModal = () => setShow(false);
 
   const handlePost = async (e) => {
     e.preventDefault();
-    await createItem(form);
+    await createItem(form, openModal);
+
   }
 
   const handleChange = ({ target: { name, value } }) => {
@@ -90,7 +93,7 @@ const PostItem = (props) => {
             </Form.Group>
             <br></br>
             <Form.Group>
-              <Button onClick={openModal} variant="outline-primary" type="submit">
+              <Button variant="outline-primary" type="submit">
                 Post
               </Button>
               <Button variant="outline-primary"><Link href='/'><a>back</a></Link></Button>
