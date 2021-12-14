@@ -15,9 +15,6 @@ const getItemsInRadius = async (req, res) => {
     let maxLong = searchLongitude + radiusInDegrees;
     let minLong = searchLongitude - radiusInDegrees;
     let allCategory =['Apparel', 'Electronics', 'Entertainment','Garden and Outdoor', 'Hobbies', 'Home Goods','Musical Instruments', 'Office Supplies','Pet Supplies', 'Sporting Goods']
-    let searchCategory = req.query.category || allCategory;
-
-    let allCategory =['Apparel', 'Electronics', 'Entertainment','Garden and Outdoor', 'Hobbies', 'Home Goods','Musical Instruments', 'Office Supplies','Pet Supplies', 'Sporting Goods']
 
     let searchCategory = req.query.category || allCategory;
     let items = await Item.findAll({

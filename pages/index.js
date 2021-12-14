@@ -17,9 +17,11 @@ import ItemContext from '../context/item/ItemContext'
 const HomePage = (props) => {
   const [view, setView] = useState('list');
   const [showFilter, setFilter] = useState(false);
-  const { getItemsInRadius } = useContext(ItemContext)
+  const { getItemsInRadius, itemList } = useContext(ItemContext)
   const SF_LOCATION = { lat: 37.962882809573145, lng: -122.57822275079111}
   const [currentLocation, setCurrentLocation] = useState(SF_LOCATION)
+  const [filterItems, setFilterItems] = useState(itemList)
+
 
   const ChangeView = (input) => {
     setView(input);
@@ -28,6 +30,10 @@ const HomePage = (props) => {
   const handleClick = () => setFilter(!showFilter)
   const closeFilter = () => setFilter(false)
 
+  const handleFilter = (category) => {
+    let results = itemList.filter(item => item.category === category )
+    setFilterItems(results)
+  }
 
   const getLocationFromAddress = (address) => {
     address = address || 'New York City'; //TODO: Remove default in Production
@@ -73,7 +79,7 @@ const HomePage = (props) => {
               <Button onClick={handleClick}>filter</Button>
               <Offcanvas show={showFilter} onHide={closeFilter} >
                 <Offcanvas.Header closeButton></Offcanvas.Header>
-                <FilterList />
+                <FilterList handleFilter={handleFilter}/>
               </Offcanvas>
             </Col>
 
