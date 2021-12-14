@@ -10,7 +10,8 @@ export default(state, action) => {
       return {
         ...state,
         savedMessages: action.payload.data,
-        conversationId: action.payload.conversationId
+        conversationId: action.payload.conversationId,
+        loading: false
       }
     case UPDATE_MESSAGES:
       return {

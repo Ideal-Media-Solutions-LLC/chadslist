@@ -9,7 +9,7 @@ import ChatMsg from '@mui-treasury/components/chatMsg/ChatMsg';
 const API_URL = 'http://localhost:3001/chat'
 
 const MessageView = ({socket, sender, receiver, id }) => {
-  const { savedMessages, createMessage } = useContext(ChatContext);
+  const { loading, savedMessages, createMessage } = useContext(ChatContext);
   const [message, setMessage] = useState('');
   const [messageList, setMessageList] = useState([]);
   // const [savedMessages, setSavedMessages] = useState([]);
@@ -28,7 +28,7 @@ const MessageView = ({socket, sender, receiver, id }) => {
     if(savedMessages) {
     setMessageList(savedMessages);
     }
-  },[])
+  },[savedMessages])
 
   const sendMsg = async (e) => {
     console.log('invoked', message);
@@ -49,7 +49,7 @@ const MessageView = ({socket, sender, receiver, id }) => {
     }
   }
 
-  if (!messageList) {
+  if (loading) {
     return <p>...Loading</p>
   } else {
   return (
