@@ -44,6 +44,26 @@ const getItemsInRadius = async (req, res) => {
 
 const createItem = (req, res) => {
   console.log(req.body)
+  const { donorId, itemName, category, description, images, coordinates } = req.body;
+
+  Item.create({
+    donorId,
+    category,
+    name: itemName,
+    description,
+    imageUrl: images,
+    longitude: coordinates.lng,
+    latitude: coordinates.lat,
+    status: 'unclaimed'
+  })
+  .then((result) => {
+    console.log(result.dataValues)
+    res.status(201).json(result.dataValues)
+  })
+  .catch((err) => {
+    res.status(401).json({ message: 'Item could not be created' })
+  })
+
 }
 
 module.exports = {
