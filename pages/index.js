@@ -12,12 +12,12 @@ import { RiLayoutGridFill } from "react-icons/ri";
 import {LoadScript} from '@react-google-maps/api';
 import { getItemsInRadius } from '../context/item/ItemContext';
 import ItemContext from '../context/item/ItemContext'
-
+import PageSelector from '../components/PageSelector.js';
 
 const HomePage = (props) => {
   const [view, setView] = useState('list');
   const [showFilter, setFilter] = useState(false);
-  const { getItemsInRadius } = useContext(ItemContext)
+  const { getItemsInRadius, itemList } = useContext(ItemContext)
   const SF_LOCATION = { lat: 37.962882809573145, lng: -122.57822275079111}
   const [currentLocation, setCurrentLocation] = useState(SF_LOCATION)
 
@@ -63,6 +63,21 @@ const HomePage = (props) => {
     })
   }, [])
 
+  // ~~~~~~~~~~~~~~~~ Pagination ~~~~~~~~~~~~~~~~~~~~~~
+
+  // current page of posts being viewed, default 1
+  const [page, setPage] = useState(1);
+
+  // how many items per page being viewed, default 8
+  const [itemsPerPage, setItemsPerPage] = useState(8);
+
+  // formula for determining which items should be viewable based on current page and number of itemsPerPage
+  const viewableItems = itemList.slice((page * itemsPerPage) - itemsPerPage, page * itemsPerPage);
+
+  const changePage = number => setPage(number);
+
+  // ~~~~~~~~~~~~~~~ Pagination End ~~~~~~~~~~~~~~~~~~~~
+
 
   return (
     <div>
@@ -89,7 +104,8 @@ const HomePage = (props) => {
           </Row>
           <Col>
             {view === 'map' && <MapView />}
-            {view === 'list' && <ListView />}
+            <ListView viewableItems={viewableItems}/>
+            <PageSelector itemsPerPage={itemsPerPage} itemsTotal={itemList.length} changePage={changePage}/>
           </Col>
         </Container>
       </LoadScript>
