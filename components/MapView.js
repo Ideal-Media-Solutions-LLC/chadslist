@@ -5,21 +5,21 @@ import ItemView from './ItemView.js'
 
 //TODO: Remove after real/formatted data is provided
 //SampleTest data for showing markers
-const items = [
-  {
-    name: 'Space Needle',
-    img: 'https://cdn.pixabay.com/photo/2016/11/23/01/18/red-panda-1851661_1280.jpg',
-    coordinates: { lat: 47.6205, lng: -122.3493 },
-  },
-  {
-    name: "Cal Anderson Park",
-    img: 'https://cdn.pixabay.com/photo/2016/11/23/01/15/red-panda-1851650_1280.jpg',
-    coordinates: { lat: 47.6173, lng: -122.3195 },
-  },
-]
+// const items = [
+//   {
+//     name: 'Space Needle',
+//     img: 'https://cdn.pixabay.com/photo/2016/11/23/01/18/red-panda-1851661_1280.jpg',
+//     coordinates: { lat: 47.6205, lng: -122.3493 },
+//   },
+//   {
+//     name: "Cal Anderson Park",
+//     img: 'https://cdn.pixabay.com/photo/2016/11/23/01/15/red-panda-1851650_1280.jpg',
+//     coordinates: { lat: 47.6173, lng: -122.3195 },
+//   },
+// ]
 
 
-function MapView(props) {
+function MapView({viewableItems, currentLocation}) {
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [isSelected, setIsSelected] = useState(false);
   const [markers, setMarkers] = useState({})
@@ -28,7 +28,7 @@ function MapView(props) {
   const closeItem = () => setIsSelected(false);
 
   const mapContainerStyle = {
-    width: '400px',
+    width: '85%',
     height: '400px'
   };
 
@@ -38,38 +38,26 @@ function MapView(props) {
     height: '10vh',
   }
 
-  const center = { //TODO: to be set as User Searched center
-    lat: 47.6253,
-    lng: -122.3222
-  };
-
   const onLoad = (newMarker, index) => {
     let newMarkers = markers
     newMarkers[index] = newMarker
     setMarkers(newMarkers)
-    console.log('markers LIST: ', markers)
   }
 
   const handleMouseDown = (index) => {
-    markers[index].setLabel({
-      color: 'black',
-      text: (index + 1).toString()
-    })
+    markers[index].setLabel({color: 'black', text: (index + 1).toString()})
   }
 
   const handleMouseUp = (index, item) => {
     setSelectedMarker(item)
-    markers[index].setLabel({
-      color: 'white',
-      text: (index + 1).toString()
-    })
+    markers[index].setLabel({color: 'white', text: (index + 1).toString()})
   }
 
   return (
     <>
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
-        center={center}
+        center={currentLocation}
         zoom={13}
         options={{
           disableDefaultUI: true,
@@ -80,12 +68,12 @@ function MapView(props) {
       >
         { /* Child components, such as markers, info windows, etc. */ }
 
-        {items.map( (item, index) => {
+        {viewableItems.map( (item, index) => {
           return (
             <Marker
               key={index}
               onLoad={(marker) => onLoad(marker, index)}
-              position={item.coordinates}
+              position={{lat: item.latitude, lng: item.longitude}}
               label= {{
                 color: 'white',
                 'fontSize': '14px',
@@ -101,12 +89,12 @@ function MapView(props) {
         {selectedMarker ? (
           <InfoWindow
             options={{pixelOffset: new window.google.maps.Size(0, -45)}}
-            position={{lat: selectedMarker.coordinates.lat, lng: selectedMarker.coordinates.lng}}
+            position={{lat: selectedMarker.latitude, lng: selectedMarker.longitude}}
 
           >
 
             <div style={infoWindowStyle} onClick={() => setIsSelected(true)} >
-              <img style={{width: '100%', height: '100'}} src={selectedMarker.img} />
+              <img style={{width: '100%', height: '100'}} src={selectedMarker.imageURL} />
               <div style={{'fontSize': 'x-small'}}>{selectedMarker.name} </div>
             </div>
 

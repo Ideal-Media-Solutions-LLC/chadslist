@@ -103,7 +103,7 @@ const HomePage = (props) => {
             </Col>
           </Row>
           <Col>
-            {view === 'map' && <MapView />}
+            {view === 'map' && <MapView viewableItems={viewableItems} currentLocation={currentLocation}/>}
             <ListView viewableItems={viewableItems}/>
             <PageSelector itemsPerPage={itemsPerPage} itemsTotal={itemList.length} changePage={changePage}/>
           </Col>
