@@ -94,7 +94,7 @@ function MapView({viewableItems, currentLocation}) {
           >
 
             <div style={infoWindowStyle} onClick={() => setIsSelected(true)} >
-              <img style={{width: '100%', height: '100'}} src={selectedMarker.imageURL} />
+              <img style={{width: '100%', height: '100'}} src={selectedMarker.imageUrl} />
               <div style={{'fontSize': 'x-small'}}>{selectedMarker.name} </div>
             </div>
 
@@ -105,7 +105,7 @@ function MapView({viewableItems, currentLocation}) {
 
    <Modal centered show={isSelected} size='md' onHide={() => setIsSelected(false)}>
      <Modal.Header closeButton></Modal.Header>
-     <ItemView />
+     <ItemView data={selectedMarker}/>
    </Modal>
    </>
   )
