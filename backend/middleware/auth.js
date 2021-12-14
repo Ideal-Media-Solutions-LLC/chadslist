@@ -1,10 +1,11 @@
 const jwt = require('jsonwebtoken');
 
-const authenticateToken = (req, res, next) => {
-  const authHeader = req.headers['authorization'];
+const verifyUser = (req, res, next) => {
+  console.log(req.headers['x-auth-token'])
+  const token = req.headers['x-auth-token'];
   //split because header returns as Authorization: Bearer TOKEN
   //check if auth header exists, if not return undefined
-  const token = authHeader && authHeader.split(' ')[1];
+  // const token = authHeader && authHeader.split(' ')[1];
 
   // if no token is given
   if(token == null) {
