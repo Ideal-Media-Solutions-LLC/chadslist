@@ -4,6 +4,7 @@ import ItemState from '../context/item/ItemState';
 import { useState } from 'react';
 import { Button, Offcanvas, Container, Col, Row } from 'react-bootstrap';
 import NaviBar from '../components/NaviBar.js';
+import Link from 'next/link';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/signup.css';
 import '../styles/mapView.css'
@@ -24,8 +25,8 @@ function MyApp({ Component, pageProps }) {
             <img src='/Chads_list_2.svg' width='640' height='100' />
           </Col>
           <Col>
-            <Button href='/SignUp' >SignUp</Button>
-            <Button href='/Login' >Login</Button>
+            <Button variant="outline-primary"><Link href='/SignUp'><a>Register</a></Link></Button>
+            <Button variant="outline-primary"><Link href='/Login'><a>Login</a></Link></Button>
           </Col>
           <Col>
             <img onClick={naviShow} src='https://i0.wp.com/css-tricks.com/wp-content/uploads/2012/10/threelines.png' width='70' height='50' />
