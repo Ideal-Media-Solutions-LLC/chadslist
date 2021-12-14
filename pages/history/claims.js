@@ -1,14 +1,9 @@
-import { Button, InputGroup, FormControl, Offcanvas, Nav, Navbar } from 'react-bootstrap';
+import { Button, Offcanvas, Nav, Navbar } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { FaSearch} from "react-icons/fa";
-import {useState} from 'react';
+import { useState } from 'react';
+import HistoryList from '../../components/HistoryList.js';
 
 const Claims = (props) => {
-  let [searching, setSearching] = useState('');
-
-  const handleSearch = (e) =>{
-    setSearching(e.target.value)
-  }
 
   return (
     <>
@@ -29,17 +24,7 @@ const Claims = (props) => {
           </Nav>
         </Navbar.Collapse>
       </Navbar>
-      <InputGroup>
-        <FormControl
-          placeholder="Search my claims..."
-          value={searching}
-          onChange={handleSearch}
-        />
-        <Button variant="outline-secondary">
-          <FaSearch />
-        </Button>
-      </InputGroup>
-      <div>List of Claims Here</div>
+      <HistoryList histType='claims'/>
     </>
   )
 }

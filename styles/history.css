@@ -1,0 +1,20 @@
+#hist-search {
+  padding-top: 5vh;
+}
+
+.hist-list-item {
+  display: flex;
+  flex-direction: row;
+  padding: 5vh 0 5vh 0;
+}
+
+.hist-list-item-img {
+  width: 20%;
+}
+
+.hist-list-item-info {
+  display: flex;
+  flex-direction: column;
+  padding-left: 5vh;
+  width: max-content;
+}

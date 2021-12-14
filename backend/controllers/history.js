@@ -1,6 +1,7 @@
 const Claim = require('../db/models/Claim.js');
 const Item = require('../db/models/Item.js');
 const User = require('../db/models/User.js');
+const Receipt = require('../db/models/Receipt.js');
 
 const getDonateHis = async (req, res) => {
   const donorId = req.query.userId;
@@ -52,8 +53,36 @@ const getClaimHis = async (req, res) => {
     res.status(500).json(err);
   })
 }
+const getReceiptHis = async (req, res) => {
+  const donorId = req.query.donorId;
+  await Receipt.findAll({
+    where: {
+      donorId
+    }
+   })
+   .then((data) => {
+     res.status(200).send(data);
+   })
+   .catch((err) => {
+     console.log(err);
+     res.status(500).end();
+   });
+};
+const postReceiptHis = async (req, res) => {
+  const { claimId, donorId, condition, value } = req.body;
+  await Receipt.create({ claimId, donorId, condition, value })
+  .then(() => {
+    res.status(201).end();
+  })
+  .catch((err) => {
+    console.log(err);
+    res.status(500).end();
+  });
+};
 
 module.exports = {
   getDonateHis,
-  getClaimHis
+  getClaimHis,
+  getReceiptHis,
+  postReceiptHis
 };

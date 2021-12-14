@@ -21,6 +21,7 @@ app.use(express.json());
 app.use('/auth', authRoutes);
 app.use('/chat', chatRoutes);
 app.use('/claim', claimRoutes);
+app.use('/history', historyRoutes);
 app.post('/additem', addItemRoutes);
 app.use('/items', itemRoutes);
 app.get('/history/*', historyRoutes);
