@@ -57,7 +57,6 @@ const createItem = (req, res) => {
     status: 'unclaimed'
   })
   .then((result) => {
-    console.log(result.dataValues)
     res.status(201).json(result.dataValues)
   })
   .catch((err) => {
