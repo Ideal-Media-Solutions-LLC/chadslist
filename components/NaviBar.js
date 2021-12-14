@@ -14,6 +14,7 @@ const NaviBar = (props) => {
         <Nav.Link ><Link href='/'><a>Home</a></Link></Nav.Link>
         <Nav.Link ><Link href="/history/donations"><a>My Donations</a></Link></Nav.Link>
         <Nav.Link ><Link href="/history/claims"><a>My Claims</a></Link></Nav.Link>
+        {!user ? null : <Nav.Link ><Link href="/chat"><a>View Messages</a></Link></Nav.Link> }
         <Nav.Link ><Link href="/postItem"><a>Post an item</a></Link></Nav.Link>
         { user ?
         <Nav.Link onClick={logoutUser}>
