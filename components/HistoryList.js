@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
-import { Card, Container, Row, Col, Modal, Button, InputGroup, FormControl } from 'react-bootstrap';
+import { Card, Container, Row, Col, Modal, Button, CloseButton, InputGroup, FormControl } from 'react-bootstrap';
 import axios from 'axios';
 import { FaSearch } from "react-icons/fa";
 import moment from 'moment';
+import ItemView from './ItemView.js';
+import ItemModal from './ItemModal.js';
 
 const getHistory = (userId, histType) => {
   let urlStr;
@@ -20,14 +22,22 @@ const getHistory = (userId, histType) => {
 }
 
 const HistListEntry = ( {item} ) => {
+  const [showModal, setShowModal] = useState(false);
+
+  const handleClick = () => {
+    setShowModal(!showModal);
+  }
+
+  // console.log('current modal status', showModal);
   return (
     <div className='hist-list-item' id={item.id}>
       <img src={item.imageUrl} className='hist-list-item-img'/>
       <div className='hist-list-item-info'>
-        <div>{item.name}</div>
+        <div onClick={handleClick}>{item.name}</div>
         <div>{(item.status).charAt(0).toUpperCase() + (item.status).slice(1)}</div>
         <div>{moment(item.createdAt).format("MM/DD/YYYY")}</div>
       </div>
+      {!showModal ? null : <ItemModal data={item} onHistClick={handleClick.bind(this)} page='history'/>}
     </div>
   )
 }
