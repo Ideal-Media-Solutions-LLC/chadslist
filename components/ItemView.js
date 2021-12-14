@@ -49,12 +49,14 @@ const ItemView = ({ data, currentPage }) => {
           {
             page === 'main' &&
             <Button variant={isClaim? "secondary":"primary"} onClick={handleClaimClick}>{isClaim? "Unclaim":"Claim"}</Button>}
-
-          <Button onClick={() => {
-            showMessage();
-            joinRoom();
-            getMessages(user.id, donorId);
-            }} variant="primary">Message</Button>
+          {
+            page === 'main' &&
+            <Button onClick={() => {
+              showMessage();
+              joinRoom();
+              getMessages(user.id, donorId);
+              }} variant="primary">Message</Button>
+          }
           <Card.Text>
             {description}
           </Card.Text>
