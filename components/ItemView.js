@@ -8,7 +8,8 @@ import AuthContext from '../context/auth/AuthContext';
 import io from "socket.io-client";
 const socket = io.connect("http://localhost:3200");
 
-const ItemView = (props) => {
+const ItemView = ({ data }) => {
+  const { name, imageUrl, category, description, status, donorId } = data;
   const { getMessages, conversationId } = useContext(ChatContext);
   const { user } = useContext(AuthContext);
   const [Message, setMessage] = useState (false);
@@ -40,8 +41,6 @@ const ItemView = (props) => {
 
     // const fakeConvoId = 99;
 
-
-
     const joinRoom = () => {
       socket.emit("join_chat", conversationId)
     }
@@ -50,9 +49,9 @@ const ItemView = (props) => {
   return (
     <>
       <Card style={{ width: '24.9rem' }}>
-        <Card.Img variant="top" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Gull_portrait_ca_usa.jpg/1280px-Gull_portrait_ca_usa.jpg" />
+        <Card.Img variant="top" src={imageUrl} />
         <Card.Body>
-          <Card.Title>Item Name</Card.Title>
+          <Card.Title>{name}</Card.Title>
           <Card.Text>Value</Card.Text>
           <Card.Text>Location</Card.Text>
           <Button variant={isClaim? "secondary":"primary"} onClick={handleClaimClick}>{isClaim? "Unclaim":"Claim"}</Button>
@@ -62,7 +61,7 @@ const ItemView = (props) => {
             getMessages(11, 99);
             }} variant="primary">Message</Button>
           <Card.Text>
-            Item's Detail
+            {description}
           </Card.Text>
         </Card.Body>
       </Card>

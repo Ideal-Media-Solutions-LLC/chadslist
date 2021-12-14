@@ -2,6 +2,7 @@ import { Button, InputGroup, FormControl, Offcanvas, Nav, Navbar } from 'react-b
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { FaSearch} from "react-icons/fa";
 import {useState} from 'react';
+import HistoryList from '../../components/HistoryList.js';
 
 const Donations = (props) => {
   let [searching, setSearching] = useState('');
@@ -40,7 +41,7 @@ const Donations = (props) => {
           <FaSearch />
         </Button>
       </InputGroup>
-      <div>List of Donations Here</div>
+      <HistoryList histType='donations' searchTerm={searching}/>
     </>
   )
 }

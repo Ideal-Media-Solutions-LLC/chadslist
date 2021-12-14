@@ -46,12 +46,15 @@ const ItemState = (props) => {
 
   const createItem = (form) => {
     const { itemName, category, description, images } = form
-    console.log(state.currentLocation.lat, state.currentLocation.lng, 'here!')
+
     const coordinates = {
       lat: state.currentLocation.lat,
       lng: state.currentLocation.lng
     }
+
+    console.log(user.id)
     axios.post(API_URL, {
+      donorId: user.id,
       itemName,
       category,
       description,
