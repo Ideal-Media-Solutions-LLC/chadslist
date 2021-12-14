@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import { GoogleMap, LoadScript, Marker, InfoWindow} from '@react-google-maps/api';
+import { GoogleMap, Marker, InfoWindow} from '@react-google-maps/api';
 import {Card, Container, Row, Col, Modal} from 'react-bootstrap';
 import ItemView from './ItemView.js'
 
@@ -48,7 +48,7 @@ function MapView(props) {
 
   return (
     <>
-    <LoadScript googleMapsApiKey={process.env.mapAPI} >
+    {/* <LoadScript googleMapsApiKey={process.env.mapAPI} > */}
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
         center={center}
@@ -90,7 +90,7 @@ function MapView(props) {
         ) : null}
 
       </GoogleMap>
-   </LoadScript>
+    {/* </LoadScript> */}
 
    <Modal centered show={isSelected} size='md' onHide={() => setIsSelected(false)}>
      <Modal.Header closeButton></Modal.Header>

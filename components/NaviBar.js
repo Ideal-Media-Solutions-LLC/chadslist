@@ -11,24 +11,20 @@ const NaviBar = (props) => {
   return (
     <div>
       <Nav defaultActiveKey="/" className="flex-column">
-        <Nav.Link href="/">Home</Nav.Link>
-        <Nav.Link href="/history/donations">
-          My Donations
-        </Nav.Link>
-        <Nav.Link href="/history/claims">My Claims</Nav.Link>
-        <Link href="/postItem">
-          Post an Item
-        </Link>
+        <Nav.Link ><Link href='/'><a>Home</a></Link></Nav.Link>
+        <Nav.Link ><Link href="/history/donations"><a>My Donations</a></Link></Nav.Link>
+        <Nav.Link ><Link href="/history/claims"><a>My Claims</a></Link></Nav.Link>
+        <Nav.Link ><Link href="/postItem/PostItem"><a>Post an item</a></Link></Nav.Link>
         { user ?
         <Nav.Link onClick={logoutUser}>
           LogOut
         </Nav.Link> :
         <>
-        <Nav.Link href="/Login" >
-          Log In
+        <Nav.Link >
+        <Link href='/Login'><a>Login</a></Link>
         </Nav.Link>
-        <Nav.Link href="/SignUp" >
-          Register
+        <Nav.Link >
+        <Link href='/SignUp'><a>Register</a></Link>
         </Nav.Link>
         </>
         }
