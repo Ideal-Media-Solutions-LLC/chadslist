@@ -40,7 +40,7 @@ const ItemView = (props) => {
 
     // const fakeConvoId = 99;
 
-
+  console.log(props.category)
 
     const joinRoom = () => {
       socket.emit("join_chat", conversationId)
