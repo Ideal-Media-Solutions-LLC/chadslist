@@ -7,15 +7,6 @@ import ItemCard from './ItemCard.js';
 
 const ListView = (props) => {
   const { itemList } = useContext(ItemContext);
-  const [map, setMap] = useState(false);
-  const [item, setItem] = useState(false);
-
-  // dummy data to show List
-  const [list, setList] = useState([]);
-
-  const viewItem = () => setItem(true);
-  const closeItem = () => setItem(false);
-
 
 
   return (
@@ -27,10 +18,6 @@ const ListView = (props) => {
             <ItemCard data={item}/>
           )
           )}
-          {/* {item ? <Modal data={} centered show={item} size='md' onHide={closeItem}>
-          <Modal.Header closeButton></Modal.Header>
-            <ItemView />
-          </Modal> : null } */}
           </Row>
       </Container>
     </div>

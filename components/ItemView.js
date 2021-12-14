@@ -33,6 +33,10 @@ const ItemView = ({ data, currentPage }) => {
   }
 
     const joinRoom = () => {
+      // if(!conversationId) {
+      //   conversationId = 0
+      // }
+
       socket.emit("join_chat", conversationId)
     }
 

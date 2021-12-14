@@ -31,6 +31,9 @@ const ChatRow = ({ message, userId }) => {
     <Col>
     <Image src="https://i.pinimg.com/736x/f9/e4/d9/f9e4d92f175e120ac1840a29095e3646.jpg" roundedCircle className="chat-icon" />
     </Col>
+    <Col>
+    <h3>Conversation No. {id}</h3>
+    </Col>
   </Row>
 
   <Modal centered show={show} fullscreen={true} onHide={() => setShow(!show)} >
