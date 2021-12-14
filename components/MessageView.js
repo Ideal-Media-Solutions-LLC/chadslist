@@ -16,37 +16,42 @@ const MessageView = ({socket, sender, receiver, id }) => {
 
   const getMessages = () => {
     socket.on('receive_msg', data => {
-      setMessageList([...messageList, data])
+      setMessageList((messageList) => [...messageList, data])
     })
   }
 
-  useEffect(getMessages, [socket]);
+  useEffect(() => {
+    getMessages()
+  }, [socket]);
 
   useEffect(() => {
     if(savedMessages) {
     setMessageList(savedMessages);
     }
-  },[savedMessages])
+  },[])
 
   const sendMsg = async (e) => {
     console.log('invoked', message);
     e.preventDefault();
     if (message !== '') {
       const messageData = {
-        fakeConvoId: id,
-        username: sender.username,
+        id,
+        userId: sender,
         message: message,
       }
 
       await socket.emit("send_msg", messageData)
 
       createMessage(sender, receiver, message)
-      setMessageList([...messageList, messageData])
+      setMessageList((messageList) => [...messageList, messageData])
 
       setMessage('');
     }
   }
 
+  if (!messageList) {
+    return <p>...Loading</p>
+  } else {
   return (
     <div>
       <div>
@@ -74,6 +79,7 @@ const MessageView = ({socket, sender, receiver, id }) => {
       </div>
     </div>
   )
+  }
 }
 
 export default MessageView;

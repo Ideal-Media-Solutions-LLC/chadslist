@@ -23,10 +23,6 @@ const ChatState = (props) => {
 
   const [state, dispatch] = useReducer(ChatReducer, initialState)
 
-  // useEffect(() => {
-  //   getMessages(11,73)
-  // }, [state.conversationId])
-
   const getMessages = (senderId, receiverId) => {
     axios.post(API_URL, {
       senderId,
