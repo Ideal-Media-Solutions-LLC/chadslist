@@ -17,7 +17,7 @@ const ItemCard = ({ data }) => {
           </Card.Body>
         </Card>
       </Col>
-      {!show ? null : <ItemModal data={data}/>}
+      {!show ? null : <ItemModal data={data} page='main'/>}
     </>
   )
 }

@@ -8,14 +8,15 @@ import AuthContext from '../context/auth/AuthContext';
 import io from "socket.io-client";
 const socket = io.connect("http://localhost:3200");
 
-const ItemView = ({ data }) => {
+const ItemView = ({ data, currentPage }) => {
   const { name, imageUrl, category, description, status, donorId } = data;
   const { getMessages, conversationId } = useContext(ChatContext);
   const { user } = useContext(AuthContext);
   const [Message, setMessage] = useState (false);
   const showMessage = () => setMessage(true);
   const closeMessage = () => setMessage(false);
-  const [isClaim, setIsClaim] = useState(false)
+  const [isClaim, setIsClaim] = useState(false);
+  const [page, setPage] = useState(currentPage);
 
 
   const handleClaimClick = () => {
@@ -44,12 +45,18 @@ const ItemView = ({ data }) => {
           <Card.Title>{name}</Card.Title>
           <Card.Text>Value</Card.Text>
           <Card.Text>Location</Card.Text>
-          <Button variant={isClaim? "secondary":"primary"} onClick={handleClaimClick}>{isClaim? "Unclaim":"Claim"}</Button>
-          <Button onClick={() => {
-            showMessage();
-            joinRoom();
-            getMessages(user.id, donorId);
-            }} variant="primary">Message</Button>
+
+          {
+            page === 'main' &&
+            <Button variant={isClaim? "secondary":"primary"} onClick={handleClaimClick}>{isClaim? "Unclaim":"Claim"}</Button>}
+          {
+            page === 'main' &&
+            <Button onClick={() => {
+              showMessage();
+              joinRoom();
+              getMessages(user.id, donorId);
+              }} variant="primary">Message</Button>
+          }
           <Card.Text>
             {description}
           </Card.Text>
