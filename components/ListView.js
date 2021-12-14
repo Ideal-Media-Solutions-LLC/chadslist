@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import ItemView from './ItemView.js';
 import { Card, Container, Row, Col, Modal } from 'react-bootstrap';
+import ListItem from './ListItem.js';
 
 const ListView = (props) => {
   const [map, setMap] = useState(false);
@@ -25,21 +26,25 @@ const ListView = (props) => {
     <div>
       <Container>
         <Row sm={4} md={4}>
-          {list.map((item, index) => <Col key={index} md={5}>
-            <Card onClick={viewItem} style={{ width: '18rem' }}>
+          {list.map((data, index) => <Col key={index} md={5}>
+            <ListItem data={data}/>
+            {/* <Card onClick={viewItem} style={{ width: '18rem' }}>
               <Card.Img variant="top" src={item.img} />
               <Card.Body>
                 <Card.Title>{item.name}</Card.Title>
               </Card.Body>
-            </Card>
+            </Card> */}
           </Col>)}
+
+          {/* <Modal centered show={item} size='md' onHide={closeItem}>
+            <Modal.Header closeButton></Modal.Header>
+            <ItemView />
+          </Modal> */}
+
         </Row>
       </Container>
 
-      <Modal centered show={item} size='md' onHide={closeItem}>
-        <Modal.Header closeButton></Modal.Header>
-        <ItemView />
-      </Modal>
+
     </div>
   )
 }
