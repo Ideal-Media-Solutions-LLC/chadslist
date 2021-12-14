@@ -13,7 +13,7 @@ const ListView = (props) => {
     <div>
       <Container>
       <Row sm={4} md={4}>
-          {props.viewableItems.map((item, index) =>
+          {itemList.map((item, index) =>
           (
             <ItemCard data={item}/>
           )
