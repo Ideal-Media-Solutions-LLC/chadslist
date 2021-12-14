@@ -58,7 +58,7 @@ const AuthState = (props) => {
       password
     })
     .then((result) => {
-
+      localStorage.setItem('token', result.data.accessToken)
       dispatch({
         type: LOGIN_USER,
         payload: result.data
