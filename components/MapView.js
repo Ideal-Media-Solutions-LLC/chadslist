@@ -68,6 +68,17 @@ function MapView(props) {
               key={index}
               onLoad={onLoad}
               position={item.coordinates}
+              icon={{
+                path: google.maps.SymbolPath.CIRCLE,
+                fillOpacity: .8,
+                fillColor: 'red',
+                strokeOpacity: 1,
+                strokeWeight: 1,
+                strokeColor: '#333',
+                scale: 12
+              }}
+              label= {{color: '#000', fontSize: '12px', fontWeight: '600',
+    text: (index + 1).toString()}}
               onClick={(e)=> {
                 setSelectedMarker(item)}}
             />
