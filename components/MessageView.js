@@ -16,44 +16,42 @@ const MessageView = ({socket, sender, receiver, id }) => {
 
   const getMessages = () => {
     socket.on('receive_msg', data => {
-      setMessageList([...messageList, data])
+      setMessageList((messageList) => [...messageList, data])
     })
   }
 
-  useEffect(getMessages, [socket]);
+  useEffect(() => {
+    getMessages()
+  }, [socket]);
 
   useEffect(() => {
     if(savedMessages) {
     setMessageList(savedMessages);
     }
-  },[savedMessages])
-  // const sender = 11;
-  // const receiver = 55;
+  },[])
 
   const sendMsg = async (e) => {
     console.log('invoked', message);
     e.preventDefault();
     if (message !== '') {
       const messageData = {
-        fakeConvoId: id,
-        username: sender.username,
+        id,
+        userId: sender,
         message: message,
       }
 
       await socket.emit("send_msg", messageData)
 
       createMessage(sender, receiver, message)
-      setMessageList([...messageList, messageData])
+      setMessageList((messageList) => [...messageList, messageData])
 
-      //clear out the input box
       setMessage('');
     }
-
-    // axios.post('http://localhost:3001/chat', {claimantId: 1, message: message})
-    // .then(() => console.log('MSG sent'))
-    // .catch(err => console.log(err));
   }
 
+  if (!messageList) {
+    return <p>...Loading</p>
+  } else {
   return (
     <div>
       <div>
@@ -81,6 +79,7 @@ const MessageView = ({socket, sender, receiver, id }) => {
       </div>
     </div>
   )
+  }
 }
 
 export default MessageView;
