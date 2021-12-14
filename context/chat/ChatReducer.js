@@ -1,6 +1,7 @@
 import {
   GET_MESSAGES,
   UPDATE_MESSAGES,
+  SET_MESSAGE_PAGE_LIST
 } from '../types';
 
 export default(state, action) => {
@@ -15,6 +16,11 @@ export default(state, action) => {
       return {
         ...state,
         savedMessages: [...state.savedMessages, action.payload]
+      }
+    case SET_MESSAGE_PAGE_LIST:
+      return {
+        ...state,
+        messagePageList: action.payload
       }
     default:
       return state

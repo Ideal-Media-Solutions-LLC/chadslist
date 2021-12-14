@@ -32,9 +32,9 @@ const ItemView = ({ data }) => {
   }
 
     const joinRoom = () => {
-      if(!conversationId) {
-        conversationId = 0
-      }
+      // if(!conversationId) {
+      //   conversationId = 0
+      // }
 
       socket.emit("join_chat", conversationId)
     }
@@ -52,7 +52,7 @@ const ItemView = ({ data }) => {
           <Button onClick={() => {
             showMessage();
             joinRoom();
-            getMessages(11, 98);
+            getMessages(user.id, donorId);
             }} variant="primary">Message</Button>
           <Card.Text>
             {description}
@@ -62,7 +62,7 @@ const ItemView = ({ data }) => {
 
       <Modal centered show={Message} fullscreen={true} onHide={closeMessage} >
         <Modal.Header closeButton>UserName</Modal.Header>
-        <MessageView sender={11} receiver={99} id={conversationId} socket={socket}/>
+        {!user ? null : <MessageView sender={user.id} receiver={donorId} id={conversationId} socket={socket}/> }
       </Modal>
     </>
   )

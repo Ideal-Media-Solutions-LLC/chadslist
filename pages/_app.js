@@ -8,6 +8,7 @@ import Link from 'next/link';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/signup.css';
 import '../styles/mapView.css'
+import '../styles/Chat.css'
 
 function MyApp({ Component, pageProps }) {
 
