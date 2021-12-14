@@ -11,24 +11,18 @@ const ListView = (props) => {
   const [item, setItem] = useState(false);
 
   // dummy data to show List
-  const [list, setList] = useState([
-    { name: 'item', img: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Gull_portrait_ca_usa.jpg/1280px-Gull_portrait_ca_usa.jpg" },
-    { name: 'item', img: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Gull_portrait_ca_usa.jpg/1280px-Gull_portrait_ca_usa.jpg" },
-    { name: 'item', img: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Gull_portrait_ca_usa.jpg/1280px-Gull_portrait_ca_usa.jpg" },
-    { name: 'item', img: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Gull_portrait_ca_usa.jpg/1280px-Gull_portrait_ca_usa.jpg" },
-    { name: 'item', img: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Gull_portrait_ca_usa.jpg/1280px-Gull_portrait_ca_usa.jpg" },
-    { name: 'item', img: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Gull_portrait_ca_usa.jpg/1280px-Gull_portrait_ca_usa.jpg" },
-  ]);
+  const [list, setList] = useState([]);
 
   const viewItem = () => setItem(true);
   const closeItem = () => setItem(false);
+
 
 
   return (
     <div>
       <Container>
       <Row sm={4} md={4}>
-          {itemList.map((item, index) =>
+          {props.viewableItems.map((item, index) =>
           (
             <ItemCard data={item}/>
           )
