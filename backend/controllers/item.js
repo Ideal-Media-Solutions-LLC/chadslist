@@ -31,10 +31,11 @@ const getItemsInRadius = async (req, res) => {
         donorId: {
           [Op.ne]: userId
         },
-        category: searchCategory,
+        // category: searchCategory,
         status: 'unclaimed'
       }
     });
+    debugger;
     res.status(200).send(items);
   } catch (error) {
     console.log(error);

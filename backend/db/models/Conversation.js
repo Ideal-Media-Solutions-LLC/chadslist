@@ -37,11 +37,19 @@ const Conversation = sequelize.define('conversation', {
 
 
 
-User.hasMany(Conversation, {foreignKey: 'smallerId'})
-User.hasMany(Conversation, {foreignKey: 'largerId'})
+User.hasMany(Conversation, {as: 'Smaller', foreignKey: 'smallerId'});
+User.hasMany(Conversation, {as: 'Larger', foreignKey: 'largerId'});
+Conversation.belongsTo(User);
 
-Conversation.belongsTo(User)
+Item.hasMany(Conversation);
 
-Item.hasMany(Conversation)
+// const test = async () => {
+//   let conversation = await Conversation.findByPk(2, {
+//     include: ['Smaller', 'Larger']
+//   })
+//   debugger;
+// }
+
+// test();
 
 module.exports = Conversation;
