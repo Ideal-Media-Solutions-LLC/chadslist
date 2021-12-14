@@ -5,7 +5,7 @@
 .hist-list-item {
   display: flex;
   flex-direction: row;
-  padding: 5vh 0 5vh 0;
+  padding: 5vh 0 5vh 5vh;
 }
 
 .hist-list-item-img {
