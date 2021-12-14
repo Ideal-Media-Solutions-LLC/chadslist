@@ -88,7 +88,25 @@ const createMessage = (req, res) => {
   })
 }
 
+const getAllMessages = (req, res) => {
+  Conversation.findAll({
+    where: {
+      [Op.or]: [
+        { smallerId: req.params.id },
+        { largerId: req.params.id }
+      ]
+    }
+  })
+  .then((result) => {
+    res.json(result)
+  })
+  .catch((err) => {
+    res.sendStatus(401)
+  })
+}
+
 module.exports = {
   startChat,
-  createMessage
+  createMessage,
+  getAllMessages
 }

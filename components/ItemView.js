@@ -58,7 +58,7 @@ const ItemView = ({ data }) => {
           <Button onClick={() => {
             showMessage();
             joinRoom();
-            getMessages(11, 99);
+            getMessages(user.id, donorId);
             }} variant="primary">Message</Button>
           <Card.Text>
             {description}
@@ -68,7 +68,7 @@ const ItemView = ({ data }) => {
 
       <Modal centered show={Message} fullscreen={true} onHide={closeMessage} >
         <Modal.Header closeButton>UserName</Modal.Header>
-        <MessageView sender={11} receiver={99} id={conversationId} socket={socket}/>
+        <MessageView sender={user.id} receiver={donorId} id={conversationId} socket={socket}/>
       </Modal>
     </>
   )
