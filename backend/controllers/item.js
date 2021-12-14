@@ -31,12 +31,33 @@ const getItemsInRadius = async (req, res) => {
         status: 'unclaimed'
       }
     });
-    res.status(200).send(items);
+    let sortedItems = sortItemsByNearest(items, searchLatitude, searchLongitude);
+    res.status(200).send(sortedItems);
   } catch (error) {
     console.log(error);
     res.sendStatus(400);
   }
 };
+
+const sortItemsByNearest = (arrItems, latUser, longUser) => {
+  // declare a disObj
+  let disObj = {};
+  // for every item in the array of item objects
+  for (let i = 0; i < arrItems.length; i++) {
+    // let latItem to the current items latitude
+    let latItem = parseFloat(arrItems[i].latitude);
+    // let longItem to the current items longitude
+    let longItem = parseFloat(arrItems[i].longitude);
+    // take the x coordinate of the item and subtract the coord of the user, then square it
+    // take the y coordinate of the item and subtract the coord of the user, then square it
+    // add both together
+    // take the square root of the result
+    let d = 69 * Math.sqrt((latUser - latItem) ** 2 + (longUser - longItem) ** 2);
+    disObj[d] = arrItems[i];
+  }
+  // return disObj's values
+  return Object.entries(disObj).sort((a,b) => { return a[0] - b[0] } );
+}
 
 module.exports = {
   getItemsInRadius,
