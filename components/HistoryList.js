@@ -21,14 +21,20 @@ const getHistory = (userId, histType) => {
   });
 }
 
-const HistListEntry = ( {item} ) => {
+const HistListEntry = ( {item, histType} ) => {
   const [showModal, setShowModal] = useState(false);
+  let revokeOption;
+  if (histType == 'claims' && item.status == 'claimed') {
+    revokeOption = 'Unclaim'
+  }
+  if (histType == 'donations' && item.status == 'unclaimed') {
+    revokeOption = 'Delist'
+  }
 
   const handleClick = () => {
     setShowModal(!showModal);
   }
 
-  // console.log('current modal status', showModal);
   return (
     <div className='hist-list-item' id={item.id}>
       <img src={item.imageUrl} className='hist-list-item-img'/>
@@ -37,7 +43,7 @@ const HistListEntry = ( {item} ) => {
         <div>{(item.status).charAt(0).toUpperCase() + (item.status).slice(1)}</div>
         <div>{moment(item.createdAt).format("MM/DD/YYYY")}</div>
       </div>
-      {!showModal ? null : <ItemModal data={item} onHistClick={handleClick.bind(this)} page='history'/>}
+      {!showModal ? null : <ItemModal data={item} onHistClick={handleClick.bind(this)} page='history' revoke={revokeOption}/>}
     </div>
   )
 }
@@ -86,19 +92,20 @@ const HistoryList = ( { histType } ) => {
   return (
     <>
       <InputGroup id='hist-search'>
-          <FormControl
-            placeholder="Search my claims..."
-            onChange={handleSearch}
-          />
-          <Button variant="outline-secondary">
-            <FaSearch />
-          </Button>
-        </InputGroup>
+        <FormControl
+          placeholder="Search my claims..."
+          onChange={handleSearch}
+        />
+        <Button variant="outline-secondary">
+          <FaSearch />
+        </Button>
+      </InputGroup>
+      {histType === 'donations' && <Button variant="primary">Print Receipt for Donations</Button>}
       <div id='hist-list'>
         {
           displayedItems &&
           displayedItems.map(item => {
-            return <HistListEntry item={item} key={item.id} />
+            return <HistListEntry item={item} key={item.id} histType={histType}/>
           })
         }
       </div>
