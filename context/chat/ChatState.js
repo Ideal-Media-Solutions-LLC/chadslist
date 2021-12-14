@@ -63,6 +63,7 @@ const ChatState = (props) => {
   const getAllMessages = () => {
     axios.get(`${API_URL}/message/${user.id}`)
     .then((result) => {
+      console.log(result.data)
       dispatch({
         type: SET_MESSAGE_PAGE_LIST,
         payload: result.data
