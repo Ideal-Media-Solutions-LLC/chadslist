@@ -22,6 +22,7 @@ const items = [
 function MapView(props) {
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [isSelected, setIsSelected] = useState(false);
+  const [markers, setMarkers] = useState({})
 
   const viewItem = () => setIsSelected(true);
   const closeItem = () => setIsSelected(false);
@@ -32,7 +33,7 @@ function MapView(props) {
   };
 
   const infoWindowStyle = {
-    'object-fit': 'contain',
+    'objectFit': 'contain',
     width: '10vh',
     height: '10vh',
   }
@@ -42,13 +43,30 @@ function MapView(props) {
     lng: -122.3222
   };
 
-  const onLoad = marker => {
-    console.log('marker: ', marker)
+  const onLoad = (newMarker, index) => {
+    let newMarkers = markers
+    newMarkers[index] = newMarker
+    setMarkers(newMarkers)
+    console.log('markers LIST: ', markers)
+  }
+
+  const handleMouseDown = (index) => {
+    markers[index].setLabel({
+      color: 'black',
+      text: (index + 1).toString()
+    })
+  }
+
+  const handleMouseUp = (index, item) => {
+    setSelectedMarker(item)
+    markers[index].setLabel({
+      color: 'white',
+      text: (index + 1).toString()
+    })
   }
 
   return (
     <>
-    {/* <LoadScript googleMapsApiKey={process.env.mapAPI} > */}
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
         center={center}
@@ -66,21 +84,16 @@ function MapView(props) {
           return (
             <Marker
               key={index}
-              onLoad={onLoad}
+              onLoad={(marker) => onLoad(marker, index)}
               position={item.coordinates}
-              icon={{
-                path: google.maps.SymbolPath.CIRCLE,
-                fillOpacity: .8,
-                fillColor: 'red',
-                strokeOpacity: 1,
-                strokeWeight: 1,
-                strokeColor: '#333',
-                scale: 12
+              label= {{
+                color: 'white',
+                'fontSize': '14px',
+                'fontWeight': '600',
+                text: (index + 1).toString()
               }}
-              label= {{color: '#000', fontSize: '12px', fontWeight: '600',
-    text: (index + 1).toString()}}
-              onClick={(e)=> {
-                setSelectedMarker(item)}}
+              onMouseDown={() => handleMouseDown(index)}
+              onMouseUp={()=> handleMouseUp(index, item)}
             />
           )}
         )}
@@ -94,14 +107,13 @@ function MapView(props) {
 
             <div style={infoWindowStyle} onClick={() => setIsSelected(true)} >
               <img style={{width: '100%', height: '100'}} src={selectedMarker.img} />
-              <div style={{'font-size': 'x-small'}}>{selectedMarker.name} </div>
+              <div style={{'fontSize': 'x-small'}}>{selectedMarker.name} </div>
             </div>
 
           </InfoWindow>
         ) : null}
 
       </GoogleMap>
-    {/* </LoadScript> */}
 
    <Modal centered show={isSelected} size='md' onHide={() => setIsSelected(false)}>
      <Modal.Header closeButton></Modal.Header>
