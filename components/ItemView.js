@@ -31,17 +31,11 @@ const ItemView = ({ data }) => {
     setIsClaim(!isClaim)
   }
 
-    // const fakeUser1 = {
-    //   username: 'fakeUser1',
-    // }
-
-    // const fakeUser2 = {
-    //   username: 'fakeUser2',
-    // }
-
-    // const fakeConvoId = 99;
-
     const joinRoom = () => {
+      if(!conversationId) {
+        conversationId = 0
+      }
+
       socket.emit("join_chat", conversationId)
     }
 
@@ -58,7 +52,7 @@ const ItemView = ({ data }) => {
           <Button onClick={() => {
             showMessage();
             joinRoom();
-            getMessages(11, 99);
+            getMessages(11, 98);
             }} variant="primary">Message</Button>
           <Card.Text>
             {description}
