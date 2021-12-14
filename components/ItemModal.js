@@ -6,7 +6,7 @@ const ItemModal = ({ data, onHistClick, page }) => {
   const [show, setShow] = useState(true);
 
   return (
-    <Modal centered show={show} size='md' onHide={() => {setShow(!show); onHistClick()}}>
+    <Modal centered show={show} size='md' onHide={() => {setShow(!show); if (page === 'history') {onHistClick()}}}>
         <Modal.Header closeButton></Modal.Header>
         <ItemView data={data} currentPage={page}/>
     </Modal>
