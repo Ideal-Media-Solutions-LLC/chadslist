@@ -44,7 +44,7 @@ const ItemState = (props) => {
     })
   }
 
-  const createItem = (form) => {
+  const createItem = (form, callback) => {
     const { itemName, category, description, images } = form
 
     const coordinates = {
@@ -62,10 +62,12 @@ const ItemState = (props) => {
       coordinates
     })
     .then((result) => {
-      console.log(result)
+      console.log(result);
+      callback();
     })
     .catch((err) => {
       console.log(err)
+      alert('Unable to post');
     })
 
   }

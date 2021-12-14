@@ -1,11 +1,13 @@
 import { useState, useContext } from 'react';
-import { Container, Col, Form, Button } from 'react-bootstrap';
+import Link from 'next/link';
+import { useRouter } from 'next/router'
+import { Container, Col, Form, Button, Image, Modal } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import ItemContext from '../../context/item/ItemContext';
 
 const PostItem = (props) => {
-  const { currentLocation, createItem } = useContext(ItemContext);
+  const { currentLocation, createItem, isPosted } = useContext(ItemContext);
 
   const [form, setForm] = useState({
     itemName: '',
@@ -14,9 +16,15 @@ const PostItem = (props) => {
     images: []
   })
 
-  const handlePost = (e) => {
+  const router = useRouter();
+  const [show, setShow] = useState(false);
+  const openModal = () => setShow(true);
+  const closeModal = () => setShow(false);
+
+  const handlePost = async (e) => {
     e.preventDefault();
-    createItem(form)
+    await createItem(form, openModal);
+
   }
 
   const handleChange = ({ target: { name, value } }) => {
@@ -34,6 +42,15 @@ const PostItem = (props) => {
     })
   }
 
+  const locationTracker = () => {
+    if (currentLocation.lat && currentLocation.lng) {
+      return true;
+    } else {
+      return false
+    }
+
+  }
+
   return (
     <div>
       <Container>
@@ -44,15 +61,20 @@ const PostItem = (props) => {
           <Form onSubmit={handlePost}>
             <Form.Group className="mb-3" controlId="itemName">
               <Form.Label>Item Images:</Form.Label>
-              <Form.Control onChange={imageChanger} type='file' />
+              <Form.Control onChange={imageChanger} type='file' required />
             </Form.Group>
+            {form.images && <img style={{ height: '70px', margin: '5px' }} src={form.images} alt=''/>}
             <Form.Group className="mb-3" controlId="itemName">
               <Form.Label>Item Name:</Form.Label>
-              <Form.Control value={form.itemName} name="itemName" onChange={handleChange} type='textarea' />
+              <Form.Control value={form.itemName} name="itemName" onChange={handleChange} type='textarea' required />
             </Form.Group>
+           { !locationTracker() && <Form.Group className="mb-3" controlId="itemName">
+              <Form.Label>Item Location:</Form.Label>
+              <Form.Control value={form.itemName} name="itemName" onChange={handleChange} type='textarea' required />
+            </Form.Group>}
             <Form.Group className="mb-3" controlId="itemName">
               <Form.Label>Item Category:</Form.Label>
-              <Form.Select value={form.category} name="category" onChange={handleChange} aria-label="Floating label select example">
+              <Form.Select value={form.category} name="category" onChange={handleChange} aria-label="Floating label select example" required>
                 <option>Select Item Category</option>
                 <option value="Apparel">Apparel</option>
                 <option value="Electronics">Electronics</option>
@@ -67,18 +89,23 @@ const PostItem = (props) => {
             </Form.Group>
             <Form.Group className="mb-3" controlId="Description">
               <Form.Label>Item Description:</Form.Label>
-              <Form.Control value={form.description} name="description" onChange={handleChange} as='textarea' rows={4} />
+              <Form.Control value={form.description} name="description" onChange={handleChange} as='textarea' rows={4} required />
             </Form.Group>
             <br></br>
             <Form.Group>
-              <Button variant="primary" type="submit">
+              <Button variant="outline-primary" type="submit">
                 Post
               </Button>
-              <Button href='/'>back</Button>
+              <Button variant="outline-primary"><Link href='/'><a>back</a></Link></Button>
             </Form.Group>
           </Form>
         </Col>
       </Container>
+
+      <Modal centered show={show} size='md' onhide={closeModal}>
+        <Modal.Body>Your item has successfully posted</Modal.Body>
+        <Button variant="outline-primary"><Link href='/'><a>OK</a></Link></Button>
+        </Modal>
     </div>
   )
 }

@@ -9,6 +9,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/signup.css';
 import '../styles/mapView.css'
 import '../styles/Chat.css'
+import '../styles/history.css';
 
 function MyApp({ Component, pageProps }) {
 
