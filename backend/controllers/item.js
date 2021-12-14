@@ -17,6 +17,9 @@ const getItemsInRadius = async (req, res) => {
     let allCategory =['Apparel', 'Electronics', 'Entertainment','Garden and Outdoor', 'Hobbies', 'Home Goods','Musical Instruments', 'Office Supplies','Pet Supplies', 'Sporting Goods']
     let searchCategory = req.query.category || allCategory;
 
+    let allCategory =['Apparel', 'Electronics', 'Entertainment','Garden and Outdoor', 'Hobbies', 'Home Goods','Musical Instruments', 'Office Supplies','Pet Supplies', 'Sporting Goods']
+
+    let searchCategory = req.query.category || allCategory;
     let items = await Item.findAll({
       where: {
         longitude: {
@@ -41,6 +44,30 @@ const getItemsInRadius = async (req, res) => {
   }
 };
 
+const createItem = (req, res) => {
+  console.log(req.body)
+  const { donorId, itemName, category, description, images, coordinates } = req.body;
+
+  Item.create({
+    donorId,
+    category,
+    name: itemName,
+    description,
+    imageUrl: images,
+    longitude: coordinates.lng,
+    latitude: coordinates.lat,
+    status: 'unclaimed'
+  })
+  .then((result) => {
+    res.status(201).json(result.dataValues)
+  })
+  .catch((err) => {
+    res.status(401).json({ message: 'Item could not be created' })
+  })
+
+}
+
 module.exports = {
   getItemsInRadius,
+  createItem
 };
