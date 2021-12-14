@@ -48,7 +48,7 @@ const login = async (req, res) => {
       res.status(401).send({ message: 'Password does not match'})
     } else {
       console.log(isUser.dataValues.userName, 'testing')
-      const accessToken = await jwt.sign({ id: newUser.id, userName: newUser.userName, email: newUser.email, accType: newUser.accType }, process.env.TOKEN_KEY);
+      const accessToken = await jwt.sign({ id: isUser.id, userName: isUser.userName, email: isUser.email, accType: isUser.accType }, process.env.TOKEN_KEY);
 
       return res.status(201).json({
         id: isUser.id,
@@ -66,7 +66,7 @@ const login = async (req, res) => {
 }
 
 const verify = (req, res) => {
-  console.log(req.user)
+  return res.json(req.user);
 }
 module.exports = {
   register,

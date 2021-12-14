@@ -86,7 +86,10 @@ const AuthState = (props) => {
       }
     })
     .then((result) => {
-      console.log(result)
+      dispatch({
+        type: LOGIN_USER,
+        payload: result.data
+      })
     })
     .catch((err) => {
       console.log(err);
