@@ -95,7 +95,8 @@ const getAllMessages = (req, res) => {
         { smallerId: req.params.id },
         { largerId: req.params.id }
       ]
-    }
+    },
+    include: User
   })
   .then((result) => {
     res.json(result)

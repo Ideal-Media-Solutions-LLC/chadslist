@@ -1,4 +1,4 @@
-import { Card, Container, Row, Col, Modal } from 'react-bootstrap';
+import { Card, Container, Row, Col, Modal, Image } from 'react-bootstrap';
 import { useState } from 'react';
 import ItemModal from './ItemModal';
 import ItemView from './ItemView';
@@ -11,13 +11,13 @@ const ItemCard = ({ data }) => {
     <>
       <Col key="1" md={5}>
         <Card onClick={() => setShow(!show)} style={{ width: '18rem' }}>
-          <Card.Img variant="top" src={imageUrl} alt=""/>
+          <Card.Img variant="top" src={imageUrl} alt='Image Loading'/>
           <Card.Body>
             <Card.Title>{name}</Card.Title>
           </Card.Body>
         </Card>
       </Col>
-      {!show ? null : <ItemModal data={data}/>}
+      {!show ? null : <ItemModal data={data} page='main'/>}
     </>
   )
 }
