@@ -7,10 +7,11 @@ const socket = io.connect("http://localhost:3200");
 
 const ChatRow = ({ message, userId }) => {
   const { id, smallerId, largerId } = message;
-  const { getMessages } = useContext(ChatContext);
+  const { getMessages, messagePageList } = useContext(ChatContext);
   const [show, setShow] = useState(false);
   const receiverId = smallerId == userId ? largerId : smallerId
 
+  const { user : { userName, email, photoUrl } } = message;
   const data = {
     socket: socket,
     sender: userId,
@@ -24,16 +25,16 @@ const ChatRow = ({ message, userId }) => {
 
   return (
     <>
-  <Row className="chat-row" onClick={() => {
+  <Row className="chat-row-container" onClick={() => {
     joinRoom();
     getMessages(userId, receiverId)
     setShow(!show)}}>
-    <Col>
-    <Image src="https://i.pinimg.com/736x/f9/e4/d9/f9e4d92f175e120ac1840a29095e3646.jpg" roundedCircle className="chat-icon" />
-    </Col>
-    <Col>
-    <h3>Conversation No. {id}</h3>
-    </Col>
+    <div className="chat-row">
+      <Image src={photoUrl} roundedCircle className="chat-icon" />
+      <div className="chat-row-text">
+        <div>{userName}</div>
+      </div>
+    </div>
   </Row>
 
   <Modal centered show={show} fullscreen={true} onHide={() => setShow(!show)} >

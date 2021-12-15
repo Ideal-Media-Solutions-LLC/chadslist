@@ -31,7 +31,7 @@ const getItemsInRadius = async (req, res) => {
         donorId: {
           [Op.ne]: userId
         },
-        category: searchCategory,
+        // category: searchCategory,
         status: 'unclaimed'
       }
     });

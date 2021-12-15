@@ -1,4 +1,4 @@
-.chat-row {
+.chat-row-container {
   border: 2px solid #1282A2;
   border-radius: 6px;
   padding: 17px;
@@ -6,7 +6,19 @@
 }
 
 .chat-icon {
-  height: 50px;
-  width: 50px;
+  height: 60px;
+  width: 60px;
   border: 2px solid #1282A2;
+}
+
+.chat-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.chat-row-text {
+  display: flex;
+  flex-direction: column;
+  margin-left: 15px;
 }
