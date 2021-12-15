@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
-import AuthContext from '../context/item/ItemContext';
+import AuthContext from '../context/auth/AuthContext';
 import { Card, Container, Row, Col, Modal, Button, CloseButton, InputGroup, FormControl } from 'react-bootstrap';
 import axios from 'axios';
 import { FaSearch } from "react-icons/fa";
@@ -22,24 +22,43 @@ const getHistory = (userId, histType) => {
   });
 }
 
-const HistListEntry = ( {item} ) => {
+const HistListEntry = ( {item, histType} ) => {
   const [showModal, setShowModal] = useState(false);
-  const {}
+  const [price, setPrice] = useState('');
+  const {user} = useContext(AuthContext);
+  let revokeOption;
+  if (histType == 'claims' && item.status == 'claimed') {
+    revokeOption = 'Unclaim'
+  }
+  if (histType == 'donations' && item.status == 'unclaimed') {
+    revokeOption = 'Delist'
+  }
 
   const handleClick = () => {
     setShowModal(!showModal);
   }
 
-  // console.log('current modal status', showModal);
+  const updatePrice = (e) => {
+    e.preventDefault();
+
+    if (Number(price) === 'NaN') {
+      alert('invalid price');
+
+    }
+    //send request to update the database
+  }
+
+
   return (
     <div className='hist-list-item' id={item.id}>
       <img src={item.imageUrl} className='hist-list-item-img'/>
       <div className='hist-list-item-info'>
         <div onClick={handleClick}>{item.name}</div>
         <div>{(item.status).charAt(0).toUpperCase() + (item.status).slice(1)}</div>
+        {(user.accType === 'charity') && <form onSubmit={updatePrice} ><input onChange={(e) => setPrice(e.target.value)} type='text' placeholder=' Edit Value'/> <input type='submit' value='submit'/></form>}
         <div>{moment(item.createdAt).format("MM/DD/YYYY")}</div>
       </div>
-      {!showModal ? null : <ItemModal data={item} onHistClick={handleClick.bind(this)} page='history'/>}
+      {!showModal ? null : <ItemModal data={item} onHistClick={handleClick.bind(this)} page='history' revoke={revokeOption}/>}
     </div>
   )
 }
@@ -88,19 +107,20 @@ const HistoryList = ( { histType } ) => {
   return (
     <>
       <InputGroup id='hist-search'>
-          <FormControl
-            placeholder="Search my claims..."
-            onChange={handleSearch}
-          />
-          <Button variant="outline-secondary">
-            <FaSearch />
-          </Button>
-        </InputGroup>
+        <FormControl
+          placeholder="Search my claims..."
+          onChange={handleSearch}
+        />
+        <Button variant="outline-secondary">
+          <FaSearch />
+        </Button>
+      </InputGroup>
+      {histType === 'donations' && <Button variant="primary">Print Receipt for Donations</Button>}
       <div id='hist-list'>
         {
           displayedItems &&
           displayedItems.map(item => {
-            return <HistListEntry item={item} key={item.id} />
+            return <HistListEntry item={item} key={item.id} histType={histType}/>
           })
         }
       </div>
