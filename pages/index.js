@@ -106,6 +106,7 @@ const HomePage = (props) => {
   //apply filter list to pagination, filterlist default as itemList.
   const viewableItems = filterItems.slice((page * itemsPerPage) - itemsPerPage, page * itemsPerPage);
 
+
   const changePage = number => setPage(number);
 
   // ~~~~~~~~~~~~~~~ Pagination End ~~~~~~~~~~~~~~~~~~~~
