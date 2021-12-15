@@ -39,7 +39,7 @@ const ChatRow = ({ message, userId }) => {
 
   <Modal centered show={show} fullscreen={true} onHide={() => setShow(!show)} >
   <Modal.Header closeButton>UserName</Modal.Header>
-  <MessageView sender={userId} receiver={receiverId} id={id} socket={socket}/>
+  <MessageView photoUrl={photoUrl} sender={userId} receiver={receiverId} id={id} socket={socket}/>
   </Modal>
 </>
   )
