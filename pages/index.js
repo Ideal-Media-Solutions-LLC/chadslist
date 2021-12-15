@@ -47,6 +47,16 @@ const HomePage = (props) => {
 
 
   useEffect(() => {
+
+    /*TODO:
+      Some devs are experiencing issues with this function but works for those who have allowed
+      permission to for sharing there location. If this this getCurrentLocation is not working,
+      use these two functions below without the geolocation API with your desired location for development
+    */
+
+    //setCurrentLocation({ lat: <latitude>, lng: <longitude> })  //For center of Map
+    //getItemsInRadius( lat: <latitude>, lng: <longitude> )     //For List of items in area
+
     //Acquire User Location
     navigator.geolocation.getCurrentPosition((result, error) => {
       if (error){
@@ -56,10 +66,8 @@ const HomePage = (props) => {
           lat: result.coords.latitude,
           lng: result.coords.longitude,
         })
-        // As we are testing we don't have any items in most locations so I'm going to
-        // getItemsInRadius(result.coords.latitude, result.coords.longitude)
-        getItemsInRadius();
 
+        getItemsInRadius(result.coords.latitude, result.coords.longitude)
         console.log(currentLocation)
       }
     })
@@ -105,7 +113,7 @@ const HomePage = (props) => {
             </Col>
           </Row>
           <Col>
-            {view === 'map' && <MapView />}
+            {view === 'map' && <MapView viewableItems={viewableItems} currentLocation={currentLocation}/>}
             <ListView viewableItems={viewableItems}/>
             <PageSelector itemsPerPage={itemsPerPage} itemsTotal={itemList.length} changePage={changePage}/>
           </Col>
