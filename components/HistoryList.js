@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import AuthContext from '../context/item/ItemContext';
 import { Card, Container, Row, Col, Modal, Button, CloseButton, InputGroup, FormControl } from 'react-bootstrap';
 import axios from 'axios';
 import { FaSearch } from "react-icons/fa";
@@ -23,6 +24,7 @@ const getHistory = (userId, histType) => {
 
 const HistListEntry = ( {item} ) => {
   const [showModal, setShowModal] = useState(false);
+  const {}
 
   const handleClick = () => {
     setShowModal(!showModal);

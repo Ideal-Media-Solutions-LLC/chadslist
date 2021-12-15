@@ -5,6 +5,7 @@ import AuthContext from '../context/auth/AuthContext';
 // import Link from 'next/link';
 
 const NaviBar = (props) => {
+  // console.log(user.accType)
 
   const { user, logoutUser } = useContext(AuthContext)
 
