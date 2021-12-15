@@ -14,7 +14,7 @@ const ListView = ({filterItems}) => {
       <Row sm={4} md={4}>
           {filterItems.map((item, index) =>
           (
-            <ItemCard key={index} data={item}/>
+            <ItemCard key={item.id} data={item}/>
           )
           )}
           </Row>

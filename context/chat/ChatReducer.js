@@ -10,7 +10,8 @@ export default(state, action) => {
       return {
         ...state,
         savedMessages: action.payload.data,
-        conversationId: action.payload.conversationId
+        conversationId: action.payload.conversationId,
+        loading: false
       }
     case UPDATE_MESSAGES:
       return {
@@ -20,7 +21,8 @@ export default(state, action) => {
     case SET_MESSAGE_PAGE_LIST:
       return {
         ...state,
-        messagePageList: action.payload
+        messagePageList: action.payload,
+        loading: false
       }
     default:
       return state

@@ -16,7 +16,8 @@ const ChatState = (props) => {
   const initialState = {
     savedMessages: [],
     conversationId: null,
-    messagePageList: []
+    messagePageList: [],
+    loading: true
   }
 
   const { user } = useContext(AuthContext);

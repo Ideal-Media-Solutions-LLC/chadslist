@@ -22,4 +22,4 @@ const ItemCard = ({ data }) => {
   )
 }
 
-export default ItemCard
+export default ItemCard;
