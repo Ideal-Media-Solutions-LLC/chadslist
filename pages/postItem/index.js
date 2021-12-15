@@ -60,7 +60,7 @@ const PostItem = (props) => {
           <Form onSubmit={handlePost}>
             <Form.Group className="mb-3" controlId="itemName">
               <Form.Label>Item Images:</Form.Label>
-              <Form.Control onChange={imageChanger} type='file' required />
+              <Form.Control onChange={imageChanger} accept='images/*' type='file' required />
             </Form.Group>
             {form.images && <img style={{ height: '70px', margin: '5px' }} src={form.images} alt=''/>}
             <Form.Group className="mb-3" controlId="itemName">
