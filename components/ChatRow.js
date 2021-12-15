@@ -32,13 +32,14 @@ const ChatRow = ({ message, userId }) => {
     <div className="chat-row">
       <Image src={photoUrl} roundedCircle className="chat-icon" />
       <div className="chat-row-text">
-        <div>{userName}</div>
+        <p className="chat-username">{userName}</p>
+        <p>Item Name</p>
       </div>
     </div>
   </Row>
 
   <Modal centered show={show} fullscreen={true} onHide={() => setShow(!show)} >
-  <Modal.Header closeButton>UserName</Modal.Header>
+  <Modal.Header closeButton>Chat</Modal.Header>
   <MessageView photoUrl={photoUrl} sender={userId} receiver={receiverId} id={id} socket={socket}/>
   </Modal>
 </>

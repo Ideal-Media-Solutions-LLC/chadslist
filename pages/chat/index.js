@@ -7,15 +7,14 @@ import AuthContext from '../../context/auth/AuthContext';
 
 const ChatPage = () => {
   const { user } = useContext(AuthContext)
-  const { getAllMessages, messagePageList } = useContext(ChatContext);
+  const { getAllMessages, messagePageList, loading } = useContext(ChatContext);
 
   useEffect(() => {
     getAllMessages();
-    console.log(messagePageList)
   }, [])
 
 
-  if (messagePageList.length === 0) {
+  if (loading) {
     return <p>...Loading</p>
   } else {
     return (

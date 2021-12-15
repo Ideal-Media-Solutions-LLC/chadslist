@@ -21,7 +21,8 @@ export default(state, action) => {
     case SET_MESSAGE_PAGE_LIST:
       return {
         ...state,
-        messagePageList: action.payload
+        messagePageList: action.payload,
+        loading: false
       }
     default:
       return state
