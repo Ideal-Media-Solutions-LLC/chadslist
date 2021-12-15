@@ -13,6 +13,8 @@ import {LoadScript} from '@react-google-maps/api';
 import { getItemsInRadius } from '../context/item/ItemContext';
 import ItemContext from '../context/item/ItemContext'
 import PageSelector from '../components/PageSelector.js';
+import Link from 'next/link';
+
 
 const HomePage = (props) => {
   const [view, setView] = useState('list');
@@ -67,7 +69,7 @@ const HomePage = (props) => {
           lng: result.coords.longitude,
         })
         // As we are testing we don't have any items in most locations so I'm going to
-        getItemsInRadius(result.coords.latitude, result.coords.longitude)
+        getItemsInRadius(37.962882809573145, -122.57822275079111)
         // getItemsInRadius();
 
 
@@ -93,37 +95,52 @@ const HomePage = (props) => {
   // ~~~~~~~~~~~~~~~ Pagination End ~~~~~~~~~~~~~~~~~~~~
 
 
+
+  const [showNavi, setNavi] = useState(false);
+  const naviShow = () => setNavi(!showNavi);
+  const closeNavi = () => setNavi(false);
+
+
   return (
-    <div>
-      <LoadScript googleMapsApiKey={process.env.mapAPI}>
-        <Container>
-          <Row>
-            <Col md="auto">
-              <Button onClick={handleClick}>filter</Button>
-              <Offcanvas show={showFilter} onHide={closeFilter} >
+    <LoadScript googleMapsApiKey={process.env.mapAPI}>
+      <Container id="home-page">
+        <Row className="header">
+            <Col>
+              <img className="home-page-logo" src='/Chads_list_2.svg' width='300' height='100' />
+            </Col>
+            <Col className="home-page-buttons">
+              <img id="hamburger-menu-home-page" onClick={naviShow} src='/dropdown_menu.svg' width='50' height='50' />
+              <Offcanvas placement='end' show={showNavi} onHide={closeNavi} >
                 <Offcanvas.Header closeButton></Offcanvas.Header>
-                <FilterList />
+                <NaviBar close={closeNavi}/>
               </Offcanvas>
             </Col>
-
-            <Col>
-              <Search />
-            </Col>
-
-            <Col xs lg="2">
-              {view === 'list'
-                ? <FaMapMarkedAlt size='40' onClick={() => ChangeView('map')} />
-                : <RiLayoutGridFill size='40' onClick={() => ChangeView('list')} />}
-            </Col>
-          </Row>
-          <Col>
-            {view === 'map' && <MapView viewableItems={viewableItems} currentLocation={currentLocation}/>}
-            <ListView viewableItems={viewableItems}/>
-            <PageSelector itemsPerPage={itemsPerPage} itemsTotal={itemList.length} changePage={changePage}/>
+        </Row>
+        <Row className="search-row">
+        <Col  className="filter-button" md="auto">
+            <Button id="filter-button" variant="primary" onClick={handleClick}>Filter</Button>
+            <Offcanvas show={showFilter} onHide={closeFilter} >
+              <Offcanvas.Header closeButton></Offcanvas.Header>
+              <FilterList />
+            </Offcanvas>
           </Col>
-        </Container>
-      </LoadScript>
-    </div>
+          <Col className="search-bar">
+            <Search />
+          </Col>
+          <Col xs lg="2">
+            {view === 'list'
+              ? <FaMapMarkedAlt size='40' onClick={() => ChangeView('map')} />
+              : <RiLayoutGridFill size='40' onClick={() => ChangeView('list')} />}
+          </Col>
+
+        </Row>
+        <Col>
+          {view === 'map' && <MapView viewableItems={viewableItems} currentLocation={currentLocation}/>}
+          {view === 'list' && <ListView viewableItems={viewableItems}/>}
+          {view === 'list' && <PageSelector itemsPerPage={itemsPerPage} itemsTotal={itemList.length} changePage={changePage}/>}
+        </Col>
+      </Container>
+    </LoadScript>
   )
 }
 
