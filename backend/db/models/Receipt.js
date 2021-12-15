@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../db.js');
+const User = require('./')
 
 const Receipt = sequelize.define('receipt', {
     id: {
@@ -7,6 +8,7 @@ const Receipt = sequelize.define('receipt', {
       primaryKey: true,
       autoIncrement: true
     },
+    itemId: DataTypes.INTEGER,
     claimId: DataTypes.INTEGER,
     donorId: DataTypes.INTEGER,
     condition: DataTypes.STRING,
@@ -23,10 +25,17 @@ const Receipt = sequelize.define('receipt', {
         name: 'receiptDonorIndex',
         using: 'HASH',
         fields: ['donorId']
+      },
+      {
+        name: 'receiptItemIndex',
+        using: 'HASH',
+        fields: ['itemId']
       }
     ]
   }
 );
+
+
 
 
 
