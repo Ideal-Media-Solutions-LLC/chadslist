@@ -35,7 +35,8 @@ const Conversation = sequelize.define('conversation', {
   }
 );
 
-
+Item.hasMany(Conversation, {foreignKey: 'itemId'})
+Conversation.belongsTo(Item)
 
 User.hasMany(Conversation, {as: 'Smaller', foreignKey: 'smallerId'})
 User.hasMany(Conversation, {as: 'Larger', foreignKey: 'largerId'})

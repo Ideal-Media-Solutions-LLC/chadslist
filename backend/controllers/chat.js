@@ -1,6 +1,7 @@
 const User = require('../db/models/User');
 const Conversation = require('../db/models/Conversation');
 const Message = require('../db/models/Message');
+const Item = require('../db/models/Item');
 const { Op } = require('sequelize');
 
 
@@ -115,6 +116,8 @@ const getAllMessages = (req, res) => {
         }
       },
       required: false
+    }, {
+      model: Item
     }]
   })
   .then((result) => {
