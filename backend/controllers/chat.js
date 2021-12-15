@@ -1,6 +1,7 @@
 const User = require('../db/models/User');
 const Conversation = require('../db/models/Conversation');
 const Message = require('../db/models/Message');
+const Item = require('../db/models/Item');
 const { Op } = require('sequelize');
 
 
@@ -114,7 +115,9 @@ const getAllMessages = (req, res) => {
         }
       },
       required: false
-    }]
+    },
+    Item
+    ]
   })
   .then((result) => {
     for (var conversation of result) {
@@ -122,9 +125,11 @@ const getAllMessages = (req, res) => {
       delete conversation.dataValues.Larger;
       delete conversation.dataValues.Smaller;
     }
+    debugger;
     res.json(result)
   })
   .catch((err) => {
+    debugger;
     res.sendStatus(401)
   })
 }
