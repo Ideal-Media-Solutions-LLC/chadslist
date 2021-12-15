@@ -34,7 +34,7 @@ function MyApp({ Component, pageProps }) {
             <img onClick={naviShow} src='https://i0.wp.com/css-tricks.com/wp-content/uploads/2012/10/threelines.png' width='70' height='50' />
             <Offcanvas placement='end' show={showNavi} onHide={closeNavi} >
               <Offcanvas.Header closeButton></Offcanvas.Header>
-              <NaviBar />
+              <NaviBar close={closeNavi}/>
             </Offcanvas>
           </Col>
         </Row>

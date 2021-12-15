@@ -8,7 +8,7 @@ import AuthContext from '../context/auth/AuthContext';
 import io from "socket.io-client";
 const socket = io.connect("http://localhost:3200");
 
-const ItemView = ({ data, currentPage }) => {
+const ItemView = ({ data, currentPage, revoke }) => {
   const { name, imageUrl, category, description, status, donorId } = data;
   const { getMessages, conversationId } = useContext(ChatContext);
   const { user } = useContext(AuthContext);
@@ -17,7 +17,6 @@ const ItemView = ({ data, currentPage }) => {
   const closeMessage = () => setMessage(false);
   const [isClaim, setIsClaim] = useState(false);
   const [page, setPage] = useState(currentPage);
-
 
   const handleClaimClick = () => {
     axios.post('http://localhost:3001/claim', {
@@ -40,7 +39,6 @@ const ItemView = ({ data, currentPage }) => {
       socket.emit("join_chat", conversationId)
     }
 
-
   return (
     <>
       <Card style={{ width: '24.9rem' }}>
@@ -51,16 +49,27 @@ const ItemView = ({ data, currentPage }) => {
           <Card.Text>Location</Card.Text>
 
           {
-            page === 'main' &&
+            page !== 'history' &&
             <Button variant={isClaim? "secondary":"primary"} onClick={handleClaimClick}>{isClaim? "Unclaim":"Claim"}</Button>}
           {
-            page === 'main' &&
+            page !== 'history' &&
             <Button onClick={() => {
               showMessage();
               joinRoom();
               getMessages(user.id, donorId);
               }} variant="primary">Message</Button>
           }
+
+          {
+            revoke === 'Unclaim' &&
+            <Button variant="primary">Unclaim</Button>
+          }
+
+          {
+            revoke === 'Delist' &&
+            <Button variant="primary">Delist</Button>
+          }
+
           <Card.Text>
             {description}
           </Card.Text>
