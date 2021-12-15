@@ -140,25 +140,6 @@ const HomePage = (props) => {
         </LoadScript>
       </div>
     )
-
-<<<<<<< HEAD
-=======
-            <Col xs lg="2">
-              {view === 'list'
-                ? <FaMapMarkedAlt size='40' onClick={() => ChangeView('map')} />
-                : <RiLayoutGridFill size='40' onClick={() => ChangeView('list')} />}
-            </Col>
-          </Row>
-          <Col>
-            {view === 'map' && <MapView viewableItems={viewableItems} currentLocation={currentLocation}/>}
-            <ListView viewableItems={viewableItems}/>
-            <PageSelector itemsPerPage={itemsPerPage} itemsTotal={itemList.length} changePage={changePage}/>
-          </Col>
-        </Container>
-      </LoadScript>
-    </div>
-  )
->>>>>>> 51edcb6930894792fbc9f9a8d21e0ebcfa13e58b
 }
 
 export default HomePage;
