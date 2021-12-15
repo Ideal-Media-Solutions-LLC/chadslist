@@ -57,8 +57,8 @@ const HomePage = (props) => {
           lng: result.coords.longitude,
         })
         // As we are testing we don't have any items in most locations so I'm going to
-        // getItemsInRadius(result.coords.latitude, result.coords.longitude)
-        getItemsInRadius();
+        getItemsInRadius(result.coords.latitude, result.coords.longitude)
+        // getItemsInRadius();
 
         console.log(currentLocation)
       }

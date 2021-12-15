@@ -28,7 +28,7 @@ const MessageView = ({socket, sender, receiver, id }) => {
     if(savedMessages) {
     setMessageList(savedMessages);
     }
-  },[savedMessages])
+  },[])
 
   const sendMsg = async (e) => {
     console.log('invoked', message);
