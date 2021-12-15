@@ -131,7 +131,7 @@ const HomePage = (props) => {
         </Row>
           <Row>
             <Col md="auto">
-              <Button onClick={handleClick}>filter</Button>
+              <Button id='filter-button' onClick={handleClick}>Filter</Button>
               <Offcanvas show={showFilter} onHide={closeFilter} >
                 <Offcanvas.Header closeButton></Offcanvas.Header>
                 <FilterList handleFilter={handleFilter}/>
