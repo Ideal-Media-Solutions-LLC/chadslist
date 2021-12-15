@@ -95,8 +95,30 @@ const delist = async (req, res) => {
   })
 }
 
-const unclaim = () => {
+const unclaim = async (req, res) => {
+  const itemId = req.query.itemId;
 
+  await Claim.destroy({
+    where: {
+      itemId: itemId
+    }
+  })
+  .then(data => {
+    Item.update({
+      status: 'unclaimed',
+      claimed: 'f'
+    }, {
+      where: {
+        id: itemId
+      }
+    })
+  })
+  .then(data => {
+    res.json(data).sendStatus(200)
+  })
+  .catch(err => {
+    res.json(err).sendStatus(500)
+  })
 }
 
 module.exports = {

@@ -12,6 +12,6 @@ router.get('/receipts', getReceiptHis)
 router.post('/receipts', postReceiptHis);
 
 router.delete('/donations', delist);
-router.delete('/claims', unclaim);
+router.put('/claims', unclaim);
 
 module.exports = router;
