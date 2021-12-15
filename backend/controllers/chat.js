@@ -89,6 +89,7 @@ const createMessage = (req, res) => {
 }
 
 const getAllMessages = (req, res) => {
+  debugger;
   Conversation.findAll({
     where: {
       [Op.or]: [
@@ -96,12 +97,32 @@ const getAllMessages = (req, res) => {
         { largerId: req.params.id }
       ]
     },
-    include: User
+    include: [{
+      model: User,
+      as: 'Smaller',
+      where: {
+        id: {
+          [Op.ne]: req.params.id
+        }
+      },
+      required: false
+    }, {
+      model: User,
+      as: 'Larger',
+      where: {
+        id: {
+          [Op.ne]: req.params.id
+        }
+      },
+      required: false
+    }]
   })
   .then((result) => {
+    debugger;
     res.json(result)
   })
   .catch((err) => {
+    debugger;
     res.sendStatus(401)
   })
 }
