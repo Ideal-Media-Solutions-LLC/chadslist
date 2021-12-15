@@ -12,21 +12,21 @@ const NaviBar = (props) => {
   return (
     <div>
       <Nav defaultActiveKey="/" className="flex-column">
-        <Nav.Link onClick={props.close}><Link href='/'><a>Home</a></Link></Nav.Link>
-        <Nav.Link onClick={props.close}><Link href="/history/donations"><a>My Donations</a></Link></Nav.Link>
-        <Nav.Link onClick={props.close}><Link href="/history/claims"><a>My Claims</a></Link></Nav.Link>
-        {!user ? null : <Nav.Link onClick={props.close}><Link href="/chat"><a>View Messages</a></Link></Nav.Link> }
-        <Nav.Link onClick={props.close}><Link href="/postItem"><a>Post an item</a></Link></Nav.Link>
+        <Nav.Link onClick={props.close}><Link href='/'>Home</Link></Nav.Link>
+        <Nav.Link onClick={props.close}><Link href="/history/donations">My Donations</Link></Nav.Link>
+        <Nav.Link onClick={props.close}><Link href="/history/claims">My Claims</Link></Nav.Link>
+        {!user ? null : <Nav.Link onClick={props.close}><Link href="/chat">View Messages</Link></Nav.Link> }
+        <Nav.Link onClick={props.close}><Link href="/postItem">Post an item</Link></Nav.Link>
         { user ?
         <Nav.Link onClick={logoutUser}>
           LogOut
         </Nav.Link> :
         <>
         <Nav.Link >
-        <Link href='/Login'><a>Login</a></Link>
+        <Link href='/Login'>Login</Link>
         </Nav.Link>
         <Nav.Link >
-        <Link href='/SignUp'><a>Register</a></Link>
+        <Link href='/SignUp'>Register</Link>
         </Nav.Link>
         </>
         }
