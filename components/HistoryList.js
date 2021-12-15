@@ -41,10 +41,7 @@ const HistListEntry = ( {item, histType} ) => {
   const updatePrice = (e) => {
     e.preventDefault();
 
-    if (Number(price) === 'NaN') {
-      alert('invalid price');
-
-    }
+    let value = Number(price);
     //send request to update the database
   }
 
@@ -55,8 +52,8 @@ const HistListEntry = ( {item, histType} ) => {
       <div className='hist-list-item-info'>
         <div onClick={handleClick}>{item.name}</div>
         <div>{(item.status).charAt(0).toUpperCase() + (item.status).slice(1)}</div>
-        {(user.accType === 'charity') && <form onSubmit={updatePrice} ><input onChange={(e) => setPrice(e.target.value)} type='text' placeholder=' Edit Value'/> <input type='submit' value='submit'/></form>}
         <div>{moment(item.createdAt).format("MM/DD/YYYY")}</div>
+        {(user.accType === 'charity') && <form onSubmit={updatePrice} ><input onChange={(e) => setPrice(e.target.value)} type='number' placeholder=' Edit Value'/> <input type='submit' value='update'/></form>}
       </div>
       {!showModal ? null : <ItemModal data={item} onHistClick={handleClick.bind(this)} page='history' revoke={revokeOption}/>}
     </div>
