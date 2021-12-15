@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import AuthContext from '../context/auth/AuthContext';
 import { Card, Container, Row, Col, Modal, Button, CloseButton, InputGroup, FormControl } from 'react-bootstrap';
 import axios from 'axios';
 import { FaSearch } from "react-icons/fa";
@@ -23,6 +24,8 @@ const getHistory = (userId, histType) => {
 
 const HistListEntry = ( {item, histType} ) => {
   const [showModal, setShowModal] = useState(false);
+  const [price, setPrice] = useState('');
+  const {user} = useContext(AuthContext);
   let revokeOption;
   if (histType == 'claims' && item.status == 'claimed') {
     revokeOption = 'Unclaim'
@@ -35,6 +38,14 @@ const HistListEntry = ( {item, histType} ) => {
     setShowModal(!showModal);
   }
 
+  const updatePrice = (e) => {
+    e.preventDefault();
+
+    let value = Number(price);
+    //send request to update the database
+  }
+
+
   return (
     <div className='hist-list-item' id={item.id}>
       <img src={item.imageUrl} className='hist-list-item-img'/>
@@ -42,6 +53,7 @@ const HistListEntry = ( {item, histType} ) => {
         <div onClick={handleClick}>{item.name}</div>
         <div>{(item.status).charAt(0).toUpperCase() + (item.status).slice(1)}</div>
         <div>{moment(item.createdAt).format("MM/DD/YYYY")}</div>
+        {(user.accType === 'charity') && <form onSubmit={updatePrice} ><input onChange={(e) => setPrice(e.target.value)} type='number' placeholder=' Edit Value'/> <input type='submit' value='update'/></form>}
       </div>
       {!showModal ? null : <ItemModal data={item} onHistClick={handleClick.bind(this)} page='history' revoke={revokeOption}/>}
     </div>

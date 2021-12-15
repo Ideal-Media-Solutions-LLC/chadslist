@@ -18,12 +18,13 @@ const PostItem = (props) => {
 
   const router = useRouter();
   const [show, setShow] = useState(false);
+  const [locationInput, setLocationInput] = useState('');
   const openModal = () => setShow(true);
   const closeModal = () => setShow(false);
 
-  const handlePost = async (e) => {
+  const handlePost = (e) => {
     e.preventDefault();
-    await createItem(form, openModal);
+    createItem(form, openModal);
 
   }
 
@@ -33,7 +34,6 @@ const PostItem = (props) => {
 
   const imageChanger = (e) => {
     let images = e.target.files[0];
-
     let url = URL.createObjectURL(images);
 
     setForm({
@@ -48,7 +48,6 @@ const PostItem = (props) => {
     } else {
       return false
     }
-
   }
 
   return (
@@ -70,7 +69,7 @@ const PostItem = (props) => {
             </Form.Group>
            { !locationTracker() && <Form.Group className="mb-3" controlId="itemName">
               <Form.Label>Item Location:</Form.Label>
-              <Form.Control value={form.itemName} name="itemName" onChange={handleChange} type='textarea' required />
+              <Form.Control onChange={(e) => setLocationInput(e.target.value)} type='textarea' required />
             </Form.Group>}
             <Form.Group className="mb-3" controlId="itemName">
               <Form.Label>Item Category:</Form.Label>
