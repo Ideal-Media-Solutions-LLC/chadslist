@@ -1,0 +1,39 @@
+#home-page {
+  width: 100%;
+  height: 100%;
+  max-width: 1000px;
+  padding: 0%;
+  margin: auto;
+}
+
+.search-row {
+  margin: auto;
+  margin-top: 1%;
+  margin-bottom: 2%;
+  padding: 0%;
+  width: 100%;
+  height: 100%;
+}
+
+#filter-button {
+  background-color: #034078;
+  display: flex;
+  justify-content: flex-start;
+  resize: both;
+}
+
+.search-bar {
+  padding-left: 0%;
+}
+
+.list-container {
+  display: flex;
+  justify-content: center;
+  margin: auto;
+}
+
+.card-tile {
+  display: flex;
+  justify-content: center;
+  margin: auto;
+}

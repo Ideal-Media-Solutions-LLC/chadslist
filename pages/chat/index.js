@@ -5,6 +5,7 @@ import MessageView from '../../components/MessageView';
 import ChatRow from '../../components/ChatRow';
 import AuthContext from '../../context/auth/AuthContext';
 
+
 const ChatPage = () => {
   const { user } = useContext(AuthContext)
   const { getAllMessages, messagePageList, loading } = useContext(ChatContext);
@@ -18,11 +19,14 @@ const ChatPage = () => {
     return <p>...Loading</p>
   } else {
     return (
-      <Container fluid="md">
+      <>
+      <Container className="chat-container"fluid="md">
+      <div className="inbox">Inbox</div>
         {messagePageList.map((message) => (
           <ChatRow message={message} userId={user.id} />
         ))}
       </Container>
+      </>
     )
   }
 }

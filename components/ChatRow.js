@@ -4,13 +4,15 @@ import { InputGroup, Button, FormControl, Form, Popover, Container, Row, Col, Mo
 import MessageView from './MessageView.js';
 import io from "socket.io-client";
 const socket = io.connect("http://localhost:3200");
+import Avatar from '@mui/material/Avatar';
+
 
 const ChatRow = ({ message, userId }) => {
   const { id, smallerId, largerId } = message;
   const { getMessages, messagePageList } = useContext(ChatContext);
   const [show, setShow] = useState(false);
   const receiverId = smallerId == userId ? largerId : smallerId
-  
+
   const { user : { userName, email, photoUrl } } = message;
   const data = {
     socket: socket,
@@ -30,7 +32,8 @@ const ChatRow = ({ message, userId }) => {
     getMessages(userId, receiverId)
     setShow(!show)}}>
     <div className="chat-row">
-      <Image src={photoUrl} roundedCircle className="chat-icon" />
+      <Avatar style={{ height: '50px', width: '50px' }} src={photoUrl} alt="D" />
+      {/* <Image src={photoUrl} roundedCircle className="chat-icon" /> */}
       <div className="chat-row-text">
         <p className="chat-username">{userName}</p>
         <p>Item Name</p>
