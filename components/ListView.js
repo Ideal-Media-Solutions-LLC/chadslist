@@ -11,7 +11,7 @@ const ListView = (props) => {
 
   return (
     <div>
-      <Container>
+      <Container className="list-container">
       <Row sm={4} md={4}>
           {itemList.map((item, index) =>
           (
