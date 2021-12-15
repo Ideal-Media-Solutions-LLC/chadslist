@@ -1,14 +1,14 @@
 .chat-row-container {
-  border: 2px solid #1282A2;
-  border-radius: 6px;
+  /* border: 2px solid #1282A2; */
+  /* border-radius: 6px; */
   padding: 17px;
-  margin-bottom: 10px;
+  /* border-bottom: 1px solid rgb(129, 129, 129); */
 }
 
 .chat-icon {
-  height: 80px;
-  width: 80px;
-  border: 2px solid #1282A2;
+  height: 60px;
+  width: 60px;
+  /* border: 2px solid #1282A2; */
   object-fit: cover;
 }
 
@@ -16,9 +16,11 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+  height: 50px;
 }
 
 .chat-row-text {
+  margin-top: 15px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -29,6 +31,14 @@
 
 .chat-username {
   /* font-weight: bold; */
-  font-size: 24px;
+  font-size: 20px;
   margin-bottom: 0;
+}
+
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  border-top: 1px solid black;
 }
