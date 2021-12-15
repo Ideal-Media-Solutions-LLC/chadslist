@@ -89,7 +89,6 @@ const createMessage = (req, res) => {
 }
 
 const getAllMessages = (req, res) => {
-  debugger;
   Conversation.findAll({
     where: {
       [Op.or]: [
@@ -118,11 +117,16 @@ const getAllMessages = (req, res) => {
     }]
   })
   .then((result) => {
+    for (var conversation of result) {
+      conversation.dataValues.user = conversation.Smaller || conversation.Larger;
+      delete conversation.dataValues.Larger;
+      delete conversation.dataValues.Smaller;
+      debugger;
+    }
     debugger;
     res.json(result)
   })
   .catch((err) => {
-    debugger;
     res.sendStatus(401)
   })
 }
