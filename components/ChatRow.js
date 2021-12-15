@@ -10,7 +10,7 @@ const ChatRow = ({ message, userId }) => {
   const { getMessages, messagePageList } = useContext(ChatContext);
   const [show, setShow] = useState(false);
   const receiverId = smallerId == userId ? largerId : smallerId
-  debugger;
+  
   const { user : { userName, email, photoUrl } } = message;
   const data = {
     socket: socket,

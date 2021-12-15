@@ -121,9 +121,7 @@ const getAllMessages = (req, res) => {
       conversation.dataValues.user = conversation.Smaller || conversation.Larger;
       delete conversation.dataValues.Larger;
       delete conversation.dataValues.Smaller;
-      debugger;
     }
-    debugger;
     res.json(result)
   })
   .catch((err) => {
