@@ -5,7 +5,7 @@ const User = require('../db/models/User.js');
 
 const register = async(req, res) => {
 
-    const { userName, email, password, accType } = req.body;
+    const { userName, email, password, accType, photoUrl } = req.body;
 
       const isUser = await User.findOne({ where: { userName: userName }});
 
@@ -17,6 +17,7 @@ const register = async(req, res) => {
           email,
           password: passwordHash,
           accType,
+          photoUrl
          })
 
         //  await newUser.save();

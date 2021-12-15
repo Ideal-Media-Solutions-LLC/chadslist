@@ -77,7 +77,7 @@ const ItemView = ({ data, currentPage, revoke }) => {
       </Card>
 
       <Modal centered show={Message} fullscreen={true} onHide={closeMessage} >
-        <Modal.Header closeButton>UserName</Modal.Header>
+        <Modal.Header closeButton>Chat</Modal.Header>
         {!user ? null : <MessageView sender={user.id} receiver={donorId} id={conversationId} socket={socket}/> }
       </Modal>
     </>

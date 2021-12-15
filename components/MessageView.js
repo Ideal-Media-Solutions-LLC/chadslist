@@ -8,8 +8,8 @@ import ChatMsg from '@mui-treasury/components/chatMsg/ChatMsg';
 
 const API_URL = 'http://localhost:3001/chat'
 
-const MessageView = ({socket, sender, receiver, id }) => {
-  const { savedMessages, createMessage } = useContext(ChatContext);
+const MessageView = ({socket, sender, receiver, id, photoUrl }) => {
+  const { loading, savedMessages, createMessage } = useContext(ChatContext);
   const [message, setMessage] = useState('');
   const [messageList, setMessageList] = useState([]);
   // const [savedMessages, setSavedMessages] = useState([]);
@@ -49,13 +49,13 @@ const MessageView = ({socket, sender, receiver, id }) => {
     }
   }
 
-  if (!messageList) {
+  if (loading) {
     return <p>...Loading</p>
   } else {
   return (
     <div>
       <div>
-        {messageList && messageList.map((msg) => msg.userId === sender ? <ChatMsg side={'right'} messages={[msg.message]}/> : <ChatMsg messages={[msg.message]}/>)}
+        {messageList && messageList.map((msg) => msg.userId === sender ? <ChatMsg side={'right'} messages={[msg.message]}/> : <ChatMsg avatar={photoUrl} messages={[msg.message]}/>)}
       </div>
 
       {/* input bar */}
