@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import Filter from './Filter';
 
 
-const FilterList = (props) => {
+const FilterList = ({handleFilter}) => {
 
   let filterList = [
     {
@@ -55,7 +55,7 @@ const FilterList = (props) => {
     <Nav defaultActiveKey="/" className="flex-column">
       <Navbar.Brand >Select Category</Navbar.Brand>
         {filterList.map((filter, index) => {
-          return  <Filter key={index} filter={filter}/>
+          return  <Filter key={index} filter={filter} handleFilter={handleFilter}/>
         })}
     </Nav>
     </>
