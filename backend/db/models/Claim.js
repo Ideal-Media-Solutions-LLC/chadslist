@@ -1,8 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../db.js');
 const User = require('./User.js');
-const Item = require('./User.js');
-const Receipt = require('./Receipt.js');
+const Item = require('./Item.js');
 
 const Claim = sequelize.define('claim', {
     id: {
@@ -31,6 +30,7 @@ const Claim = sequelize.define('claim', {
   }
 );
 
+
 // Setting up associations (Relationships)
 // Each claimer (User) can have many claims
 User.hasMany(Claim, {foreignKey: 'claimerId'});
@@ -39,10 +39,6 @@ User.hasMany(Claim, {foreignKey: 'claimerId'});
 // Each Item can have many claims
 Item.hasMany(Claim, {foreignKey: 'itemId'});
 Claim.belongsTo(Item);
-
-// Each claim can have one receipt (Foreign key is stored on the receipt)
-Claim.hasOne(Receipt, {foreignKey: 'claimId'});
-Receipt.belongsTo(Claim);
 
 
 
