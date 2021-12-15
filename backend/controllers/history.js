@@ -80,9 +80,30 @@ const postReceiptHis = async (req, res) => {
   });
 };
 
+const delist = async (req, res) => {
+  const itemId = req.query.itemId;
+  await Item.destroy({
+    where: {
+      id: itemId
+    }
+  })
+  .then(data => {
+    res.status(204).json(`Succesfully deleted item ${itemId}`)
+  })
+  .catch(err => {
+    res.status(500).json('Error delist the item', err)
+  })
+}
+
+const unclaim = () => {
+
+}
+
 module.exports = {
   getDonateHis,
   getClaimHis,
   getReceiptHis,
-  postReceiptHis
+  postReceiptHis,
+  unclaim,
+  delist
 };
