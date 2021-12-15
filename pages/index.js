@@ -31,7 +31,6 @@ const HomePage = (props) => {
 
   useEffect(updateList,[itemList]);
 
-
   const ChangeView = (input) => {
     setView(input);
   }
@@ -101,45 +100,47 @@ const HomePage = (props) => {
   const [itemsPerPage, setItemsPerPage] = useState(8);
 
   // formula for determining which items should be viewable based on current page and number of itemsPerPage
-  const viewableItems = itemList.slice((page * itemsPerPage) - itemsPerPage, page * itemsPerPage);
+
+  //apply filter list to pagination, filterlist default as itemList.
+  const viewableItems = filterItems.slice((page * itemsPerPage) - itemsPerPage, page * itemsPerPage);
 
   const changePage = number => setPage(number);
 
   // ~~~~~~~~~~~~~~~ Pagination End ~~~~~~~~~~~~~~~~~~~~
 
 
-    return (
-      <div>
-        <LoadScript googleMapsApiKey={process.env.mapAPI}>
-          <Container>
-            <Row>
-              <Col md="auto">
-                <Button onClick={handleClick}>filter</Button>
-                <Offcanvas show={showFilter} onHide={closeFilter} >
-                  <Offcanvas.Header closeButton></Offcanvas.Header>
-                  <FilterList handleFilter={handleFilter}/>
-                </Offcanvas>
-              </Col>
-
-              <Col>
-                <Search />
-              </Col>
-
-              <Col xs lg="2">
-                {view === 'list'
-                  ? <FaMapMarkedAlt size='40' onClick={() => ChangeView('map')} />
-                  : <RiLayoutGridFill size='40' onClick={() => ChangeView('list')} />}
-              </Col>
-            </Row>
-            <Col>
-              {view === 'map' && <MapView />}
-              <ListView viewableItems={viewableItems} filterItems={filterItems}/>
-              <PageSelector itemsPerPage={itemsPerPage} itemsTotal={itemList.length} changePage={changePage}/>
+  return (
+    <div>
+      <LoadScript googleMapsApiKey={process.env.mapAPI}>
+        <Container>
+          <Row>
+            <Col md="auto">
+              <Button onClick={handleClick}>filter</Button>
+              <Offcanvas show={showFilter} onHide={closeFilter} >
+                <Offcanvas.Header closeButton></Offcanvas.Header>
+                <FilterList handleFilter={handleFilter}/>
+              </Offcanvas>
             </Col>
-          </Container>
-        </LoadScript>
-      </div>
-    )
+
+            <Col>
+              <Search />
+            </Col>
+
+            <Col xs lg="2">
+              {view === 'list'
+                ? <FaMapMarkedAlt size='40' onClick={() => ChangeView('map')} />
+                : <RiLayoutGridFill size='40' onClick={() => ChangeView('list')} />}
+            </Col>
+          </Row>
+          <Col>
+            {view === 'map' && <MapView viewableItems={viewableItems} currentLocation={currentLocation}/>}
+            <ListView viewableItems={viewableItems} filterItems={filterItems}/>
+            <PageSelector itemsPerPage={itemsPerPage} itemsTotal={itemList.length} changePage={changePage}/>
+          </Col>
+        </Container>
+      </LoadScript>
+    </div>
+  )
 }
 
 export default HomePage;
