@@ -1,10 +1,11 @@
 import { useState, useContext } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router'
-import { Container, Col, Form, Button, Image, Modal } from 'react-bootstrap';
+import { Container, Col, Form, Button, Image, Modal, Row, Offcanvas } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import ItemContext from '../../context/item/ItemContext';
+import NaviBar from '../../components/NaviBar.js';
 
 const PostItem = (props) => {
   const { currentLocation, createItem, isPosted } = useContext(ItemContext);
@@ -21,6 +22,10 @@ const PostItem = (props) => {
   const [locationInput, setLocationInput] = useState('');
   const openModal = () => setShow(true);
   const closeModal = () => setShow(false);
+
+  const [showNavi, setNavi] = useState(false);
+  const naviShow = () => setNavi(!showNavi);
+  const closeNavi = () => setNavi(false);
 
   const handlePost = (e) => {
     e.preventDefault();
@@ -53,6 +58,18 @@ const PostItem = (props) => {
   return (
     <div>
       <Container>
+      <Row className="header">
+            <Col>
+              <img className="home-page-logo" src='/Chads_list_2.svg' width='300' height='100' />
+            </Col>
+            <Col className="home-page-buttons">
+              <img id="hamburger-menu-home-page" onClick={naviShow} src='/dropdown_menu.svg' width='50' height='50' />
+              <Offcanvas placement='end' show={showNavi} onHide={closeNavi} >
+                <Offcanvas.Header closeButton></Offcanvas.Header>
+                <NaviBar close={closeNavi}/>
+              </Offcanvas>
+            </Col>
+        </Row>
         <Col>
           <br></br>
           <h2>Post an Item</h2>
