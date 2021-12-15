@@ -10,7 +10,7 @@ const ListView = ({filterItems}) => {
 
   return (
     <div>
-      <Container>
+      <Container className="list-container">
       <Row sm={4} md={4}>
           {filterItems.map((item, index) =>
           (
