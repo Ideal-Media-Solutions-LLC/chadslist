@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const { google } = require('googleapis');
 const authRoutes = require('./routes/authRoutes.js');
 const claimRoutes = require('./routes/claimRoutes.js');
 const addItemRoutes = require('./routes/addItemRoutes.js');
@@ -29,6 +30,10 @@ app.get('/history/*', historyRoutes);
 app.get('/', (req, res) => {
   res.send('Hello World!');
 });
+
+app.get('/test', (req, res) => {
+
+})
 
 io.on('connection', function(socket){
   console.log('A user connected');
