@@ -24,10 +24,11 @@ const ChatState = (props) => {
 
   const [state, dispatch] = useReducer(ChatReducer, initialState)
 
-  const getMessages = (senderId, receiverId) => {
+  const getMessages = (senderId, receiverId, id) => {
     axios.post(API_URL, {
       senderId,
-      receiverId
+      receiverId,
+      id
     })
     .then((result) => {
         dispatch({

@@ -5,7 +5,7 @@ const { Op } = require('sequelize');
 
 
 const startChat = (req, res) => {
-  const { senderId, receiverId } = req.body;
+  const { senderId, receiverId, id } = req.body;
   //query for conversation based on IDs
   console.log(senderId, receiverId)
   const smallerId = senderId > receiverId ? receiverId : senderId
@@ -43,7 +43,8 @@ const startChat = (req, res) => {
     } else {
       Conversation.create({
         smallerId,
-        largerId
+        largerId,
+        itemId: id
       }).then((result) => {
         return res.json({ conversationId: result.dataValues.id, data: [] });
       })
