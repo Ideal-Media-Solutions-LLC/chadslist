@@ -17,6 +17,7 @@
   flex-direction: row;
   align-items: center;
   height: 50px;
+  width: 100%;
 }
 
 .chat-row-text {
@@ -40,5 +41,13 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  border-top: 1px solid black;
+  background-color: rgb(238, 237, 237);
+  height: 100vh;
+  border-radius: 20px 20px 0 0;
+  /* border-top: 1px solid black; */
+}
+
+.inbox {
+  margin-left: 23px;
+  margin-top: 20px;
 }

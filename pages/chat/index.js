@@ -21,7 +21,7 @@ const ChatPage = () => {
     return (
       <>
       <Container className="chat-container"fluid="md">
-      <div>Inbox</div>
+      <div className="inbox">Inbox</div>
         {messagePageList.map((message) => (
           <ChatRow message={message} userId={user.id} />
         ))}
