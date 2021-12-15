@@ -1,15 +1,16 @@
-import { Nav, Button, Navbar, InputGroup } from 'react-bootstrap';
+import { Nav, InputGroup } from 'react-bootstrap';
 import Image from 'next/image';
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import ItemContext from '../context/item/ItemContext';
 
-const Filter = ({filter}) => {
+const Filter = ({filter, handleFilter}) => {
 
   return (
     <>
       <InputGroup>
         <Image src={filter.src} width='40' height='40' />
-        <Nav.Link >{filter.category}</Nav.Link>
+        <Nav.Link onClick={() =>handleFilter(filter.category)}>{filter.category}</Nav.Link>
       </InputGroup>
     </>
   )

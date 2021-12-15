@@ -20,6 +20,17 @@ const HomePage = (props) => {
   const { getItemsInRadius, itemList } = useContext(ItemContext)
   const SF_LOCATION = { lat: 37.962882809573145, lng: -122.57822275079111}
   const [currentLocation, setCurrentLocation] = useState(SF_LOCATION)
+  const [filterItems, setFilterItems] = useState([])
+
+  const updateList = () => {
+    if(itemList.length > 0){
+      setFilterItems(itemList)
+    }
+  }
+
+
+  useEffect(updateList,[itemList]);
+
 
   const ChangeView = (input) => {
     setView(input);
@@ -28,6 +39,10 @@ const HomePage = (props) => {
   const handleClick = () => setFilter(!showFilter)
   const closeFilter = () => setFilter(false)
 
+  const handleFilter = (category) => {
+    let results = itemList.filter(item => item.category === category )
+    setFilterItems(results)
+  }
 
   const getLocationFromAddress = (address) => {
     address = address || 'New York City'; //TODO: Remove default in Production
@@ -93,38 +108,38 @@ const HomePage = (props) => {
   // ~~~~~~~~~~~~~~~ Pagination End ~~~~~~~~~~~~~~~~~~~~
 
 
-  return (
-    <div>
-      <LoadScript googleMapsApiKey={process.env.mapAPI}>
-        <Container>
-          <Row>
-            <Col md="auto">
-              <Button onClick={handleClick}>filter</Button>
-              <Offcanvas show={showFilter} onHide={closeFilter} >
-                <Offcanvas.Header closeButton></Offcanvas.Header>
-                <FilterList />
-              </Offcanvas>
-            </Col>
+    return (
+      <div>
+        <LoadScript googleMapsApiKey={process.env.mapAPI}>
+          <Container>
+            <Row>
+              <Col md="auto">
+                <Button onClick={handleClick}>filter</Button>
+                <Offcanvas show={showFilter} onHide={closeFilter} >
+                  <Offcanvas.Header closeButton></Offcanvas.Header>
+                  <FilterList handleFilter={handleFilter}/>
+                </Offcanvas>
+              </Col>
 
+              <Col>
+                <Search />
+              </Col>
+
+              <Col xs lg="2">
+                {view === 'list'
+                  ? <FaMapMarkedAlt size='40' onClick={() => ChangeView('map')} />
+                  : <RiLayoutGridFill size='40' onClick={() => ChangeView('list')} />}
+              </Col>
+            </Row>
             <Col>
-              <Search />
+              {view === 'map' && <MapView />}
+              <ListView viewableItems={viewableItems} filterItems={filterItems}/>
+              <PageSelector itemsPerPage={itemsPerPage} itemsTotal={itemList.length} changePage={changePage}/>
             </Col>
-
-            <Col xs lg="2">
-              {view === 'list'
-                ? <FaMapMarkedAlt size='40' onClick={() => ChangeView('map')} />
-                : <RiLayoutGridFill size='40' onClick={() => ChangeView('list')} />}
-            </Col>
-          </Row>
-          <Col>
-            {view === 'map' && <MapView viewableItems={viewableItems} currentLocation={currentLocation}/>}
-            <ListView viewableItems={viewableItems}/>
-            <PageSelector itemsPerPage={itemsPerPage} itemsTotal={itemList.length} changePage={changePage}/>
-          </Col>
-        </Container>
-      </LoadScript>
-    </div>
-  )
+          </Container>
+        </LoadScript>
+      </div>
+    )
 }
 
 export default HomePage;
