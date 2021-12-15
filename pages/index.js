@@ -20,6 +20,16 @@ const HomePage = (props) => {
   const { getItemsInRadius, itemList } = useContext(ItemContext)
   const SF_LOCATION = { lat: 37.962882809573145, lng: -122.57822275079111}
   const [currentLocation, setCurrentLocation] = useState(SF_LOCATION)
+  const [filterItems, setFilterItems] = useState([])
+
+  const updateList = () => {
+    if(itemList.length > 0){
+      setFilterItems(itemList)
+    }
+  }
+
+
+  useEffect(updateList,[itemList]);
 
   const ChangeView = (input) => {
     setView(input);
@@ -28,6 +38,10 @@ const HomePage = (props) => {
   const handleClick = () => setFilter(!showFilter)
   const closeFilter = () => setFilter(false)
 
+  const handleFilter = (category) => {
+    let results = itemList.filter(item => item.category === category )
+    setFilterItems(results)
+  }
 
   const getLocationFromAddress = (address) => {
     address = address || 'New York City'; //TODO: Remove default in Production
@@ -86,7 +100,9 @@ const HomePage = (props) => {
   const [itemsPerPage, setItemsPerPage] = useState(8);
 
   // formula for determining which items should be viewable based on current page and number of itemsPerPage
-  const viewableItems = itemList.slice((page * itemsPerPage) - itemsPerPage, page * itemsPerPage);
+
+  //apply filter list to pagination, filterlist default as itemList.
+  const viewableItems = filterItems.slice((page * itemsPerPage) - itemsPerPage, page * itemsPerPage);
 
   const changePage = number => setPage(number);
 
@@ -102,7 +118,7 @@ const HomePage = (props) => {
               <Button onClick={handleClick}>filter</Button>
               <Offcanvas show={showFilter} onHide={closeFilter} >
                 <Offcanvas.Header closeButton></Offcanvas.Header>
-                <FilterList />
+                <FilterList handleFilter={handleFilter}/>
               </Offcanvas>
             </Col>
 
@@ -118,7 +134,7 @@ const HomePage = (props) => {
           </Row>
           <Col>
             {view === 'map' && <MapView viewableItems={viewableItems} currentLocation={currentLocation}/>}
-            <ListView viewableItems={viewableItems}/>
+            <ListView viewableItems={viewableItems} filterItems={filterItems}/>
             <PageSelector itemsPerPage={itemsPerPage} itemsTotal={itemList.length} changePage={changePage}/>
           </Col>
         </Container>

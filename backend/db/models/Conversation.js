@@ -40,16 +40,8 @@ const Conversation = sequelize.define('conversation', {
 User.hasMany(Conversation, {as: 'Smaller', foreignKey: 'smallerId'})
 User.hasMany(Conversation, {as: 'Larger', foreignKey: 'largerId'})
 
-Conversation.belongsTo(User, { targetKey: 'id', foreignKey: 'smallerId'})
-Conversation.belongsTo(User, { targetKey: 'id', foreignKey: 'largerId'})
+Conversation.belongsTo(User, { as: 'Smaller', targetKey: 'id', foreignKey: 'smallerId'})
+Conversation.belongsTo(User, { as: 'Larger', targetKey: 'id', foreignKey: 'largerId'})
 
-// const test = async () => {
-//   let conversation = await Conversation.findByPk(2, {
-//     include: ['Smaller', 'Larger']
-//   })
-//   debugger;
-// }
-
-// test();
 
 module.exports = Conversation;

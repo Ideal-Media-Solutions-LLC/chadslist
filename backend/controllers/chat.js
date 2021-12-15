@@ -96,9 +96,32 @@ const getAllMessages = (req, res) => {
         { largerId: req.params.id }
       ]
     },
-    include: User
+    include: [{
+      model: User,
+      as: 'Smaller',
+      where: {
+        id: {
+          [Op.ne]: req.params.id
+        }
+      },
+      required: false
+    }, {
+      model: User,
+      as: 'Larger',
+      where: {
+        id: {
+          [Op.ne]: req.params.id
+        }
+      },
+      required: false
+    }]
   })
   .then((result) => {
+    for (var conversation of result) {
+      conversation.dataValues.user = conversation.Smaller || conversation.Larger;
+      delete conversation.dataValues.Larger;
+      delete conversation.dataValues.Smaller;
+    }
     res.json(result)
   })
   .catch((err) => {
