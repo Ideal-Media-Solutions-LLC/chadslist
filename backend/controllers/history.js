@@ -69,9 +69,9 @@ const getReceiptHis = async (req, res) => {
    });
 };
 const postReceiptHis = async (req, res) => {
-  const { claimId, donorId, condition, value, itemId } = req.body;
+  const { claimId, donorId, condition, value, itemId, userId } = req.body;
   debugger;
-  await Receipt.create({ claimId, donorId, condition, value, itemId })
+  await Receipt.create({ claimId, donorId, condition, value, itemId, userId })
   .then(() => {
     res.status(201).end();
   })
