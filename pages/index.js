@@ -131,8 +131,8 @@ const HomePage = (props) => {
             </Col>
             <Col className="home-page-buttons">
               <div className="avatar-header-row" onClick={naviShow}>
-                <Avatar alt="Travis Howard" src={user.photoUrl} style={{ height: '50px', width: '50px', marginRight: '10px' }}/>
-                <p>{user.userName}</p>
+                <Avatar alt="Travis Howard" src={user.photoUrl} style={{ height: '50px', width: '50px', marginRight: '12px' }}/>
+                <p style={{ marginTop: '6px', fontWeight: 'bold'}}>{user.userName}</p>
               </div>
 
               {/* <img id="hamburger-menu-home-page" onClick={naviShow} src='/dropdown_menu.svg' width='50' height='50' /> */}

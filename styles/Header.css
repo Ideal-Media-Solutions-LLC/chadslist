@@ -80,7 +80,10 @@
   flex-direction: row;
   align-items: center;
   margin-right: 20px;
-  padding: 15px 10px 15px 10px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-right: 20px;
+  padding-left: 20px;
   border-radius: 25%;
 }
 
