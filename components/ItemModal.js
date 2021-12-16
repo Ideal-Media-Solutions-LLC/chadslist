@@ -5,12 +5,23 @@ import ItemView from './ItemView';
 const ItemModal = ({ data, onHistClick, page, revoke, toggleModal }) => {
   const [show, setShow] = useState(true);
 
-  return (
-    <Modal centered show={show} size='md' onHide={() => {setShow(!show); toggleModal(); if (page === 'history') {onHistClick()}}}>
+
+  if (page === 'history') {
+    return (
+      <Modal centered show={show} size='md' onHide={() => {setShow(!show); {page === 'history' && toggleModal();  onHistClick()}}}>
         <Modal.Header closeButton></Modal.Header>
         <ItemView data={data} currentPage={page} revoke={revoke}/>
     </Modal>
-  )
+    )
+  } else {
+    return (
+      <Modal centered show={show} size='md' onHide={() => {setShow(!show)}}>
+          <Modal.Header closeButton></Modal.Header>
+          <ItemView data={data} currentPage={page} revoke={revoke}/>
+      </Modal>
+    )
+  }
+
 }
 
 export default ItemModal

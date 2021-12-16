@@ -4,7 +4,7 @@ import { InputGroup, Button, FormControl, Form, Popover, Container, Row, Col, Mo
 import MessageView from './MessageView.js';
 import io from "socket.io-client";
 const socket = io.connect("http://localhost:3200");
-import Avatar from '@mui/material/Avatar';
+// import Avatar from '@mui/material/Avatar';
 import Badge from './Badge.js';
 import moment from 'moment'
 

@@ -3,6 +3,7 @@ import MessageView from './MessageView.js';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
+import ItemContext from '../context/item/ItemContext';
 import ChatContext from '../context/chat/ChatContext';
 import AuthContext from '../context/auth/AuthContext';
 import io from "socket.io-client";
@@ -12,6 +13,7 @@ const ItemView = ({ data, currentPage, revoke }) => {
   const { id, name, imageUrl, category, description, status, donorId } = data;
   const { getMessages, conversationId } = useContext(ChatContext);
   const { user } = useContext(AuthContext);
+  const {item} = useContext(ItemContext);
   const [Message, setMessage] = useState (false);
   const showMessage = () => setMessage(true);
   const closeMessage = () => setMessage(false);
@@ -42,11 +44,10 @@ const ItemView = ({ data, currentPage, revoke }) => {
   }
 
   const handleClaimClick = () => {
+
     axios.post('http://localhost:3001/claim', {
-      claimerId: '',
-      itemId: '',
-      status: '',
-      UserId: '',
+      claimantId: user.id,
+      itemId: data.id,
     })
     .then(() => console.log('claim success'))
     .catch(err => console.log('claim err', err));
@@ -55,9 +56,7 @@ const ItemView = ({ data, currentPage, revoke }) => {
   }
 
     const joinRoom = () => {
-      // if(!conversationId) {
-      //   conversationId = 0
-      // }
+
 
       socket.emit("join_chat", conversationId)
     }
@@ -68,9 +67,9 @@ const ItemView = ({ data, currentPage, revoke }) => {
   Results may include a Google 'Plus Code' due to the mock data point
   locations of items being in places that have no proper address.
   */
-   useEffect( () => {
-    const geocoder = new google.maps.Geocoder();
+  const geocoder = new google.maps.Geocoder();
 
+  useEffect( () => {
     geocoder.geocode({location: {
       lat: data.latitude,
       lng: data.longitude
@@ -83,6 +82,7 @@ const ItemView = ({ data, currentPage, revoke }) => {
     })}, [data])
 
 
+  console.log(data);
   return (
     <>
       <Card style={{ width: '24.9rem' }}>
