@@ -7,6 +7,7 @@ import ItemView from './ItemView.js'
 function MapView({viewableItems, currentLocation}) {
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [isSelected, setIsSelected] = useState(false);
+  const [map, setMap] = useState(null)
   const [markers, setMarkers] = useState({}) //objects to interact with GoogleMaps API
 
 
@@ -19,7 +20,7 @@ function MapView({viewableItems, currentLocation}) {
   };
 
   const infoWindowStyle = {
-    'object-fit': 'contain',
+    'objectFit': 'contain',
     width: '10vh',
     height: '10vh',
   }
@@ -41,8 +42,23 @@ function MapView({viewableItems, currentLocation}) {
 
   useEffect( () => {
     setSelectedMarker(null)
+    console.log('MAP', map)
+
+    let bounds = new google.maps.LatLngBounds();
+    for (let i = 0; i < Object.entries(markers).length; i++) {
+      console.log('MARKER', markers)
+      bounds.extend(markers[i].getPosition());
+    }
+
+    if(map){
+      map.fitBounds(bounds)
+
+    }
     }, [viewableItems]
+
+
   )
+
 
 
   return (
@@ -51,6 +67,7 @@ function MapView({viewableItems, currentLocation}) {
         mapContainerStyle={mapContainerStyle}
         center={currentLocation}
         zoom={13}
+        onLoad={(map) => setMap(map)}
         options={{
           disableDefaultUI: true,
           zoomControl: true,
