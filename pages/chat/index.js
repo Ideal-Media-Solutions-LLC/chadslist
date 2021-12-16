@@ -6,6 +6,7 @@ import MessageView from '../../components/MessageView';
 import ChatRow from '../../components/ChatRow';
 import AuthContext from '../../context/auth/AuthContext';
 import Avatar from '@mui/material/Avatar';
+import Loader from '../../components/Loader'
 
 const ChatPage = () => {
   const { user } = useContext(AuthContext)
@@ -21,7 +22,7 @@ const ChatPage = () => {
   const closeNavi = () => setNavi(false);
 
   if (loading) {
-    return <p>...Loading</p>
+    return <Loader />
   } else {
     return (
       <>
