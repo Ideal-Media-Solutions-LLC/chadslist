@@ -3,6 +3,7 @@ const Claim = require('../db/models/Claim.js');
 const Item = require('../db/models/Item.js');
 const claim = async (req, res) => {
   const claimerId = req.body.claimantId;
+  console.log(claimerId);
   const itemId = req.body.itemId;
   const status = 'claimed';
   const claim = await Claim.create({ claimerId, itemId, status })
