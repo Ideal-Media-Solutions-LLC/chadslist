@@ -2,6 +2,7 @@ import { Card, Container, Row, Col, Modal, Image } from 'react-bootstrap';
 import { useState } from 'react';
 import ItemModal from './ItemModal';
 import ItemView from './ItemView';
+import { Heart } from '../Public/heart.svg'
 
 const ItemCard = ({ data }) => {
   const { name, imageUrl } = data;
@@ -9,14 +10,15 @@ const ItemCard = ({ data }) => {
 
   return (
     <>
-      <Col className="card-tile" key="1" md={5}>
-        <Card onClick={() => setShow(!show)} style={{ width: '18rem' }}>
-          <Card.Img variant="top" src={imageUrl} alt='Image Loading'/>
+      <div className="card-tile-container" >
+        <Card className="card-tile" onClick={() => setShow(!show)} style={{ width: '20rem' }}>
+        <Card.Img variant="top" src={imageUrl} />
+         {/* { imageUrl ? <Card.Img variant="top" src={imageUrl} /> : <Card.Img variant="top" src="/heart.svg"/> } */}
           <Card.Body>
             <Card.Title>{name}</Card.Title>
           </Card.Body>
         </Card>
-      </Col>
+      </div>
       {!show ? null : <ItemModal data={data} page='main'/>}
     </>
   )

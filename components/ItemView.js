@@ -62,16 +62,14 @@ const ItemView = ({ data, currentPage, revoke }) => {
   console.log(data);
   return (
     <>
-      <Card style={{ width: '24.9rem' }}>
+      <Card style={{ width: '100%' }}>
         <Card.Img variant="top" src={imageUrl} />
         <Card.Body>
-          <Card.Title>{name}</Card.Title>
-          <Card.Text>Value</Card.Text>
-          <Card.Text>Location</Card.Text>
 
+          <div className="card-button-row">
           {
             page !== 'history' &&
-            <Button variant={isClaim? "secondary":"primary"} onClick={handleClaimClick}>{isClaim? "Unclaim":"Claim"}</Button>}
+            <Button style={{ marginRight: '10px'}} variant={isClaim? "secondary":"primary"} onClick={handleClaimClick}>{isClaim? "Unclaim":"Claim"}</Button>}
           {
             page !== 'history' &&
             <Button onClick={() => {
@@ -80,7 +78,12 @@ const ItemView = ({ data, currentPage, revoke }) => {
               getMessages(user.id, donorId, id);
               }} variant="primary">Message</Button>
           }
+          </div>
 
+          <div className="card-modal-description">
+          <Card.Title>{name}</Card.Title>
+            {/* <Card.Text>Value</Card.Text> */}
+            {/* <Card.Text>Location</Card.Text> */}
           {
             (revoke === 'Unclaim' && histClaim) &&
             <Button variant="primary" onClick={handleHistClaim}>Unclaim</Button>
@@ -106,6 +109,7 @@ const ItemView = ({ data, currentPage, revoke }) => {
           <Card.Text>
             {description}
           </Card.Text>
+          </div>
         </Card.Body>
       </Card>
 

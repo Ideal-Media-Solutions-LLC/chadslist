@@ -69,12 +69,6 @@
   margin: auto;
 }
 
-.card-tile {
-  display: flex;
-  justify-content: center;
-  margin: auto;
-}
-
 .avatar-header-row {
   display: flex;
   flex-direction: row;
