@@ -1,7 +1,7 @@
 import { Button, Card, CloseButton, Modal } from 'react-bootstrap';
 import MessageView from './MessageView.js';
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import ItemContext from '../context/item/ItemContext';
 import ChatContext from '../context/chat/ChatContext';
@@ -21,6 +21,7 @@ const ItemView = ({ data, currentPage, revoke }) => {
   const [histClaim, setHistClaim] = useState(true);
   const [histList, setHistList] = useState(true);
   const [page, setPage] = useState(currentPage);
+  const [address, setAddress] = useState('')
 
   const handleHistClaim = (e) => {
     axios.put(`http://localhost:3001/history/claims?itemId=${id}`)
@@ -59,6 +60,28 @@ const ItemView = ({ data, currentPage, revoke }) => {
 
       socket.emit("join_chat", conversationId)
     }
+
+
+  /*
+  Converts location coordinates to Human Readable address string
+  Results may include a Google 'Plus Code' due to the mock data point
+  locations of items being in places that have no proper address.
+  */
+  const geocoder = new google.maps.Geocoder();
+
+  useEffect( () => {
+    geocoder.geocode({location: {
+      lat: data.latitude,
+      lng: data.longitude
+    }})
+    .then( response => {
+      console.log(response)
+      if (response.results[1]) {
+       setAddress(response.results[1].formatted_address)
+      }
+    })}, [data])
+
+
   console.log(data);
   return (
     <>
@@ -67,7 +90,7 @@ const ItemView = ({ data, currentPage, revoke }) => {
         <Card.Body>
           <Card.Title>{name}</Card.Title>
           <Card.Text>Value</Card.Text>
-          <Card.Text>Location</Card.Text>
+          <Card.Text>{address}</Card.Text>
 
           {
             page !== 'history' &&
