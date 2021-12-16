@@ -52,3 +52,6 @@ pids
 
 # Google Calendar Config
 apiGoogleConfig.json
+token.json
+credentials.json
+client_secret.json

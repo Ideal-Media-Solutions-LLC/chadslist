@@ -1,9 +1,10 @@
 const fs = require('fs');
 const readline = require('readline');
-const {google} = require('googleapis');
+const { google } = require('googleapis');
+const { primaryKeyAttribute } = require('./db/models/User');
 
 // If modifying these scopes, delete token.json.
-const SCOPES = ['https://www.googleapis.com/auth/calendar.readonly'];
+const SCOPES = ['https://www.googleapis.com/auth/calendar.readonly', 'https://www.googleapis.com/auth/calendar.events'];
 // The file token.json stores the user's access and refresh tokens, and is
 // created automatically when the authorization flow completes for the first
 // time.
@@ -24,11 +25,6 @@ fs.readFile('credentials.json', (err, content) => {
  */
 function authorize(credentials, callback) {
   const {client_secret, client_id, redirect_uris} = credentials.installed;
-  console.log(redirect_uris);
-  console.log(client_secret);
-  console.log(client_id);
-  console.log(credentials);
-  console.log(credentials.installed);
   const oAuth2Client = new google.auth.OAuth2(
       client_id, client_secret, redirect_uris[0]);
 
@@ -95,5 +91,19 @@ function listEvents(auth) {
     } else {
       console.log('No upcoming events found.');
     }
+  });
+  calendar.events.insert({
+    calendarId: 'primary',
+    requestBody: {
+      start:{
+        date: '2021-12-15'
+      },
+      end:{
+        date: '2021-12-16'
+      },
+      summary: 'Toy Problem Status Weewoo',
+    },
+  }).then((data) => {
+    console.log(data);
   });
 }
