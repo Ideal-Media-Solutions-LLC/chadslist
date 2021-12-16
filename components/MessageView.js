@@ -2,21 +2,21 @@ import { useState, useEffect, useContext } from 'react';
 import { InputGroup, Button, FormControl, Form, Popover, Row } from 'react-bootstrap';
 import axios from 'axios';
 import ChatContext from '../context/chat/ChatContext';
+import Loader from './Loader.js';
 // import AuthContext from '../context/auth/AuthContext';
 
 import ChatMsg from '@mui-treasury/components/chatMsg/ChatMsg';
 
 const API_URL = 'http://localhost:3001/chat'
 
-const MessageView = ({socket, sender, receiver, id }) => {
-  const { savedMessages, createMessage } = useContext(ChatContext);
+const MessageView = ({socket, sender, receiver, id, photoUrl }) => {
+  const { loading, savedMessages, createMessage, addMessage, setLoading } = useContext(ChatContext);
   const [message, setMessage] = useState('');
-  const [messageList, setMessageList] = useState([]);
-  // const [savedMessages, setSavedMessages] = useState([]);
-
+  const [messageList, setMessageList] = useState(null);
   const getMessages = () => {
     socket.on('receive_msg', data => {
       setMessageList((messageList) => [...messageList, data])
+      // addMessage(data)
     })
   }
 
@@ -24,14 +24,24 @@ const MessageView = ({socket, sender, receiver, id }) => {
     getMessages()
   }, [socket]);
 
+  // useEffect(() => {
+  //   // if(savedMessages) {
+  //   // setMessageList(savedMessages);
+  //   // }
+  //   // if(savedMessages) {
+  //   // setMessageList(savedMessages)
+  //   // }
+  //   // setLoading()
+  // },[id])
+
   useEffect(() => {
     if(savedMessages) {
-    setMessageList(savedMessages);
+      setMessageList(savedMessages)
     }
-  },[])
+  }, [savedMessages])
 
   const sendMsg = async (e) => {
-    console.log('invoked', message);
+
     e.preventDefault();
     if (message !== '') {
       const messageData = {
@@ -44,18 +54,18 @@ const MessageView = ({socket, sender, receiver, id }) => {
 
       createMessage(sender, receiver, message)
       setMessageList((messageList) => [...messageList, messageData])
-
+      // addMessage(messageData)
       setMessage('');
     }
   }
 
-  if (!messageList) {
-    return <p>...Loading</p>
+  if (loading) {
+    return <Loader />
   } else {
   return (
     <div>
       <div>
-        {messageList && messageList.map((msg) => msg.userId === sender ? <ChatMsg side={'right'} messages={[msg.message]}/> : <ChatMsg messages={[msg.message]}/>)}
+        {messageList && messageList.map((msg) => msg.userId === sender ? <ChatMsg side={'right'} messages={[msg.message]}/> : <ChatMsg avatar={photoUrl} messages={[msg.message]}/>)}
       </div>
 
       {/* input bar */}

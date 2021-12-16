@@ -22,21 +22,31 @@ const ItemState = (props) => {
   const { user } = useContext(AuthContext);
   const [state, dispatch] = useReducer(ItemReducer, initialState)
 
-  const getItemsInRadius = (lat = 10, lng = 10) => {
+  const getItemsInRadius = (lat = 40.72557420158411, lng = -74.01148541130824, radius) => {
     // FOR LATER: need to have dynamic input for radius for user
 
     // axios.get(`${API_URL}/?userId=${user.id}&radius=10&latitude=${lat}&longitude=${lng}`)
 
-    axios.get(`${API_URL}/?radius=10&latitude=${lat}&longitude=${lng}`)
+    axios.get(`${API_URL}/?radius=${radius}&latitude=${lat}&longitude=${lng}`)
     .then((result) => {
-      const newObj = {
-        data: result.data,
+      const newData = result.data.map((result) => {
+        return result[1]
+      })
+
+      const obj = {
+        data: newData,
         lat: lat,
         lng: lng
       }
+
+      // const newObj = {
+      //   data: result.data,
+      //   lat: lat,
+      //   lng: lng
+      // }
       dispatch({
         type: SET_ITEM_LIST,
-        payload: newObj
+        payload: obj
       })
     })
     .catch((err) => {

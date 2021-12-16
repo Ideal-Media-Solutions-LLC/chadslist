@@ -1,10 +1,11 @@
 import { useState, useContext } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router'
-import { Container, Col, Form, Button, Image, Modal } from 'react-bootstrap';
+import { Container, Col, Form, Button, Image, Modal, Row, Offcanvas } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import ItemContext from '../../context/item/ItemContext';
+import NaviBar from '../../components/NaviBar.js';
 
 const PostItem = (props) => {
   const { currentLocation, createItem, isPosted } = useContext(ItemContext);
@@ -18,12 +19,17 @@ const PostItem = (props) => {
 
   const router = useRouter();
   const [show, setShow] = useState(false);
+  const [locationInput, setLocationInput] = useState('');
   const openModal = () => setShow(true);
   const closeModal = () => setShow(false);
 
-  const handlePost = async (e) => {
+  const [showNavi, setNavi] = useState(false);
+  const naviShow = () => setNavi(!showNavi);
+  const closeNavi = () => setNavi(false);
+
+  const handlePost = (e) => {
     e.preventDefault();
-    await createItem(form, openModal);
+    createItem(form, openModal);
 
   }
 
@@ -33,7 +39,6 @@ const PostItem = (props) => {
 
   const imageChanger = (e) => {
     let images = e.target.files[0];
-
     let url = URL.createObjectURL(images);
 
     setForm({
@@ -48,12 +53,23 @@ const PostItem = (props) => {
     } else {
       return false
     }
-
   }
 
   return (
     <div>
       <Container>
+      <Row className="header">
+            <Col>
+              <img className="home-page-logo" src='/Chads_list_2.svg' width='300' height='100' />
+            </Col>
+            <Col className="home-page-buttons">
+              <img id="hamburger-menu-home-page" onClick={naviShow} src='/dropdown_menu.svg' width='50' height='50' />
+              <Offcanvas placement='end' show={showNavi} onHide={closeNavi} >
+                <Offcanvas.Header closeButton></Offcanvas.Header>
+                <NaviBar close={closeNavi}/>
+              </Offcanvas>
+            </Col>
+        </Row>
         <Col>
           <br></br>
           <h2>Post an Item</h2>
@@ -61,7 +77,7 @@ const PostItem = (props) => {
           <Form onSubmit={handlePost}>
             <Form.Group className="mb-3" controlId="itemName">
               <Form.Label>Item Images:</Form.Label>
-              <Form.Control onChange={imageChanger} type='file' required />
+              <Form.Control onChange={imageChanger} accept='images/*' type='file' required />
             </Form.Group>
             {form.images && <img style={{ height: '70px', margin: '5px' }} src={form.images} alt=''/>}
             <Form.Group className="mb-3" controlId="itemName">
@@ -70,7 +86,7 @@ const PostItem = (props) => {
             </Form.Group>
            { !locationTracker() && <Form.Group className="mb-3" controlId="itemName">
               <Form.Label>Item Location:</Form.Label>
-              <Form.Control value={form.itemName} name="itemName" onChange={handleChange} type='textarea' required />
+              <Form.Control onChange={(e) => setLocationInput(e.target.value)} type='textarea' required />
             </Form.Group>}
             <Form.Group className="mb-3" controlId="itemName">
               <Form.Label>Item Category:</Form.Label>

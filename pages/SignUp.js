@@ -19,7 +19,6 @@ const SignUp = (props) => {
     e.preventDefault();
 
     if (form.password !== form.password2) {
-
       alert('Passwords are not matching. Try again')
     } else {
       registerUser(form)
@@ -31,7 +30,6 @@ const SignUp = (props) => {
   }
 
   const handleFileChange = (e) => {
-    console.log(URL.createObjectURL(e.target.files[0]));
     setForm({...form, photoUrl: URL.createObjectURL(e.target.files[0])});
   }
 
@@ -47,24 +45,20 @@ const SignUp = (props) => {
               <Form.Control placeholder="Upload profile picture" type="file" name="photoUrl" onChange={handleFileChange}/>
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicEmail">
-              {/* <Form.Label>Email address</Form.Label> */}
               <Form.Control type="email" placeholder="Enter email" name="email" value={form.email} onChange={handleChange} required/>
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicName">
-              {/* <Form.Label>Username</Form.Label> */}
               <Form.Control  placeholder="Your username" name="userName" value={form.userName} onChange={handleChange} required/>
             </Form.Group>
             <Form.Group className="mb-3" controlId="formGroupPassword">
-              {/* <Form.Label>Password</Form.Label> */}
               <Form.Control type="password" placeholder="Password" name="password" value={form.password} onChange={handleChange} required/>
             </Form.Group>
             <Form.Group className="mb-3">
-              {/* <Form.Label>Repeat Password</Form.Label> */}
               <Form.Control type="password" placeholder="Re-enter password" name="password2" value={form.password2} onChange={handleChange} required/>
             </Form.Group>
             <Form.Group>
               <Form.Label htmlFor="accountType">Are you a charity or an individual?</Form.Label>
-              <Form.Select className="me-sm-2" id="inlineFormCustomSelect" name="accountType" value={form.accType} onChange={handleChange} required>
+              <Form.Select className="me-sm-2" id="inlineFormCustomSelect" name="accType" value={form.accType} onChange={handleChange} required>
                 <option value="individual">Individual</option>
                 <option value="charity">Charity</option>
               </Form.Select>

@@ -1,11 +1,12 @@
 const User = require('../db/models/User');
 const Conversation = require('../db/models/Conversation');
 const Message = require('../db/models/Message');
+const Item = require('../db/models/Item');
 const { Op } = require('sequelize');
 
 
 const startChat = (req, res) => {
-  const { senderId, receiverId } = req.body;
+  const { senderId, receiverId, id } = req.body;
   //query for conversation based on IDs
   console.log(senderId, receiverId)
   const smallerId = senderId > receiverId ? receiverId : senderId
@@ -43,7 +44,8 @@ const startChat = (req, res) => {
     } else {
       Conversation.create({
         smallerId,
-        largerId
+        largerId,
+        itemId: id
       }).then((result) => {
         return res.json({ conversationId: result.dataValues.id, data: [] });
       })
@@ -96,9 +98,34 @@ const getAllMessages = (req, res) => {
         { largerId: req.params.id }
       ]
     },
-    include: User
+    include: [{
+      model: User,
+      as: 'Smaller',
+      where: {
+        id: {
+          [Op.ne]: req.params.id
+        }
+      },
+      required: false
+    }, {
+      model: User,
+      as: 'Larger',
+      where: {
+        id: {
+          [Op.ne]: req.params.id
+        }
+      },
+      required: false
+    }, {
+      model: Item
+    }]
   })
   .then((result) => {
+    for (var conversation of result) {
+      conversation.dataValues.user = conversation.Smaller || conversation.Larger;
+      delete conversation.dataValues.Larger;
+      delete conversation.dataValues.Smaller;
+    }
     res.json(result)
   })
   .catch((err) => {

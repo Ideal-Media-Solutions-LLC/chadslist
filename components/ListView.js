@@ -5,17 +5,16 @@ import { Card, Container, Row, Col, Modal } from 'react-bootstrap';
 import ItemContext from '../context/item/ItemContext';
 import ItemCard from './ItemCard.js';
 
-const ListView = (props) => {
+const ListView = ({viewableItems}) => {
   const { itemList } = useContext(ItemContext);
-
-
+  
   return (
     <div>
-      <Container>
+      <Container className="list-container">
       <Row sm={4} md={4}>
-          {props.viewableItems.map((item, index) =>
+          {viewableItems.map((item, index) =>
           (
-            <ItemCard data={item}/>
+            <ItemCard key={item.id} data={item}/>
           )
           )}
           </Row>

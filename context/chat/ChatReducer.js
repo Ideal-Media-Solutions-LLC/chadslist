@@ -1,7 +1,10 @@
 import {
   GET_MESSAGES,
   UPDATE_MESSAGES,
-  SET_MESSAGE_PAGE_LIST
+  SET_MESSAGE_PAGE_LIST,
+  CLEAR_SAVED_MESSAGES,
+  SET_LOADING,
+  ADD_MESSAGE
 } from '../types';
 
 export default(state, action) => {
@@ -10,7 +13,8 @@ export default(state, action) => {
       return {
         ...state,
         savedMessages: action.payload.data,
-        conversationId: action.payload.conversationId
+        conversationId: action.payload.conversationId,
+        loading: false
       }
     case UPDATE_MESSAGES:
       return {
@@ -20,7 +24,23 @@ export default(state, action) => {
     case SET_MESSAGE_PAGE_LIST:
       return {
         ...state,
-        messagePageList: action.payload
+        messagePageList: action.payload,
+        loading: false
+      }
+    case CLEAR_SAVED_MESSAGES:
+        return {
+          ...state,
+          savedMessages: action.payload
+      }
+    case SET_LOADING:
+        return {
+          ...state,
+          loading: !state.loading
+      }
+    case ADD_MESSAGE:
+        return {
+          ...state,
+          savedMessages: [...state.savedMessages, action.payload]
       }
     default:
       return state

@@ -3,7 +3,6 @@ const cors = require('cors');
 const { google } = require('googleapis');
 const authRoutes = require('./routes/authRoutes.js');
 const claimRoutes = require('./routes/claimRoutes.js');
-const addItemRoutes = require('./routes/addItemRoutes.js');
 const chatRoutes = require('./routes/chatRoutes.js');
 const itemRoutes = require('./routes/itemRoutes.js');
 const historyRoutes = require('./routes/historyRoutes.js');
@@ -23,7 +22,6 @@ app.use('/auth', authRoutes);
 app.use('/chat', chatRoutes);
 app.use('/claim', claimRoutes);
 app.use('/history', historyRoutes);
-app.post('/additem', addItemRoutes);
 app.use('/items', itemRoutes);
 app.get('/history/*', historyRoutes);
 

@@ -8,16 +8,37 @@ import AuthContext from '../context/auth/AuthContext';
 import io from "socket.io-client";
 const socket = io.connect("http://localhost:3200");
 
-const ItemView = ({ data, currentPage }) => {
-  const { name, imageUrl, category, description, status, donorId } = data;
+const ItemView = ({ data, currentPage, revoke }) => {
+  const { id, name, imageUrl, category, description, status, donorId } = data;
   const { getMessages, conversationId } = useContext(ChatContext);
   const { user } = useContext(AuthContext);
   const [Message, setMessage] = useState (false);
   const showMessage = () => setMessage(true);
   const closeMessage = () => setMessage(false);
   const [isClaim, setIsClaim] = useState(false);
+  const [histClaim, setHistClaim] = useState(true);
+  const [histList, setHistList] = useState(true);
   const [page, setPage] = useState(currentPage);
 
+  const handleHistClaim = (e) => {
+    axios.put(`http://localhost:3001/history/claims?itemId=${id}`)
+        .then(res => {
+          setHistClaim(false)
+        })
+        .catch(err => {
+          console.log('unclaim err', err)
+        })
+  }
+
+  const handleHistList = (e) => {
+    axios.delete(`http://localhost:3001/history/donations?itemId=${id}`)
+    .then(res => {
+      setHistList(false)
+    })
+    .catch(err => {
+      console.log('delist err', err)
+    })
+  }
 
   const handleClaimClick = () => {
     axios.post('http://localhost:3001/claim', {
@@ -40,7 +61,6 @@ const ItemView = ({ data, currentPage }) => {
       socket.emit("join_chat", conversationId)
     }
 
-
   return (
     <>
       <Card style={{ width: '24.9rem' }}>
@@ -51,16 +71,39 @@ const ItemView = ({ data, currentPage }) => {
           <Card.Text>Location</Card.Text>
 
           {
-            page === 'main' &&
+            page !== 'history' &&
             <Button variant={isClaim? "secondary":"primary"} onClick={handleClaimClick}>{isClaim? "Unclaim":"Claim"}</Button>}
           {
-            page === 'main' &&
+            page !== 'history' &&
             <Button onClick={() => {
               showMessage();
               joinRoom();
-              getMessages(user.id, donorId);
+              getMessages(user.id, donorId, id);
               }} variant="primary">Message</Button>
           }
+
+          {
+            (revoke === 'Unclaim' && histClaim) &&
+            <Button variant="primary" onClick={handleHistClaim}>Unclaim</Button>
+          }
+
+          {
+            !histClaim &&
+            <Button variant="secondary" disabled>
+              Unclaim
+            </Button>
+          }
+
+          {
+            (revoke === 'Delist' && histList) &&
+            <Button variant="primary" onClick={handleHistList}>Delist</Button>
+          }
+
+          {
+            !histList &&
+            <Button variant="secondary" disabled>Delist</Button>
+          }
+
           <Card.Text>
             {description}
           </Card.Text>
@@ -68,7 +111,7 @@ const ItemView = ({ data, currentPage }) => {
       </Card>
 
       <Modal centered show={Message} fullscreen={true} onHide={closeMessage} >
-        <Modal.Header closeButton>UserName</Modal.Header>
+        <Modal.Header closeButton>Chat</Modal.Header>
         {!user ? null : <MessageView sender={user.id} receiver={donorId} id={conversationId} socket={socket}/> }
       </Modal>
     </>
