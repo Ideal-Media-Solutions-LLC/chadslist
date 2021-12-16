@@ -1,12 +1,29 @@
-import { Button, Offcanvas, Nav, Navbar } from 'react-bootstrap';
+import { Button, Offcanvas, Nav, Navbar, Row, Col } from 'react-bootstrap';
+import NaviBar from '../../components/NaviBar.js';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { useState } from 'react';
 import HistoryList from '../../components/HistoryList.js';
 
 const Claims = (props) => {
 
+  const [showNavi, setNavi] = useState(false);
+  const naviShow = () => setNavi(!showNavi);
+  const closeNavi = () => setNavi(false);
+
   return (
     <>
+    <Row className="header">
+            <Col>
+              <img className="home-page-logo" src='/Chads_list_2.svg' width='300' height='100' />
+            </Col>
+            <Col className="home-page-buttons">
+              <img id="hamburger-menu-home-page" onClick={naviShow} src='/dropdown_menu.svg' width='50' height='50' />
+              <Offcanvas placement='end' show={showNavi} onHide={closeNavi} >
+                <Offcanvas.Header closeButton></Offcanvas.Header>
+                <NaviBar close={closeNavi}/>
+              </Offcanvas>
+            </Col>
+        </Row>
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
         <Navbar.Brand href="/history/claims">
           My Claims
