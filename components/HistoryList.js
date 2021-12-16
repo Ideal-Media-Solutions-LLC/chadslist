@@ -26,6 +26,7 @@ const HistListEntry = ( {item, histType, toggleModal} ) => {
   const [showModal, setShowModal] = useState(false);
   const [price, setPrice] = useState('');
   const {user} = useContext(AuthContext);
+  console.log(item);
   let itemId = item.id;
   let revokeOption;
   if (histType == 'claims' && item.status == 'claimed') {
@@ -45,12 +46,26 @@ const HistListEntry = ( {item, histType, toggleModal} ) => {
 
     let value = Number(price);
     //send request to update the database
-    axios.put('http://localhost:3001/claim', {price: value, itemId: itemId})
+    // axios.put('http://localhost:3001/claim', {price: value, itemId: itemId})
+    // .then(() => {
+    //   alert('update price ok');
+    //   setPrice('');
+    // })
+    // .catch(err => console.log(err));
+    const input = {
+      itemId: itemId,
+      donorId: item.donorId,
+      userId: user.id,
+      condition: 'good',
+      value: value
+    }
+    axios.post('http://localhost:3001/history/receipts', input)
     .then(() => {
       alert('update price ok');
       setPrice('');
     })
     .catch(err => console.log(err));
+
   }
 
 
