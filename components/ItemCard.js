@@ -6,10 +6,10 @@ import ItemView from './ItemView';
 const ItemCard = ({ data }) => {
   const { name, imageUrl } = data;
   const [show, setShow] = useState(false);
-
+  console.log(imageUrl)
   return (
     <>
-      <Col key="1" md={5}>
+      <Col className="card-tile" key="1" md={5}>
         <Card onClick={() => setShow(!show)} style={{ width: '18rem' }}>
           <Card.Img variant="top" src={imageUrl} alt='Image Loading'/>
           <Card.Body>

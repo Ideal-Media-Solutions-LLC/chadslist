@@ -1,0 +1,76 @@
+.header {
+  border-bottom: solid;
+  margin: auto;
+  margin-top: 1%;
+  margin-bottom: 2%;
+  padding: 0%;
+  width: 100%;
+  height: 100%;
+}
+
+.home-page-logo {
+  display: flex;
+  justify-content: flex-start;
+  padding-left: 0%;
+  resize: both;
+}
+
+.home-page-buttons {
+  display: flex;
+  justify-content: flex-end;
+  resize: both;
+}
+
+#hamburger-menu-home-page {
+  display: flex;
+  justify-content: flex-end;
+  height: max-content;
+  margin-top: 4.8%;
+}
+
+#signup-button-home-page{
+  background-color: #1282A2;
+  display: flex;
+  justify-content: center;
+  height: max-content;
+  margin-right: 2%;
+  margin-top: 6%;
+}
+
+#signup-button-home-page:hover {
+  text-decoration: underline;
+}
+
+#login-button-home-page{
+  background-color: #001F54;
+  display: flex;
+  justify-content: center;
+  height: max-content;
+  margin-right: 2%;
+  margin-top: 6%;
+}
+
+#login-button-home-page:hover, #login-button-redirect:hover {
+  text-decoration: underline;
+}
+
+
+#login-button-home-page:not(:disabled):not(:disabled):active {
+  background-color: #001F54;
+}
+
+#signup-button-home-page:not(:disabled):not(:disabled):active{
+  background-color: #1282A2;
+}
+
+.list-container {
+  display: flex;
+  justify-content: center;
+  margin: auto;
+}
+
+.card-tile {
+  display: flex;
+  justify-content: center;
+  margin: auto;
+}

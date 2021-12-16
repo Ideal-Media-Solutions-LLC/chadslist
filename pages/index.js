@@ -106,6 +106,10 @@ const HomePage = (props) => {
 
   const changePage = number => setPage(number);
 
+  const [showNavi, setNavi] = useState(false);
+  const naviShow = () => setNavi(!showNavi);
+  const closeNavi = () => setNavi(false);
+
   // ~~~~~~~~~~~~~~~ Pagination End ~~~~~~~~~~~~~~~~~~~~
 
 
@@ -113,9 +117,21 @@ const HomePage = (props) => {
     <div>
       <LoadScript googleMapsApiKey={process.env.mapAPI}>
         <Container>
+        <Row className="header">
+            <Col>
+              <img className="home-page-logo" src='/Chads_list_2.svg' width='300' height='100' />
+            </Col>
+            <Col className="home-page-buttons">
+              <img id="hamburger-menu-home-page" onClick={naviShow} src='/dropdown_menu.svg' width='50' height='50' />
+              <Offcanvas placement='end' show={showNavi} onHide={closeNavi} >
+                <Offcanvas.Header closeButton></Offcanvas.Header>
+                <NaviBar close={closeNavi}/>
+              </Offcanvas>
+            </Col>
+        </Row>
           <Row>
             <Col md="auto">
-              <Button onClick={handleClick}>filter</Button>
+              <Button id='filter-button' onClick={handleClick}>Filter</Button>
               <Offcanvas show={showFilter} onHide={closeFilter} >
                 <Offcanvas.Header closeButton></Offcanvas.Header>
                 <FilterList handleFilter={handleFilter}/>

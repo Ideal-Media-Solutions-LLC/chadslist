@@ -28,12 +28,12 @@ function MapView({viewableItems, currentLocation}) {
   const closeItem = () => setIsSelected(false);
 
   const mapContainerStyle = {
-    width: '85%',
-    height: '400px'
+    width: '100%',
+    height: '500px'
   };
 
   const infoWindowStyle = {
-    'objectFit': 'contain',
+    'object-fit': 'contain',
     width: '10vh',
     height: '10vh',
   }
