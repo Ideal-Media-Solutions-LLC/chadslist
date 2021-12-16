@@ -5,12 +5,11 @@ import MessageView from './MessageView.js';
 import io from "socket.io-client";
 const socket = io.connect("http://localhost:3200");
 import Avatar from '@mui/material/Avatar';
-// import Badge from '@mui/material/Badge';
 import Badge from './Badge.js';
-
+import moment from 'moment'
 
 const ChatRow = ({ message, userId }) => {
-  const { id, smallerId, largerId, item } = message;
+  const { id, smallerId, largerId, item, updatedAt } = message;
   const { getMessages, messagePageList } = useContext(ChatContext);
   const [show, setShow] = useState(false);
   const receiverId = smallerId == userId ? largerId : smallerId
@@ -24,7 +23,7 @@ const ChatRow = ({ message, userId }) => {
     id: id
   }
 
-  console.log(user, item)
+  console.log(moment(updatedAt).fromNow())
 
   const joinRoom = () => {
     socket.emit("join_chat", id)
@@ -44,8 +43,9 @@ const ChatRow = ({ message, userId }) => {
       {/* <Image src={photoUrl} roundedCircle className="chat-icon" /> */}
       <div className="chat-row-text">
         <p className="chat-username">{user.userName}</p>
-        <p>{item ? item.name : null }</p>
+        <p className="chat-item-description">{item ? item.name : null }</p>
       </div>
+      <div className="chat-time">{moment(updatedAt).fromNow()}</div>
     </div>
   </Row>
 
