@@ -6,6 +6,7 @@ import ItemView from './ItemView';
 const ItemCard = ({ data }) => {
   const { name, imageUrl } = data;
   const [show, setShow] = useState(false);
+  console.log(data.id);
 
   return (
     <>

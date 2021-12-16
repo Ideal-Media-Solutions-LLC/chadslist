@@ -71,7 +71,7 @@ const HistListEntry = ( {item, histType, toggleModal} ) => {
 const HistoryList = ( { histType } ) => {
   // need to fix the userId later;
   const {user} = useContext(AuthContext);
-  const userId = 50;
+  const userId = user.id;
   const [allHistItems, setAllHistItems] = useState(null);
   const [displayedItems, setDisplayedItems] = useState(null);
   const [searchTerm, setSearchTerm] = useState(null);
