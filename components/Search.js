@@ -6,7 +6,7 @@ import ItemContext from '../context/item/ItemContext';
 import { FaMapMarkedAlt } from "react-icons/fa";
 import { RiLayoutGridFill } from "react-icons/ri";
 
-const Search = ({ ChangeView, setCurrentLocation, handleClick}) => {
+const Search = ({ ChangeView, setCurrentLocation, handleClick, wordFilter}) => {
 
   let [searchItem, setSearchItem] = useState('');
   let [searchAddress, setSearchAddress] = useState('');
@@ -36,12 +36,16 @@ const Search = ({ ChangeView, setCurrentLocation, handleClick}) => {
     e.preventDefault()
     console.log('Submited:', searchItem, searchAddress, distance)
 
-    getLocationFromAddress(searchAddress, ((lat, lng) => {
-      getItemsInRadius(lat, lng, distance)
+    getLocationFromAddress(searchAddress, (async (lat, lng) => {
+      await getItemsInRadius(lat, lng, distance)
       setCurrentLocation({lat: lat, lng: lng})
+      wordFilter(searchItem)
     })
   )
   }
+
+
+
 
   const handleSelector = (e) =>{
     console.log('DropDown: ', e.target.value)

@@ -46,6 +46,20 @@ const HomePage = (props) => {
     setFilterItems(results)
   }
 
+  // handle filtering item by keyword via search bar
+  const wordFilter = async (input) => {
+    if(input){
+      let results = await itemList.filter(item =>item.name.toLowerCase().includes(input.toLowerCase()));
+      console.log('results',results)
+      setFilterItems(results)
+      console.log('filterItems',filterItems)
+    }else{
+      console.log('no input')
+      return
+    }
+  }
+
+
   useEffect(() => {
 
     /*TODO:
@@ -121,7 +135,7 @@ const HomePage = (props) => {
                 <FilterList setFilterTag={setFilterTag} close={closeFilter} categoryFilter={categoryFilter}/>
               </Offcanvas>
 
-              <Search ChangeView={ChangeView} setCurrentLocation={setCurrentLocation} handleClick={handleClick}/>
+              <Search ChangeView={ChangeView} setCurrentLocation={setCurrentLocation} handleClick={handleClick} wordFilter={wordFilter}/>
 
           {filterTag && <Row>
             <div>
@@ -133,7 +147,7 @@ const HomePage = (props) => {
               </Row>}
           <Col>
             {view === 'map' && <MapView viewableItems={viewableItems} currentLocation={currentLocation}/>}
-            <ListView viewableItems={viewableItems} filterItems={filterItems}/>
+            <ListView viewableItems={viewableItems}/>
             <PageSelector itemsPerPage={itemsPerPage} itemsTotal={itemList.length} changePage={changePage}/>
           </Col>
         </Container>
