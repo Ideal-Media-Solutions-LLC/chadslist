@@ -4,14 +4,13 @@ import { FaSearch} from "react-icons/fa";
 import {useState, useContext} from 'react';
 import ItemContext from '../context/item/ItemContext';
 
-const Search = ({setCurrentLocation, getLocationFromAddress}) => {
-  // let [searching, setSearching] = useState('');///
+const Search = ({setCurrentLocation, getLocationFromAddress, wordFilter, filterItems}) => {
 
   let [searchItem, setSearchItem] = useState('');
   let [searchAddress, setSearchAddress] = useState('');
-  let [distance, setDistance] = useState('')
+  let [distance, setDistance] = useState(25);
 
-  const { getItemsInRadius } = useContext(ItemContext)
+  const { getItemsInRadius, itemList } = useContext(ItemContext)
 
   const handleSearch = (e) =>{
     setSearching(e.target.value)
@@ -19,24 +18,11 @@ const Search = ({setCurrentLocation, getLocationFromAddress}) => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-
-    //Changing search location, to get the list of itemns
-    //Change the center of the map, so you see items
-    console.log('Submited:', searchItem, searchAddress, distance)
-    //transform coordinate
-    //getLocationFromAddress
-    //pass coordinate to  getItemsInRadius( )
-    //setCurrentLocation
-    getLocationFromAddress(searchAddress, ( (lat, lng) => {
-      console.log('RUNNING', lat, lng)
-      getItemsInRadius(lat, lng, distance)
-      setCurrentLocation({lat: lat, lng: lng})
-    })
-    )
-  }
-
-  const handleSelector = (e) =>{
-    console.log('DropDown: ', e.target.value)
+    getLocationFromAddress(searchAddress, (async (lat, lng) => {
+    await getItemsInRadius(lat, lng, distance)
+    setCurrentLocation({lat: lat, lng: lng})
+    wordFilter(searchItem)
+    }))
   }
 
   return (
@@ -71,46 +57,17 @@ const Search = ({setCurrentLocation, getLocationFromAddress}) => {
                 value={searchAddress}
                 onChange={(e) => setSearchAddress(e.target.value)}
               />
-
             </InputGroup>
           </Col>
+
           <Col>
           <Button type="submit">
             <FaSearch />
             </Button>
-
           </Col>
+
         </Row>
-
       </Form>
-{/*
-      <InputGroup>
-        <InputGroup.Text>Find</InputGroup.Text>
-        <FormControl
-          placeholder='Item'
-          value={searching}
-          onChange={handleSearch}
-        />
-
-        <InputGroup.Text>Near</InputGroup.Text>
-        <FormControl
-          placeholder='Address'
-        />
-        <DropdownButton
-        alignRight
-        title='Distance'
-        value={() => setDistance(value)}
-        onSelect={handleDropDown}
-        >
-          <Dropdown.Item> 1 </Dropdown.Item>
-          <Dropdown.Item value={5}> 5 </Dropdown.Item>
-          <Dropdown.Item value={10}> 10 </Dropdown.Item>
-          <Dropdown.Item value={25}> 25 </Dropdown.Item>
-        </DropdownButton>
-        <Button variant="outline-secondary">
-          <FaSearch />
-        </Button>
-      </InputGroup> */}
     </>
   )
 }
