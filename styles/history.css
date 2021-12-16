@@ -1,20 +1,56 @@
-#hist-search {
-  padding-top: 5vh;
+.page-title {
+  padding: 3% 5% 0 5%;
 }
 
+#hist-search {
+  padding: 4% 5% 0 5%;
+}
+
+#donation-receipt-btn {
+  margin: 2% 5% 3% 5%;
+  background-color: #1282A2;
+  border-color: #1282A2;
+}
+
+#donation-receipt-btn:hover {
+  text-decoration: underline;
+}
+
+#hist-list {
+  padding: 0 5% 5% 5%;
+}
 .hist-list-item {
   display: flex;
   flex-direction: row;
-  padding: 5vh 0 5vh 0;
+  padding: 3% 0 3% 0;
+  border-bottom: solid 1px;
+  border-color: #034078;
 }
 
 .hist-list-item-img {
-  width: 20%;
+  width: 30%;
 }
 
 .hist-list-item-info {
   display: flex;
   flex-direction: column;
-  padding-left: 5vh;
+  padding-left: 5%;
   width: max-content;
+  justify-content: flex-start;
+  position: relative;
+}
+
+.hist-list-item-name {
+  width: max-content;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.hist-list-item-date {
+  position: absolute;
+  bottom: 0;
+}
+
+.hist-list-item-name:hover {
+  color: #1282A2;
 }

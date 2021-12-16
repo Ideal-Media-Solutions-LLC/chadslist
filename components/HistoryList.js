@@ -26,6 +26,7 @@ const HistListEntry = ( {item, histType, toggleModal} ) => {
   const [showModal, setShowModal] = useState(false);
   const [price, setPrice] = useState('');
   const {user} = useContext(AuthContext);
+  console.log(item);
   let itemId = item.id;
   let revokeOption;
   if (histType == 'claims' && item.status == 'claimed') {
@@ -45,12 +46,26 @@ const HistListEntry = ( {item, histType, toggleModal} ) => {
 
     let value = Number(price);
     //send request to update the database
-    axios.put('http://localhost:3001/claim', {price: value, itemId: itemId})
+    // axios.put('http://localhost:3001/claim', {price: value, itemId: itemId})
+    // .then(() => {
+    //   alert('update price ok');
+    //   setPrice('');
+    // })
+    // .catch(err => console.log(err));
+    const input = {
+      itemId: itemId,
+      donorId: item.donorId,
+      userId: user.id,
+      condition: 'good',
+      value: value
+    }
+    axios.post('http://localhost:3001/history/receipts', input)
     .then(() => {
       alert('update price ok');
       setPrice('');
     })
     .catch(err => console.log(err));
+
   }
 
 
@@ -58,10 +73,10 @@ const HistListEntry = ( {item, histType, toggleModal} ) => {
     <div className='hist-list-item' id={item.id}>
       <img src={item.imageUrl} className='hist-list-item-img'/>
       <div className='hist-list-item-info'>
-        <div onClick={handleClick}>{item.name}</div>
-        <div>{(item.status).charAt(0).toUpperCase() + (item.status).slice(1)}</div>
-        <div>{moment(item.createdAt).format("MM/DD/YYYY")}</div>
-        {(user.accType === 'charity' && histType === 'claims') && <form onSubmit={updatePrice} ><input onChange={(e) => setPrice(e.target.value)} type='number' value={price} placeholder=' Edit Value'/> <input type='submit' value='update'/></form>}
+        <div className='hist-list-item-name' onClick={handleClick}>{item.name}</div>
+        <div className='hist-list-item-status'>{(item.status).charAt(0).toUpperCase() + (item.status).slice(1)}</div>
+        <div className='hist-list-item-date'>{moment(item.createdAt).format("MM/DD/YYYY")}</div>
+        {(user && user.accType === 'charity' && histType === 'claims') && <form onSubmit={updatePrice} ><input onChange={(e) => setPrice(e.target.value)} type='number' value={price} placeholder=' Edit Value'/> <input type='submit' value='update'/></form>}
       </div>
       {!showModal ? null : <ItemModal data={item} onHistClick={handleClick.bind(this)} page='history' revoke={revokeOption} toggleModal={toggleModal}/>}
     </div>
@@ -71,7 +86,7 @@ const HistListEntry = ( {item, histType, toggleModal} ) => {
 const HistoryList = ( { histType } ) => {
   // need to fix the userId later;
   const {user} = useContext(AuthContext);
-  const userId = 50;
+  const userId = user.id;
   const [allHistItems, setAllHistItems] = useState(null);
   const [displayedItems, setDisplayedItems] = useState(null);
   const [searchTerm, setSearchTerm] = useState(null);
@@ -120,14 +135,14 @@ const HistoryList = ( { histType } ) => {
     <>
       <InputGroup id='hist-search'>
         <FormControl
-          placeholder="Search my claims..."
+          placeholder={`Search my ${histType}...`}
           onChange={handleSearch}
         />
         <Button variant="outline-secondary">
           <FaSearch />
         </Button>
       </InputGroup>
-      {histType === 'donations' && <Button variant="primary">Print Receipt for Donations</Button>}
+      {histType === 'donations' && <Button className='btn' id='donation-receipt-btn' variant="primary">Print Receipt for Donations</Button>}
       <div id='hist-list'>
         {
           displayedItems &&
