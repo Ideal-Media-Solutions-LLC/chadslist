@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, useCallback } from 'react';
 import AuthContext from '../context/auth/AuthContext';
 import { Card, Container, Row, Col, Modal, Button, CloseButton, InputGroup, FormControl } from 'react-bootstrap';
 import axios from 'axios';
@@ -67,7 +67,7 @@ const HistListEntry = ( {item, histType} ) => {
 const HistoryList = ( { histType } ) => {
   // need to fix the userId later;
   const {user} = useContext(AuthContext);
-  const userId = 1
+  const userId = 8
   const [allHistItems, setAllHistItems] = useState(null);
   const [displayedItems, setDisplayedItems] = useState(null);
   const [searchTerm, setSearchTerm] = useState(null);

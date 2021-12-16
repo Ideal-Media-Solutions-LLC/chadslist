@@ -17,16 +17,27 @@ const ItemView = ({ data, currentPage, revoke }) => {
   const closeMessage = () => setMessage(false);
   const [isClaim, setIsClaim] = useState(false);
   const [histClaim, setHistClaim] = useState(true);
+  const [histList, setHistList] = useState(true);
   const [page, setPage] = useState(currentPage);
 
   const handleHistClaim = (e) => {
     axios.put(`http://localhost:3001/history/claims?itemId=${id}`)
         .then(res => {
-          setHistClaim(false);
+          setHistClaim(false)
         })
         .catch(err => {
           console.log('unclaim err', err)
         })
+  }
+
+  const handleHistList = (e) => {
+    axios.delete(`http://localhost:3001/history/donations?itemId=${id}`)
+    .then(res => {
+      setHistList(false)
+    })
+    .catch(err => {
+      console.log('delist err', err)
+    })
   }
 
   const handleClaimClick = () => {
@@ -84,8 +95,13 @@ const ItemView = ({ data, currentPage, revoke }) => {
           }
 
           {
-            revoke === 'Delist' &&
-            <Button variant="primary">Delist</Button>
+            (revoke === 'Delist' && histList) &&
+            <Button variant="primary" onClick={handleHistList}>Delist</Button>
+          }
+
+          {
+            !histList &&
+            <Button variant="secondary" disabled>Delist</Button>
           }
 
           <Card.Text>
