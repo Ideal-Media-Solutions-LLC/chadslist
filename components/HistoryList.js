@@ -57,7 +57,7 @@ const HistListEntry = ( {item, histType} ) => {
         <div onClick={handleClick}>{item.name}</div>
         <div>{(item.status).charAt(0).toUpperCase() + (item.status).slice(1)}</div>
         <div>{moment(item.createdAt).format("MM/DD/YYYY")}</div>
-        {(user.accType === 'charity') && <form onSubmit={updatePrice} ><input onChange={(e) => setPrice(e.target.value)} type='number' placeholder=' Edit Value'/> <input type='submit' value='update'/></form>}
+        {(user && user.accType === 'charity') && <form onSubmit={updatePrice} ><input onChange={(e) => setPrice(e.target.value)} type='number' placeholder=' Edit Value'/> <input type='submit' value='update'/></form>}
       </div>
       {!showModal ? null : <ItemModal data={item} onHistClick={handleClick.bind(this)} page='history' revoke={revokeOption}/>}
     </div>
@@ -67,7 +67,7 @@ const HistListEntry = ( {item, histType} ) => {
 const HistoryList = ( { histType } ) => {
   // need to fix the userId later;
   const {user} = useContext(AuthContext);
-  const userId = 40
+  const userId = 1
   const [allHistItems, setAllHistItems] = useState(null);
   const [displayedItems, setDisplayedItems] = useState(null);
   const [searchTerm, setSearchTerm] = useState(null);
