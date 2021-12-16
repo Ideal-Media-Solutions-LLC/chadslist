@@ -10,14 +10,13 @@ import ChatMsg from '@mui-treasury/components/chatMsg/ChatMsg';
 const API_URL = 'http://localhost:3001/chat'
 
 const MessageView = ({socket, sender, receiver, id, photoUrl }) => {
-  const { loading, savedMessages, createMessage } = useContext(ChatContext);
+  const { loading, savedMessages, createMessage, addMessage, setLoading } = useContext(ChatContext);
   const [message, setMessage] = useState('');
-  const [messageList, setMessageList] = useState([]);
-  // const [savedMessages, setSavedMessages] = useState([]);
-
+  const [messageList, setMessageList] = useState(null);
   const getMessages = () => {
     socket.on('receive_msg', data => {
       setMessageList((messageList) => [...messageList, data])
+      // addMessage(data)
     })
   }
 
@@ -25,11 +24,21 @@ const MessageView = ({socket, sender, receiver, id, photoUrl }) => {
     getMessages()
   }, [socket]);
 
+  // useEffect(() => {
+  //   // if(savedMessages) {
+  //   // setMessageList(savedMessages);
+  //   // }
+  //   // if(savedMessages) {
+  //   // setMessageList(savedMessages)
+  //   // }
+  //   // setLoading()
+  // },[id])
+
   useEffect(() => {
     if(savedMessages) {
-    setMessageList(savedMessages);
+      setMessageList(savedMessages)
     }
-  },[])
+  }, [savedMessages])
 
   const sendMsg = async (e) => {
 
@@ -45,7 +54,7 @@ const MessageView = ({socket, sender, receiver, id, photoUrl }) => {
 
       createMessage(sender, receiver, message)
       setMessageList((messageList) => [...messageList, messageData])
-
+      // addMessage(messageData)
       setMessage('');
     }
   }

@@ -5,7 +5,7 @@ import NaviBar from '../../components/NaviBar.js';
 import MessageView from '../../components/MessageView';
 import ChatRow from '../../components/ChatRow';
 import AuthContext from '../../context/auth/AuthContext';
-
+import Loader from '../../components/Loader';
 
 const ChatPage = () => {
   const { user } = useContext(AuthContext)
@@ -13,7 +13,7 @@ const ChatPage = () => {
 
   useEffect(() => {
     getAllMessages();
-  }, [])
+  }, [messagePageList])
 
 
   const [showNavi, setNavi] = useState(false);
@@ -21,7 +21,7 @@ const ChatPage = () => {
   const closeNavi = () => setNavi(false);
 
   if (loading) {
-    return <p>...Loading</p>
+    return <Loader />
   } else {
     return (
       <>
