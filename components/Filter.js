@@ -4,13 +4,17 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import { useState, useContext } from 'react';
 import ItemContext from '../context/item/ItemContext';
 
-const Filter = ({filter, handleFilter}) => {
+const Filter = ({filter, handleFilter, close, setFilterTag}) => {
 
   return (
     <>
       <InputGroup>
         <Image src={filter.src} width='40' height='40' />
-        <Nav.Link onClick={() =>handleFilter(filter.category)}>{filter.category}</Nav.Link>
+        <Nav.Link onClick={() =>{
+          handleFilter(filter.category);
+          setFilterTag(filter.category);
+          close();
+          }}>{filter.category}</Nav.Link>
       </InputGroup>
     </>
   )
