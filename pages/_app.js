@@ -10,6 +10,7 @@ import '../styles/Chat.css'
 import '../styles/history.css';
 import '../styles/Header.css';
 import '../styles/homePage.css';
+import '../styles/Navbar.css';
 
 function MyApp({ Component, pageProps }) {
 
