@@ -22,7 +22,7 @@ const getHistory = (userId, histType) => {
   });
 }
 
-const HistListEntry = ( {item, histType} ) => {
+const HistListEntry = ( {item, histType, toggleModal} ) => {
   const [showModal, setShowModal] = useState(false);
   const [price, setPrice] = useState('');
   const {user} = useContext(AuthContext);
@@ -37,6 +37,7 @@ const HistListEntry = ( {item, histType} ) => {
 
   const handleClick = () => {
     setShowModal(!showModal);
+    toggleModal();
   }
 
   const updatePrice = (e) => {
@@ -59,7 +60,7 @@ const HistListEntry = ( {item, histType} ) => {
         <div>{moment(item.createdAt).format("MM/DD/YYYY")}</div>
         {(user && user.accType === 'charity') && <form onSubmit={updatePrice} ><input onChange={(e) => setPrice(e.target.value)} type='number' placeholder=' Edit Value'/> <input type='submit' value='update'/></form>}
       </div>
-      {!showModal ? null : <ItemModal data={item} onHistClick={handleClick.bind(this)} page='history' revoke={revokeOption}/>}
+      {!showModal ? null : <ItemModal data={item} onHistClick={handleClick.bind(this)} page='history' revoke={revokeOption} toggleModal={toggleModal}/>}
     </div>
   )
 }
@@ -67,10 +68,15 @@ const HistListEntry = ( {item, histType} ) => {
 const HistoryList = ( { histType } ) => {
   // need to fix the userId later;
   const {user} = useContext(AuthContext);
-  const userId = 8
+  const userId = 50;
   const [allHistItems, setAllHistItems] = useState(null);
   const [displayedItems, setDisplayedItems] = useState(null);
   const [searchTerm, setSearchTerm] = useState(null);
+  const [modalView, setModalView] = useState(false);
+
+  const toggleModal = () => {
+    setModalView(!modalView)
+  }
 
   const handleSearch = (e) =>{
     let searchStr = e.target.value;
@@ -91,12 +97,12 @@ const HistoryList = ( { histType } ) => {
     .catch(err => {
       console.log(`Error getting user history ${histType}`, err);
     })
-  }, [userId, histType])
+  }, [userId, histType, modalView])
 
   useEffect(() => {
     if (displayedItems !== null) {
       if (searchTerm) {
-        setDisplayedItems(displayedItems.filter((item) => {
+        setDisplayedItems(allHistItems.filter((item) => {
           return item.name.toLowerCase().includes(searchTerm.toLowerCase().trim());
         }))
       } else {
@@ -105,7 +111,7 @@ const HistoryList = ( { histType } ) => {
     }
   }, [userId, searchTerm])
 
-  // console.log(searchTerm);
+  console.log('have modal open?', modalView);
   // console.log(displayedItems);
   return (
     <>
@@ -123,7 +129,7 @@ const HistoryList = ( { histType } ) => {
         {
           displayedItems &&
           displayedItems.map(item => {
-            return <HistListEntry item={item} key={item.id} histType={histType}/>
+            return <HistListEntry item={item} key={item.id} histType={histType} toggleModal={toggleModal.bind(this)}/>
           })
         }
       </div>
