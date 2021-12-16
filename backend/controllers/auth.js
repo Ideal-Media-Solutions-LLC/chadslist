@@ -21,12 +21,13 @@ const register = async(req, res) => {
          })
 
         //  await newUser.save();
-        const accessToken = await jwt.sign({ id: newUser.id, userName: newUser.userName, email: newUser.email, accType: newUser.accType }, process.env.TOKEN_KEY);
+        const accessToken = await jwt.sign({ id: newUser.id, userName: newUser.userName, email: newUser.email, accType: newUser.accType, photoUrl: newUser.photoUrl }, process.env.TOKEN_KEY);
         return res.status(201).json({
           id: newUser.id,
           userName,
           email,
           accType,
+          photoUrl,
           accessToken
         })
       } else {
@@ -49,13 +50,14 @@ const login = async (req, res) => {
       res.status(401).send({ message: 'Password does not match'})
     } else {
       console.log(isUser.dataValues.userName, 'testing')
-      const accessToken = await jwt.sign({ id: isUser.id, userName: isUser.userName, email: isUser.email, accType: isUser.accType }, process.env.TOKEN_KEY);
+      const accessToken = await jwt.sign({ id: isUser.id, userName: isUser.userName, email: isUser.email, accType: isUser.accType, photoUrl: isUser.photoUrl }, process.env.TOKEN_KEY);
 
       return res.status(201).json({
         id: isUser.id,
         userName: isUser.userName,
         email: isUser.email,
         accType: isUser.accType,
+        photoUrl: isUser.photoUrl,
         accessToken
       })
     }

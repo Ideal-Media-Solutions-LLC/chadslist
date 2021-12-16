@@ -74,3 +74,21 @@
   justify-content: center;
   margin: auto;
 }
+
+.avatar-header-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-right: 20px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-right: 20px;
+  padding-left: 20px;
+  border-radius: 25%;
+}
+
+.avatar-header-row:hover {
+  /* border: 2px solid lightgrey; */
+  /* border-radius: 16px; */
+  background-color: lightgrey;
+}
