@@ -80,4 +80,12 @@
   flex-direction: row;
   align-items: center;
   margin-right: 20px;
+  padding: 15px 10px 15px 10px;
+  border-radius: 25%;
+}
+
+.avatar-header-row:hover {
+  /* border: 2px solid lightgrey; */
+  /* border-radius: 16px; */
+  background-color: lightgrey;
 }

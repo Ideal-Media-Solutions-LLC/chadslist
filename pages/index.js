@@ -130,12 +130,12 @@ const HomePage = (props) => {
               <img className="home-page-logo" src='/Chads_list_2.svg' width='300' height='100' />
             </Col>
             <Col className="home-page-buttons">
-              <div className="avatar-header-row">
+              <div className="avatar-header-row" onClick={naviShow}>
                 <Avatar alt="Travis Howard" src={user.photoUrl} style={{ height: '50px', width: '50px', marginRight: '10px' }}/>
                 <p>{user.userName}</p>
               </div>
 
-              <img id="hamburger-menu-home-page" onClick={naviShow} src='/dropdown_menu.svg' width='50' height='50' />
+              {/* <img id="hamburger-menu-home-page" onClick={naviShow} src='/dropdown_menu.svg' width='50' height='50' /> */}
               <Offcanvas placement='end' show={showNavi} onHide={closeNavi} >
                 <Offcanvas.Header closeButton></Offcanvas.Header>
                 <NaviBar close={closeNavi}/>
