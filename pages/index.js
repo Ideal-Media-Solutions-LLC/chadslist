@@ -13,10 +13,13 @@ import {LoadScript} from '@react-google-maps/api';
 import { getItemsInRadius } from '../context/item/ItemContext';
 import ItemContext from '../context/item/ItemContext'
 import PageSelector from '../components/PageSelector.js';
+import Avatar from '@mui/material/Avatar';
+import AuthContext from '../context/auth/AuthContext';
 
 const HomePage = (props) => {
   const [view, setView] = useState('list');
   const [showFilter, setFilter] = useState(false);
+  const { user } = useContext(AuthContext);
   const { getItemsInRadius, itemList } = useContext(ItemContext)
   const SF_LOCATION = { lat: 37.962882809573145, lng: -122.57822275079111}
   const [currentLocation, setCurrentLocation] = useState(SF_LOCATION)
@@ -127,6 +130,11 @@ const HomePage = (props) => {
               <img className="home-page-logo" src='/Chads_list_2.svg' width='300' height='100' />
             </Col>
             <Col className="home-page-buttons">
+              <div className="avatar-header-row">
+                <Avatar alt="Travis Howard" src={user.photoUrl} style={{ height: '50px', width: '50px', marginRight: '10px' }}/>
+                <p>{user.userName}</p>
+              </div>
+
               <img id="hamburger-menu-home-page" onClick={naviShow} src='/dropdown_menu.svg' width='50' height='50' />
               <Offcanvas placement='end' show={showNavi} onHide={closeNavi} >
                 <Offcanvas.Header closeButton></Offcanvas.Header>
