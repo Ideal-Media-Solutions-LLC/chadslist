@@ -57,7 +57,8 @@
 
 .inbox {
   margin-left: 23px;
-  margin-top: 20px;
+  margin-top: 10px;
+  margin-bottom: 20px;
 }
 
 .chat-item-description {
@@ -71,4 +72,11 @@
   top: 0;
   right: 0;
   color: grey;
+}
+
+.chat-box {
+  overflow-y: auto;
+  height: 80vh;
+  overflow-x: hidden;
+  margin-top: 5px;
 }

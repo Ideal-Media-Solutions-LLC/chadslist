@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, useRef } from 'react';
 import { InputGroup, Button, FormControl, Form, Popover, Row } from 'react-bootstrap';
 import axios from 'axios';
 import ChatContext from '../context/chat/ChatContext';
@@ -13,6 +13,7 @@ const MessageView = ({socket, sender, receiver, id, photoUrl }) => {
   const { loading, savedMessages, createMessage, addMessage, setLoading } = useContext(ChatContext);
   const [message, setMessage] = useState('');
   const [messageList, setMessageList] = useState(null);
+  const messageEl = useRef(null);
   const getMessages = () => {
     socket.on('receive_msg', data => {
       setMessageList((messageList) => [...messageList, data])
@@ -24,6 +25,14 @@ const MessageView = ({socket, sender, receiver, id, photoUrl }) => {
     getMessages()
   }, [socket]);
 
+  useEffect(() => {
+    if(messageEl) {
+      messageEl.current.addEventListener('DOMNodeInserted', e => {
+        const { currentTarget: target } = e;
+        target.scroll({ top: target.scrollHeight, behavior: 'smooth'})
+      })
+    }
+  }, [])
   // useEffect(() => {
   //   // if(savedMessages) {
   //   // setMessageList(savedMessages);
@@ -64,7 +73,7 @@ const MessageView = ({socket, sender, receiver, id, photoUrl }) => {
   } else {
   return (
     <div>
-      <div>
+      <div ref={messageEl} className="chat-box">
         {messageList && messageList.map((msg) => msg.userId === sender ? <ChatMsg side={'right'} messages={[msg.message]}/> : <ChatMsg avatar={photoUrl} messages={[msg.message]}/>)}
       </div>
 

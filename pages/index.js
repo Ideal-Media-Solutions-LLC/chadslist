@@ -116,12 +116,14 @@ const HomePage = (props) => {
         <Container>
         <Row className="header">
             <Col>
-              <img className="home-page-logo" src='/Chads_list_2.svg' width='300' height='100' />
+              <img className="home-page-logo" src='/Chads_list_2.svg' width='230' height='100' />
             </Col>
             <Col className="home-page-buttons">
               {user ? <div className="avatar-header-row" onClick={naviShow}>
-                <Avatar alt="Travis Howard" src={user.photoUrl} style={{ height: '50px', width: '50px', marginRight: '12px' }}/>
-                <p style={{ marginTop: '6px', fontWeight: 'bold'}}>{user.userName}</p>
+                <Avatar alt="Travis Howard" src={user.photoUrl} style={{ height: '35px', width: '35px', marginRight: '8px' }}/>
+                <div style={{ marginTop: '12px', fontWeight: 'bold', display: 'flex', flexWrap: 'wrap' }}>
+                <p>{user.userName}</p>
+                </div>
               </div> :   <img id="hamburger-menu-home-page" onClick={naviShow} src='/dropdown_menu.svg' width='50' height='50' /> }
 
               <Offcanvas placement='end' show={showNavi} onHide={closeNavi} >
