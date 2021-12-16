@@ -45,7 +45,7 @@ const ItemView = ({ data, currentPage, revoke }) => {
   const handleClaimClick = () => {
 
     axios.post('http://localhost:3001/claim', {
-      claimerId: user.id,
+      claimantId: user.id,
       itemId: data.id,
     })
     .then(() => console.log('claim success'))
@@ -59,7 +59,7 @@ const ItemView = ({ data, currentPage, revoke }) => {
 
       socket.emit("join_chat", conversationId)
     }
-
+  console.log(data);
   return (
     <>
       <Card style={{ width: '24.9rem' }}>
