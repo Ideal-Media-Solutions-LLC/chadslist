@@ -15,6 +15,7 @@ import ItemContext from '../context/item/ItemContext'
 import PageSelector from '../components/PageSelector.js';
 import Avatar from '@mui/material/Avatar';
 import AuthContext from '../context/auth/AuthContext';
+import { FaSearch} from "react-icons/fa";
 
 const HomePage = (props) => {
   const [view, setView] = useState('list');
@@ -141,25 +142,26 @@ const HomePage = (props) => {
               </Offcanvas>
             </Col>
         </Row>
-          <Row>
-            <Col md="auto">
-              <Button id='filter-button' onClick={handleClick}>Filter</Button>
+          {/* <Row> */}
+            {/* <Col md="auto"> */}
+              {/* <Button id='filter-button' onClick={handleClick}>Filter</Button>
               <Offcanvas show={showFilter} onHide={closeFilter} >
                 <Offcanvas.Header closeButton></Offcanvas.Header>
                 <FilterList setFilterTag={setFilterTag} close={closeFilter} handleFilter={handleFilter}/>
-              </Offcanvas>
-            </Col>
+              </Offcanvas> */}
+            {/* </Col> */}
 
-            <Col>
-              <Search setCurrentLocation={setCurrentLocation} getLocationFromAddress={getLocationFromAddress}/>
-            </Col>
+            {/* <Col> */}
+              <Search ChangeView={ChangeView}/>
+            {/* </Col> */}
 
-            <Col xs lg="2">
+
+            {/* <div className="map-container">
               {view === 'list'
                 ? <FaMapMarkedAlt size='40' onClick={() => ChangeView('map')} />
                 : <RiLayoutGridFill size='40' onClick={() => ChangeView('list')} />}
-            </Col>
-          </Row>
+            </div> */}
+          {/* </Row> */}
           {filterTag && <Row>
             <div>
               Filter: {filterTag} < span onClick={() => {
