@@ -5,6 +5,6 @@ const router = express.Router();
 
 router.post('/', claim);
 router.delete('/', unclaim);
-router.put('/', updatePrice);
+router.post('/receipts', updatePrice);
 
 module.exports = router;
