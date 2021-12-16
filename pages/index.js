@@ -43,7 +43,7 @@ const HomePage = (props) => {
     setFilterItems(results)
   }
 
-  const getLocationFromAddress = (address) => {
+  const getLocationFromAddress = (address, callback) => {
     address = address || 'New York City'; //TODO: Remove default in Production
 
     const Geocoder = new window.google.maps.Geocoder();
@@ -53,8 +53,11 @@ const HomePage = (props) => {
       const lng = result[0].geometry.location.lng()
       if (status === 'OK') {
         console.log(`'${address}' geocoded to \nlat: ${lat} \nlng: ${lng}`)
+        console.log(callback)
+        callback(lat, lng)
       } else {
         console.log(status, `Was not able to retrieve geocode from '${address}`)
+
       }
     })
   }
@@ -110,6 +113,8 @@ const HomePage = (props) => {
   const naviShow = () => setNavi(!showNavi);
   const closeNavi = () => setNavi(false);
 
+  const [filterTag, setFilterTag] = useState(null);
+
   // ~~~~~~~~~~~~~~~ Pagination End ~~~~~~~~~~~~~~~~~~~~
 
 
@@ -134,12 +139,12 @@ const HomePage = (props) => {
               <Button id='filter-button' onClick={handleClick}>Filter</Button>
               <Offcanvas show={showFilter} onHide={closeFilter} >
                 <Offcanvas.Header closeButton></Offcanvas.Header>
-                <FilterList handleFilter={handleFilter}/>
+                <FilterList setFilterTag={setFilterTag} close={closeFilter} handleFilter={handleFilter}/>
               </Offcanvas>
             </Col>
 
             <Col>
-              <Search />
+              <Search setCurrentLocation={setCurrentLocation} getLocationFromAddress={getLocationFromAddress}/>
             </Col>
 
             <Col xs lg="2">
@@ -148,6 +153,14 @@ const HomePage = (props) => {
                 : <RiLayoutGridFill size='40' onClick={() => ChangeView('list')} />}
             </Col>
           </Row>
+          {filterTag && <Row>
+            <div>
+              Filter: {filterTag} < span onClick={() => {
+                setFilterItems(itemList);
+                setFilterTag(null);
+                }}> x</span>
+              </div>
+              </Row>}
           <Col>
             {view === 'map' && <MapView viewableItems={viewableItems} currentLocation={currentLocation}/>}
             <ListView viewableItems={viewableItems} filterItems={filterItems}/>
