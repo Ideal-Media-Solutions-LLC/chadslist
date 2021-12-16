@@ -63,7 +63,7 @@ const ItemView = ({ data, currentPage, revoke }) => {
   return (
     <>
       <Card style={{ width: '100%' }}>
-        <Card.Img variant="top" src={imageUrl} />
+        <Card.Img variant="top" src={imageUrl} style={{ objectFit: 'cover', height: '40vh'}}/>
         <Card.Body>
 
           <div className="card-button-row">
