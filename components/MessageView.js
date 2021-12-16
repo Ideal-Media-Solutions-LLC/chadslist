@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import { InputGroup, Button, FormControl, Form, Popover, Row } from 'react-bootstrap';
 import axios from 'axios';
 import ChatContext from '../context/chat/ChatContext';
+import Loader from './Loader.js';
 // import AuthContext from '../context/auth/AuthContext';
 
 import ChatMsg from '@mui-treasury/components/chatMsg/ChatMsg';
@@ -31,7 +32,7 @@ const MessageView = ({socket, sender, receiver, id, photoUrl }) => {
   },[])
 
   const sendMsg = async (e) => {
-    console.log('invoked', message);
+
     e.preventDefault();
     if (message !== '') {
       const messageData = {
@@ -50,7 +51,7 @@ const MessageView = ({socket, sender, receiver, id, photoUrl }) => {
   }
 
   if (loading) {
-    return <p>...Loading</p>
+    return <Loader />
   } else {
   return (
     <div>

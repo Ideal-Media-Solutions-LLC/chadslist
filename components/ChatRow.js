@@ -1,19 +1,21 @@
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import ChatContext from '../context/chat/ChatContext';
 import { InputGroup, Button, FormControl, Form, Popover, Container, Row, Col, Modal, Image } from 'react-bootstrap';
 import MessageView from './MessageView.js';
 import io from "socket.io-client";
 const socket = io.connect("http://localhost:3200");
 import Avatar from '@mui/material/Avatar';
-
+import Badge from './Badge.js';
+import moment from 'moment'
 
 const ChatRow = ({ message, userId }) => {
-  const { id, smallerId, largerId } = message;
+  const { id, smallerId, largerId, item, updatedAt } = message;
   const { getMessages, messagePageList } = useContext(ChatContext);
   const [show, setShow] = useState(false);
   const receiverId = smallerId == userId ? largerId : smallerId
 
-  const { user : { userName, email, photoUrl } } = message;
+  const { user } = message;
+  // const { user : { userName, email, photoUrl } } = message;
   const data = {
     socket: socket,
     sender: userId,
@@ -21,10 +23,15 @@ const ChatRow = ({ message, userId }) => {
     id: id
   }
 
+  console.log(moment(updatedAt).fromNow())
+
   const joinRoom = () => {
     socket.emit("join_chat", id)
   }
 
+  if(!user) {
+    return null
+  } else {
   return (
     <>
   <Row className="chat-row-container" onClick={() => {
@@ -32,21 +39,23 @@ const ChatRow = ({ message, userId }) => {
     getMessages(userId, receiverId)
     setShow(!show)}}>
     <div className="chat-row">
-      <Avatar style={{ height: '50px', width: '50px' }} src={photoUrl} alt="D" />
+    {item && item.imageUrl ? <Badge userPhoto={user.photoUrl} itemPhoto={item.imageUrl}/> : <Badge userPhoto={user.photoUrl} />}
       {/* <Image src={photoUrl} roundedCircle className="chat-icon" /> */}
       <div className="chat-row-text">
-        <p className="chat-username">{userName}</p>
-        <p>Item Name</p>
+        <p className="chat-username">{user.userName}</p>
+        <p className="chat-item-description">{item ? item.name : null }</p>
       </div>
+      <div className="chat-time">{moment(updatedAt).fromNow()}</div>
     </div>
   </Row>
 
   <Modal centered show={show} fullscreen={true} onHide={() => setShow(!show)} >
   <Modal.Header closeButton>Chat</Modal.Header>
-  <MessageView photoUrl={photoUrl} sender={userId} receiver={receiverId} id={id} socket={socket}/>
+  <MessageView photoUrl={user.photoUrl} sender={userId} receiver={receiverId} id={id} socket={socket}/>
   </Modal>
 </>
   )
+  }
 }
 
 export default ChatRow

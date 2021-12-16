@@ -9,14 +9,36 @@ import io from "socket.io-client";
 const socket = io.connect("http://localhost:3200");
 
 const ItemView = ({ data, currentPage, revoke }) => {
-  const { name, imageUrl, category, description, status, donorId } = data;
+  const { id, name, imageUrl, category, description, status, donorId } = data;
   const { getMessages, conversationId } = useContext(ChatContext);
   const { user } = useContext(AuthContext);
   const [Message, setMessage] = useState (false);
   const showMessage = () => setMessage(true);
   const closeMessage = () => setMessage(false);
   const [isClaim, setIsClaim] = useState(false);
+  const [histClaim, setHistClaim] = useState(true);
+  const [histList, setHistList] = useState(true);
   const [page, setPage] = useState(currentPage);
+
+  const handleHistClaim = (e) => {
+    axios.put(`http://localhost:3001/history/claims?itemId=${id}`)
+        .then(res => {
+          setHistClaim(false)
+        })
+        .catch(err => {
+          console.log('unclaim err', err)
+        })
+  }
+
+  const handleHistList = (e) => {
+    axios.delete(`http://localhost:3001/history/donations?itemId=${id}`)
+    .then(res => {
+      setHistList(false)
+    })
+    .catch(err => {
+      console.log('delist err', err)
+    })
+  }
 
   const handleClaimClick = () => {
     axios.post('http://localhost:3001/claim', {
@@ -56,18 +78,30 @@ const ItemView = ({ data, currentPage, revoke }) => {
             <Button onClick={() => {
               showMessage();
               joinRoom();
-              getMessages(user.id, donorId);
+              getMessages(user.id, donorId, id);
               }} variant="primary">Message</Button>
           }
 
           {
-            revoke === 'Unclaim' &&
-            <Button variant="primary">Unclaim</Button>
+            (revoke === 'Unclaim' && histClaim) &&
+            <Button variant="primary" onClick={handleHistClaim}>Unclaim</Button>
           }
 
           {
-            revoke === 'Delist' &&
-            <Button variant="primary">Delist</Button>
+            !histClaim &&
+            <Button variant="secondary" disabled>
+              Unclaim
+            </Button>
+          }
+
+          {
+            (revoke === 'Delist' && histList) &&
+            <Button variant="primary" onClick={handleHistList}>Delist</Button>
+          }
+
+          {
+            !histList &&
+            <Button variant="secondary" disabled>Delist</Button>
           }
 
           <Card.Text>
