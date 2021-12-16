@@ -9,7 +9,7 @@ import io from "socket.io-client";
 const socket = io.connect("http://localhost:3200");
 
 const ItemView = ({ data, currentPage, revoke }) => {
-  const { name, imageUrl, category, description, status, donorId } = data;
+  const { id, name, imageUrl, category, description, status, donorId } = data;
   const { getMessages, conversationId } = useContext(ChatContext);
   const { user } = useContext(AuthContext);
   const [Message, setMessage] = useState (false);
@@ -56,7 +56,7 @@ const ItemView = ({ data, currentPage, revoke }) => {
             <Button onClick={() => {
               showMessage();
               joinRoom();
-              getMessages(user.id, donorId);
+              getMessages(user.id, donorId, id);
               }} variant="primary">Message</Button>
           }
 

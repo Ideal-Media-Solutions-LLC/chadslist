@@ -1,11 +1,12 @@
 const User = require('../db/models/User');
 const Conversation = require('../db/models/Conversation');
 const Message = require('../db/models/Message');
+const Item = require('../db/models/Item');
 const { Op } = require('sequelize');
 
 
 const startChat = (req, res) => {
-  const { senderId, receiverId } = req.body;
+  const { senderId, receiverId, id } = req.body;
   //query for conversation based on IDs
   console.log(senderId, receiverId)
   const smallerId = senderId > receiverId ? receiverId : senderId
@@ -43,7 +44,8 @@ const startChat = (req, res) => {
     } else {
       Conversation.create({
         smallerId,
-        largerId
+        largerId,
+        itemId: id
       }).then((result) => {
         return res.json({ conversationId: result.dataValues.id, data: [] });
       })
@@ -114,6 +116,8 @@ const getAllMessages = (req, res) => {
         }
       },
       required: false
+    }, {
+      model: Item
     }]
   })
   .then((result) => {
