@@ -58,7 +58,7 @@ const SignUp = (props) => {
             </Form.Group>
             <Form.Group>
               <Form.Label htmlFor="accountType">Are you a charity or an individual?</Form.Label>
-              <Form.Select className="me-sm-2" id="inlineFormCustomSelect" name="accountType" value={form.accType} onChange={handleChange} required>
+              <Form.Select className="me-sm-2" id="inlineFormCustomSelect" name="accType" value={form.accType} onChange={handleChange} required>
                 <option value="individual">Individual</option>
                 <option value="charity">Charity</option>
               </Form.Select>

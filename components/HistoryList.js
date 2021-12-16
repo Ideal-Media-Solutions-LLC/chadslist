@@ -45,7 +45,10 @@ const HistListEntry = ( {item, histType} ) => {
     let value = Number(price);
     //send request to update the database
     axios.put('http://localhost:3001/claim', {price: value, itemId: itemId})
-    .then(() => console.log('update price ok'))
+    .then(() => {
+      alert('update price ok');
+      setPrice('');
+    })
     .catch(err => console.log(err));
   }
 
@@ -57,7 +60,7 @@ const HistListEntry = ( {item, histType} ) => {
         <div onClick={handleClick}>{item.name}</div>
         <div>{(item.status).charAt(0).toUpperCase() + (item.status).slice(1)}</div>
         <div>{moment(item.createdAt).format("MM/DD/YYYY")}</div>
-        {(user.accType === 'charity') && <form onSubmit={updatePrice} ><input onChange={(e) => setPrice(e.target.value)} type='number' placeholder=' Edit Value'/> <input type='submit' value='update'/></form>}
+        {(user.accType === 'charity' && histType === 'claims') && <form onSubmit={updatePrice} ><input onChange={(e) => setPrice(e.target.value)} type='number' value={price} placeholder=' Edit Value'/> <input type='submit' value='update'/></form>}
       </div>
       {!showModal ? null : <ItemModal data={item} onHistClick={handleClick.bind(this)} page='history' revoke={revokeOption}/>}
     </div>

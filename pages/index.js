@@ -110,6 +110,8 @@ const HomePage = (props) => {
   const naviShow = () => setNavi(!showNavi);
   const closeNavi = () => setNavi(false);
 
+  const [filterTag, setFilterTag] = useState(null);
+
   // ~~~~~~~~~~~~~~~ Pagination End ~~~~~~~~~~~~~~~~~~~~
 
 
@@ -134,7 +136,7 @@ const HomePage = (props) => {
               <Button id='filter-button' onClick={handleClick}>Filter</Button>
               <Offcanvas show={showFilter} onHide={closeFilter} >
                 <Offcanvas.Header closeButton></Offcanvas.Header>
-                <FilterList handleFilter={handleFilter}/>
+                <FilterList setFilterTag={setFilterTag} close={closeFilter} handleFilter={handleFilter}/>
               </Offcanvas>
             </Col>
 
@@ -148,6 +150,14 @@ const HomePage = (props) => {
                 : <RiLayoutGridFill size='40' onClick={() => ChangeView('list')} />}
             </Col>
           </Row>
+          {filterTag && <Row>
+            <div>
+              Filter: {filterTag} < span onClick={() => {
+                setFilterItems(itemList);
+                setFilterTag(null);
+                }}> x</span>
+              </div>
+              </Row>}
           <Col>
             {view === 'map' && <MapView viewableItems={viewableItems} currentLocation={currentLocation}/>}
             <ListView viewableItems={viewableItems} filterItems={filterItems}/>
