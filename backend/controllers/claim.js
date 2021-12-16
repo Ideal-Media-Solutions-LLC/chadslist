@@ -4,11 +4,10 @@ const Item = require('../db/models/Item.js');
 const claim = async (req, res) => {
   const claimerId = req.body.claimantId;
   const itemId = req.body.itemId;
-  const status = 'Ongoing';
-  const UserId = req.body.UserId;
-  const claim = await Claim.create({ claimerId, itemId, status, UserId })
+  const status = 'claimed';
+  const claim = await Claim.create({ claimerId, itemId, status })
     .then(async () => {
-      const item = await Item.update({ claimed: true }, {
+      const item = await Item.update({ claimed: true, status: 'claimed' }, {
         where: {
           id: itemId
         }
