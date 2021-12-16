@@ -10,14 +10,14 @@ import ChatMsg from '@mui-treasury/components/chatMsg/ChatMsg';
 const API_URL = 'http://localhost:3001/chat'
 
 const MessageView = ({socket, sender, receiver, id, photoUrl }) => {
-  const { loading, savedMessages, createMessage } = useContext(ChatContext);
+  const { loading, savedMessages, createMessage, setLoading, addMessage } = useContext(ChatContext);
   const [message, setMessage] = useState('');
-  const [messageList, setMessageList] = useState([]);
+  const [messageList, setMessageList] = useState(null);
   // const [savedMessages, setSavedMessages] = useState([]);
-
   const getMessages = () => {
     socket.on('receive_msg', data => {
-      setMessageList((messageList) => [...messageList, data])
+      // setMessageList((messageList) => [...messageList, data])
+      addMessage(data)
     })
   }
 
@@ -26,10 +26,15 @@ const MessageView = ({socket, sender, receiver, id, photoUrl }) => {
   }, [socket]);
 
   useEffect(() => {
-    if(savedMessages) {
-    setMessageList(savedMessages);
-    }
-  },[])
+    // if(savedMessages) {
+    // setMessageList(savedMessages);
+    // }
+    // if(savedMessages) {
+    // setMessageList(savedMessages)
+    // }
+    // setLoading()
+  },[id])
+
 
   const sendMsg = async (e) => {
 
@@ -44,19 +49,20 @@ const MessageView = ({socket, sender, receiver, id, photoUrl }) => {
       await socket.emit("send_msg", messageData)
 
       createMessage(sender, receiver, message)
-      setMessageList((messageList) => [...messageList, messageData])
+      // setMessageList((messageList) => [...messageList, messageData])
+      // addMessage(messageData)
 
       setMessage('');
     }
   }
 
-  if (loading) {
-    return <Loader />
+  if (!savedMessages) {
+    return <p>...Loading</p>
   } else {
   return (
     <div>
       <div>
-        {messageList && messageList.map((msg) => msg.userId === sender ? <ChatMsg side={'right'} messages={[msg.message]}/> : <ChatMsg avatar={photoUrl} messages={[msg.message]}/>)}
+        {savedMessages && savedMessages.map((msg) => msg.userId === sender ? <ChatMsg side={'right'} messages={[msg.message]}/> : <ChatMsg avatar={photoUrl} messages={[msg.message]}/>)}
       </div>
 
       {/* input bar */}

@@ -10,7 +10,7 @@ import moment from 'moment'
 
 const ChatRow = ({ message, userId }) => {
   const { id, smallerId, largerId, item, updatedAt } = message;
-  const { getMessages, messagePageList } = useContext(ChatContext);
+  const { getMessages, messagePageList, clearSavedMessages, setLoading } = useContext(ChatContext);
   const [show, setShow] = useState(false);
   const receiverId = smallerId == userId ? largerId : smallerId
 
@@ -23,7 +23,11 @@ const ChatRow = ({ message, userId }) => {
     id: id
   }
 
-  console.log(moment(updatedAt).fromNow())
+  const handleHide = () => {
+    setShow(!show)
+    clearSavedMessages();
+  }
+
 
   const joinRoom = () => {
     socket.emit("join_chat", id)
@@ -49,7 +53,7 @@ const ChatRow = ({ message, userId }) => {
     </div>
   </Row>
 
-  <Modal centered show={show} fullscreen={true} onHide={() => setShow(!show)} >
+  <Modal centered show={show} fullscreen={true} onHide={handleHide} >
   <Modal.Header closeButton>Chat</Modal.Header>
   <MessageView photoUrl={user.photoUrl} sender={userId} receiver={receiverId} id={id} socket={socket}/>
   </Modal>

@@ -7,7 +7,10 @@ import AuthContext from '../auth/AuthContext.js';
 import {
   GET_MESSAGES,
   UPDATE_MESSAGES,
-  SET_MESSAGE_PAGE_LIST
+  SET_MESSAGE_PAGE_LIST,
+  CLEAR_SAVED_MESSAGES,
+  SET_LOADING,
+  ADD_MESSAGE
 } from '../types.js';
 
 const API_URL = 'http://localhost:3001/chat'
@@ -17,7 +20,7 @@ const ChatState = (props) => {
     savedMessages: [],
     conversationId: null,
     messagePageList: [],
-    loading: true
+    loading: false
   }
 
   const { user } = useContext(AuthContext);
@@ -72,8 +75,29 @@ const ChatState = (props) => {
     })
   }
 
+  const clearSavedMessages = () => {
+
+    dispatch({
+      type: CLEAR_SAVED_MESSAGES,
+      payload: null
+    })
+  }
+
+  const addMessage = (message) => {
+    dispatch({
+      type: ADD_MESSAGE,
+      payload: message
+    })
+  }
+  const setLoading = () => {
+    // console.log('test')
+    dispatch({
+      type: SET_LOADING,
+    })
+  }
+
   return (
-    <ChatContext.Provider value={{ savedMessages: state.savedMessages, conversationId: state.conversationId, messagePageList: state.messagePageList, getMessages, createMessage, getAllMessages }}>
+    <ChatContext.Provider value={{ savedMessages: state.savedMessages, conversationId: state.conversationId, messagePageList: state.messagePageList, getMessages, createMessage, getAllMessages, clearSavedMessages, setLoading, addMessage }}>
       {props.children}
     </ChatContext.Provider>
   )
