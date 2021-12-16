@@ -1,10 +1,11 @@
 import { Form, Row, Col, Button, InputGroup, FormControl, DropdownButton, Dropdown } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { FaSearch} from "react-icons/fa";
+import { FaSearch, FaMapMarkerAlt } from "react-icons/fa";
 import {useState, useContext} from 'react';
 import ItemContext from '../context/item/ItemContext';
 import { FaMapMarkedAlt } from "react-icons/fa";
 import { RiLayoutGridFill } from "react-icons/ri";
+
 
 const Search = ({ ChangeView, setCurrentLocation, handleClick, wordFilter}) => {
 
@@ -35,13 +36,12 @@ const Search = ({ ChangeView, setCurrentLocation, handleClick, wordFilter}) => {
   const handleSubmit = (e) => {
     e.preventDefault()
     console.log('Submited:', searchItem, searchAddress, distance)
-
     getLocationFromAddress(searchAddress, (async (lat, lng) => {
       await getItemsInRadius(lat, lng, distance)
       setCurrentLocation({lat: lat, lng: lng})
       wordFilter(searchItem)
     })
-  )
+    )
   }
 
 
@@ -89,9 +89,9 @@ const Search = ({ ChangeView, setCurrentLocation, handleClick, wordFilter}) => {
             </Form.Select>
             </div>
             <div className="map-container" >
-             { mapToggle === 'list' ? <FaMapMarkedAlt size='40' onClick={() =>  { ChangeView('map')
+             { mapToggle === 'list' ? <FaMapMarkerAlt size='35' color='#0b5ed7' onClick={() =>  { ChangeView('map')
              setMapToggle('map')
-            }}/> :<RiLayoutGridFill size='40' onClick={() => {
+            }}/> :<RiLayoutGridFill size='35' color='#0b5ed7' onClick={() => {
               ChangeView('list')
               setMapToggle('list')
             }} /> }
