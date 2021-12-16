@@ -90,7 +90,7 @@ const HistoryList = ( { histType } ) => {
   useEffect(() => {
     getHistory(userId, histType)
     .then(res => {
-      console.log('what did server return', res.data);
+      // console.log('what did server return', res.data);
       setAllHistItems(res.data);
       setDisplayedItems(res.data);
     })
@@ -111,7 +111,7 @@ const HistoryList = ( { histType } ) => {
     }
   }, [userId, searchTerm])
 
-  console.log('have modal open?', modalView);
+  // console.log('have modal open?', modalView);
   // console.log(displayedItems);
   return (
     <>
