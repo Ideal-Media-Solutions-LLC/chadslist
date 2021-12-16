@@ -5,7 +5,8 @@
     "start": "next start",
     "lint": "next lint",
     "backend": "nodemon ./backend/server.js",
-    "chat": "nodemon ./backend/chatServer.js"
+    "chat": "nodemon ./backend/chatServer.js",
+    "test": "jest ./spec"
   },
   "dependencies": {
     "@emotion/react": "^11.7.1",
