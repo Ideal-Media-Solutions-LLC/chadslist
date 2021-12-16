@@ -58,7 +58,7 @@ const getReceiptHis = async (req, res) => {
   await Receipt.findAll({
     where: {
       donorId
-    }
+    },
    })
    .then((data) => {
      res.status(200).send(data);
