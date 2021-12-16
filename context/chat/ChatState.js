@@ -51,10 +51,11 @@ const ChatState = (props) => {
       receiverId
     })
     .then((result) => {
-      dispatch({
-        type: UPDATE_MESSAGES,
-        payload: result.data
-      })
+      console.log(result)
+      // dispatch({
+      //   type: UPDATE_MESSAGES,
+      //   payload: result.data
+      // })
     })
     .catch((err) => {
       console.log(err)
@@ -84,6 +85,7 @@ const ChatState = (props) => {
   }
 
   const addMessage = (message) => {
+    console.log(message)
     dispatch({
       type: ADD_MESSAGE,
       payload: message
@@ -97,7 +99,7 @@ const ChatState = (props) => {
   }
 
   return (
-    <ChatContext.Provider value={{ savedMessages: state.savedMessages, conversationId: state.conversationId, messagePageList: state.messagePageList, getMessages, createMessage, getAllMessages, clearSavedMessages, setLoading, addMessage }}>
+    <ChatContext.Provider value={{ savedMessages: state.savedMessages, conversationId: state.conversationId, messagePageList: state.messagePageList, loading: state.loading, getMessages, createMessage, getAllMessages, clearSavedMessages, setLoading, addMessage }}>
       {props.children}
     </ChatContext.Provider>
   )

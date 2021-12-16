@@ -40,6 +40,7 @@ const ChatRow = ({ message, userId }) => {
     <>
   <Row className="chat-row-container" onClick={() => {
     joinRoom();
+    // setLoading()
     getMessages(userId, receiverId)
     setShow(!show)}}>
     <div className="chat-row">

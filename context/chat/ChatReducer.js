@@ -14,6 +14,7 @@ export default(state, action) => {
         ...state,
         savedMessages: action.payload.data,
         conversationId: action.payload.conversationId,
+        loading: false
       }
     case UPDATE_MESSAGES:
       return {
