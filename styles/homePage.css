@@ -19,7 +19,7 @@
   background-color: #034078;
   display: flex;
   justify-content: flex-start;
-  resize: both;
+  /* resize: both; */
 }
 
 .search-bar {
@@ -36,4 +36,38 @@
   display: flex;
   justify-content: center;
   margin: auto;
+}
+
+.search-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.search-row-input {
+  width: 80%;
+  margin-right: 10px;
+}
+
+.search-row-radius {
+  width: 25%;
+  margin-left: 10px;
+}
+
+.home-page-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.address-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.address-row-input {
+  width: 65%
+}
+
+.map-container {
+  margin-left: 15px;
+  margin-bottom: 5px;
 }

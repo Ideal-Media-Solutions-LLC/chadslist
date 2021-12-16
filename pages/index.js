@@ -15,6 +15,7 @@ import ItemContext from '../context/item/ItemContext'
 import PageSelector from '../components/PageSelector.js';
 import Avatar from '@mui/material/Avatar';
 import AuthContext from '../context/auth/AuthContext';
+import { FaSearch} from "react-icons/fa";
 
 const HomePage = (props) => {
   const [view, setView] = useState('list');
@@ -22,7 +23,7 @@ const HomePage = (props) => {
   const { user } = useContext(AuthContext);
   const { getItemsInRadius, itemList } = useContext(ItemContext)
   const SF_LOCATION = { lat: 37.962882809573145, lng: -122.57822275079111}
-  const [currentLocation, setCurrentLocation] = useState(SF_LOCATION)
+  const [currentLocation, setCurrentLocation] = useState(SF_LOCATION)  //Supplies Map component, is updated from Search
   const [filterItems, setFilterItems] = useState([])
 
   const updateList = () => {
@@ -30,7 +31,6 @@ const HomePage = (props) => {
       setFilterItems(itemList)
     }
   }
-
 
   useEffect(updateList,[itemList]);
 
@@ -41,28 +41,22 @@ const HomePage = (props) => {
   const handleClick = () => setFilter(!showFilter)
   const closeFilter = () => setFilter(false)
 
-  const handleFilter = (category) => {
+  const categoryFilter = (category) => {
     let results = itemList.filter(item => item.category === category )
     setFilterItems(results)
   }
 
-  const getLocationFromAddress = (address, callback) => {
-    address = address || 'New York City'; //TODO: Remove default in Production
-
-    const Geocoder = new window.google.maps.Geocoder();
-
-    Geocoder.geocode({address : address}, (result, status) => {
-      const lat = result[0].geometry.location.lat()
-      const lng = result[0].geometry.location.lng()
-      if (status === 'OK') {
-        console.log(`'${address}' geocoded to \nlat: ${lat} \nlng: ${lng}`)
-        console.log(callback)
-        callback(lat, lng)
-      } else {
-        console.log(status, `Was not able to retrieve geocode from '${address}`)
-
-      }
-    })
+  // handle filtering item by keyword via search bar
+  const wordFilter = async (input) => {
+    if(input){
+      let results = await itemList.filter(item =>item.name.toLowerCase().includes(input.toLowerCase()));
+      console.log('results',results)
+      setFilterItems(results)
+      console.log('filterItems',filterItems)
+    }else{
+      console.log('no input')
+      return
+    }
   }
 
 
@@ -74,6 +68,7 @@ const HomePage = (props) => {
       use these two functions below without the geolocation API with your desired location for development
     */
 
+    //Note
     //setCurrentLocation({ lat: <latitude>, lng: <longitude> })  //For center of Map
     //getItemsInRadius( lat: <latitude>, lng: <longitude> )     //For List of items in area
 
@@ -86,13 +81,7 @@ const HomePage = (props) => {
           lat: result.coords.latitude,
           lng: result.coords.longitude,
         })
-        // As we are testing we don't have any items in most locations so I'm going to
         getItemsInRadius(result.coords.latitude, result.coords.longitude)
-        // getItemsInRadius();
-
-
-//         getItemsInRadius(result.coords.latitude, result.coords.longitude)
-//         console.log(currentLocation)
       }
     })
   }, [])
@@ -141,25 +130,13 @@ const HomePage = (props) => {
               </Offcanvas>
             </Col>
         </Row>
-          <Row>
-            <Col md="auto">
-              <Button id='filter-button' onClick={handleClick}>Filter</Button>
               <Offcanvas show={showFilter} onHide={closeFilter} >
                 <Offcanvas.Header closeButton></Offcanvas.Header>
-                <FilterList setFilterTag={setFilterTag} close={closeFilter} handleFilter={handleFilter}/>
+                <FilterList setFilterTag={setFilterTag} close={closeFilter} categoryFilter={categoryFilter}/>
               </Offcanvas>
-            </Col>
 
-            <Col>
-              <Search setCurrentLocation={setCurrentLocation} getLocationFromAddress={getLocationFromAddress}/>
-            </Col>
+              <Search ChangeView={ChangeView} setCurrentLocation={setCurrentLocation} handleClick={handleClick} wordFilter={wordFilter}/>
 
-            <Col xs lg="2">
-              {view === 'list'
-                ? <FaMapMarkedAlt size='40' onClick={() => ChangeView('map')} />
-                : <RiLayoutGridFill size='40' onClick={() => ChangeView('list')} />}
-            </Col>
-          </Row>
           {filterTag && <Row>
             <div>
               Filter: {filterTag} < span onClick={() => {
@@ -170,7 +147,7 @@ const HomePage = (props) => {
               </Row>}
           <Col>
             {view === 'map' && <MapView viewableItems={viewableItems} currentLocation={currentLocation}/>}
-            <ListView viewableItems={viewableItems} filterItems={filterItems}/>
+            <ListView viewableItems={viewableItems}/>
             <PageSelector itemsPerPage={itemsPerPage} itemsTotal={itemList.length} changePage={changePage}/>
           </Col>
         </Container>
