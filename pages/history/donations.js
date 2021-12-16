@@ -24,7 +24,7 @@ const Donations = (props) => {
               </Offcanvas>
             </Col>
         </Row>
-      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+      {/* <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
         <Navbar.Brand href="/history/donations">
           My Donations
         </Navbar.Brand>
@@ -40,8 +40,8 @@ const Donations = (props) => {
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>
-      </Navbar>
-
+      </Navbar> */}
+      <h2 className='page-title'>My Donations</h2>
       <HistoryList histType='donations'/>
     </>
   )
