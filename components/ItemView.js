@@ -92,7 +92,7 @@ const ItemView = ({ data, currentPage, revoke }) => {
         <Card.Img variant="top" onError={imageVerification} src={imageUrl} style={{ objectFit: 'cover', height: '40vh'}}/>
         <Card.Body>
 
-         { !user ? null : <div className="card-button-row">
+         { !user || user.id == donorId ? null : <div className="card-button-row">
           {
             page !== 'history' &&
             <Button style={{ marginRight: '10px'}} variant={isClaim? "secondary":"primary"} onClick={handleClaimClick}>{isClaim? "Unclaim":"Claim"}</Button>}
