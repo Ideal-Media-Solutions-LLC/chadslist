@@ -1,6 +1,7 @@
 import { useState, useContext } from 'react';
 import Link from 'next/link';
-import { Nav } from 'react-bootstrap';
+import Router from 'next/router';
+import { Nav, Image, Container } from 'react-bootstrap';
 import AuthContext from '../context/auth/AuthContext';
 // import Link from 'next/link';
 import Avatar from '@mui/material/Avatar';
@@ -11,7 +12,8 @@ const NaviBar = (props) => {
   const { user, logoutUser } = useContext(AuthContext)
 
   return (
-    <div>
+    <Container>
+      <Image src='/Chads_list_2.svg' width='150' height='60' />
       <Nav defaultActiveKey="/" className="flex-column">
         {/* <div className="navbar-avatar-row">
           <Avatar alt="Travis Howard" src={user.photoUrl} style={{ height: '50px', width: '50px' }}/>
@@ -24,7 +26,10 @@ const NaviBar = (props) => {
         {!user ? null : <Nav.Link onClick={props.close}><Link href="/chat">View Messages</Link></Nav.Link> }
         <Nav.Link onClick={props.close}><Link href="/postItem">Post an item</Link></Nav.Link>
         { user ?
-        <Nav.Link onClick={logoutUser}>
+        <Nav.Link onClick={async () => {
+          await Router.push('/');
+          logoutUser();
+          }}>
           LogOut
         </Nav.Link> :
         <>
@@ -37,7 +42,7 @@ const NaviBar = (props) => {
         </>
         }
       </Nav>
-    </div>
+    </Container>
   )
 }
 
