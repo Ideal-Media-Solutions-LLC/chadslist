@@ -10,6 +10,7 @@ import '../styles/history.css';
 import '../styles/Header.css';
 import '../styles/homePage.css';
 import '../styles/Navbar.css';
+import '../styles/Item.css';
 
 const MyApp = ({ Component, pageProps }) => {
 

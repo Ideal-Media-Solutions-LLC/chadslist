@@ -5,6 +5,7 @@ const User = require('../models/User.js');
 const Item = require('../models/Item.js');
 const Conversation = require('../models/Conversation.js');
 const Message = require('../models/Message.js');
+const Receipt = require('../models/Receipt.js');
 const Claim = require('../models/Claim.js');
 
 
@@ -184,6 +185,27 @@ const seedMessage = async () => {
   await Message.bulkCreate(messages);
 };
 
+const conditions = ['new', 'great','good', 'okay'];
+const seedReceipt = async () => {
+  try {
+    let receipts = [];
+    let index = 0;
+    for (var i = 0; i < 100; i++) {
+      if (items[i].status !== 'uncalimed') {
+        receipts[index] = {};
+        receipts[index].itemId = i + 1;
+        receipts[index].donorId = items[i].donorId;
+        receipts[index].condition = conditions[Math.floor(Math.random() * 4)];
+        receipts[index].value = Math.floor(Math.random() * 1000);
+      }
+      index ++;
+    }
+    await Receipt.bulkCreate(receipts);
+  } catch (error) {
+    console.log('error adding data for receipts', error);
+  }
+};
+
 const seedClaim = async () => {
   try {
     let claims = [];
@@ -234,11 +256,13 @@ const seedAll = async() => {
     await Item.sync({force: true});
     await Claim.sync({force: true});
     await Message.sync({force: true});
+    await Receipt.sync({force: true});
     await seedUser();
     await seedConversation();
     await seedItem();
     await seedClaim();
     await seedMessage();
+    await seedReceipt();
   } catch (error) {
     console.log(error);
   }
