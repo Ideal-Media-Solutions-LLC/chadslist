@@ -22,7 +22,7 @@ const Item = sequelize.define('item', {
   },
   // We might also do a separate category table and then have this be a foreign key
   category: DataTypes.STRING,
-  donorId: DataTypes.INTEGER
+  donorId: DataTypes.INTEGER,
 },
 {
   indexes: [
