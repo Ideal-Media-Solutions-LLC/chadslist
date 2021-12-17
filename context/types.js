@@ -13,3 +13,4 @@ export const ADD_MESSAGE = 'ADD_MESSAGE';
 
 // ITEMS
 export const SET_ITEM_LIST = 'SET_ITEM_LIST';
+export const FILTER_ITEMS = 'FILTER_ITEMS';

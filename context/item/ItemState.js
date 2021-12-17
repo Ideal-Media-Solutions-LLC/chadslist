@@ -5,7 +5,8 @@ import AuthContext from '../auth/AuthContext';
 import axios from 'axios';
 
 import {
-  SET_ITEM_LIST
+  SET_ITEM_LIST,
+  FILTER_ITEMS
 } from '../types';
 
 const API_URL = 'http://localhost:3001/items'
@@ -22,7 +23,7 @@ const ItemState = (props) => {
   const { user } = useContext(AuthContext);
   const [state, dispatch] = useReducer(ItemReducer, initialState)
 
-  const getItemsInRadius = (lat = 40.72557420158411, lng = -74.01148541130824, radius) => {
+  const getItemsInRadius = (lat = 40.72557420158411, lng = -74.01148541130824, radius, input = null) => {
     // FOR LATER: need to have dynamic input for radius for user
 
     // axios.get(`${API_URL}/?userId=${user.id}&radius=10&latitude=${lat}&longitude=${lng}`)
@@ -33,17 +34,16 @@ const ItemState = (props) => {
         return result[1]
       })
 
+
+      if (input) {
+        newData = newData.filter((item) => item.name.toLowerCase().includes(input.toLowerCase()))
+      }
+
       const obj = {
         data: newData,
         lat: lat,
         lng: lng
       }
-
-      // const newObj = {
-      //   data: result.data,
-      //   lat: lat,
-      //   lng: lng
-      // }
       dispatch({
         type: SET_ITEM_LIST,
         payload: obj
@@ -79,11 +79,18 @@ const ItemState = (props) => {
       console.log(err)
       alert('Unable to post');
     })
+  }
 
+  const filterItems = (input) => {
+
+    dispatch({
+      type: FILTER_ITEMS,
+      payload: input
+    })
   }
 
   return (
-    <ItemContext.Provider value={{ itemList: state.itemList, currentLocation: state.currentLocation, getItemsInRadius, createItem }}>
+    <ItemContext.Provider value={{ itemList: state.itemList, currentLocation: state.currentLocation, getItemsInRadius, createItem, filterItems }}>
       {props.children}
     </ItemContext.Provider>
   )

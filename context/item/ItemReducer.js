@@ -1,5 +1,6 @@
 import {
-  SET_ITEM_LIST
+  SET_ITEM_LIST,
+  FILTER_ITEMS
 } from '../types'
 
 export default(state, action) => {
@@ -10,6 +11,11 @@ export default(state, action) => {
         itemList: action.payload.data,
         currentLocation: {lat: action.payload.lat, lng: action.payload.lng}
       }
+    case FILTER_ITEMS:
+        return {
+          ...state,
+          itemList: state.itemList.filter((item) => item.name.toLowerCase().includes(action.payload.toLowerCase()))
+        }
     default:
       return state
   }
