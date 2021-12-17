@@ -13,23 +13,23 @@ const server = http.createServer(app);
 
 const io = new Server (server, {
   cors: {
-    origin: 'http://localhost:3003',
+    origin: 'http://localhost:3000',
     methods: ['GET', 'POST', 'PUT', 'DELETE']
   },
 });
 
 io.on('connection', (socket) => {
   console.log('connected', socket.id);
-  socket.on("join_chat", convoId => {
+  socket.on('join_chat', convoId => {
     socket.join(convoId);
     console.log(`User with ID: ${socket.id} joined convo: ${convoId}`);
-  })
+  });
 
-  socket.on("send_msg", (messageData) =>{
-    socket.to(messageData.id).emit("receive_msg", messageData);
-  })
+  socket.on('send_msg', (messageData) =>{
+    socket.to(messageData.id).emit('receive_msg', messageData);
+  });
 
-  socket.on('disconnect', () => console.log('disconnected', socket.id))
+  socket.on('disconnect', () => console.log('disconnected', socket.id));
 });
 
 

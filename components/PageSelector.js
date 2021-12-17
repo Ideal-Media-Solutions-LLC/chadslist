@@ -16,7 +16,7 @@ const PageSelector = ({itemsPerPage, itemsTotal, changePage}) => {
         <Pagination>{pageNumbers}</Pagination>
       </div>
     </>
-  )
-}
+  );
+};
 
 export default PageSelector;

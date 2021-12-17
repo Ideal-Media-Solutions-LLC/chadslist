@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/router';
 import { Container, Col, Form, Button, Image, Modal, Row, Offcanvas } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
@@ -15,7 +15,7 @@ const PostItem = (props) => {
     category: '',
     description: '',
     images: []
-  })
+  });
 
   const router = useRouter();
   const [show, setShow] = useState(false);
@@ -31,11 +31,11 @@ const PostItem = (props) => {
     e.preventDefault();
     createItem(form, openModal);
 
-  }
+  };
 
   const handleChange = ({ target: { name, value } }) => {
-    setForm({ ...form, [name]: value})
-  }
+    setForm({ ...form, [name]: value});
+  };
 
   const imageChanger = (e) => {
     let images = e.target.files[0];
@@ -44,31 +44,31 @@ const PostItem = (props) => {
     setForm({
       ...form,
       images: url
-    })
-  }
+    });
+  };
 
   const locationTracker = () => {
     if (currentLocation.lat && currentLocation.lng) {
       return true;
     } else {
-      return false
+      return false;
     }
-  }
+  };
 
   return (
     <div>
       <Container>
-      <Row className="header">
-            <Col>
-              <img className="home-page-logo" src='/Chads_list_2.svg' width='300' height='100' />
-            </Col>
-            <Col className="home-page-buttons">
-              <img id="hamburger-menu-home-page" onClick={naviShow} src='/dropdown_menu.svg' width='50' height='50' />
-              <Offcanvas placement='end' show={showNavi} onHide={closeNavi} >
-                <Offcanvas.Header closeButton></Offcanvas.Header>
-                <NaviBar close={closeNavi}/>
-              </Offcanvas>
-            </Col>
+        <Row className="header">
+          <Col>
+            <img className="home-page-logo" src='/Chads_list_2.svg' width='300' height='100' />
+          </Col>
+          <Col className="home-page-buttons">
+            <img id="hamburger-menu-home-page" onClick={naviShow} src='/dropdown_menu.svg' width='50' height='50' />
+            <Offcanvas placement='end' show={showNavi} onHide={closeNavi} >
+              <Offcanvas.Header closeButton></Offcanvas.Header>
+              <NaviBar close={closeNavi}/>
+            </Offcanvas>
+          </Col>
         </Row>
         <Col>
           <br></br>
@@ -84,7 +84,7 @@ const PostItem = (props) => {
               <Form.Label>Item Name:</Form.Label>
               <Form.Control value={form.itemName} name="itemName" onChange={handleChange} type='textarea' required />
             </Form.Group>
-           { !locationTracker() && <Form.Group className="mb-3" controlId="itemName">
+            { !locationTracker() && <Form.Group className="mb-3" controlId="itemName">
               <Form.Label>Item Location:</Form.Label>
               <Form.Control onChange={(e) => setLocationInput(e.target.value)} type='textarea' required />
             </Form.Group>}
@@ -121,9 +121,9 @@ const PostItem = (props) => {
       <Modal centered show={show} size='md' onhide={closeModal}>
         <Modal.Body>Your item has successfully posted</Modal.Body>
         <Button variant="outline-primary"><Link href='/'><a>OK</a></Link></Button>
-        </Modal>
+      </Modal>
     </div>
-  )
-}
+  );
+};
 
 export default PostItem;

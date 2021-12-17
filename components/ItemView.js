@@ -1,13 +1,13 @@
 import { Button, Card, CloseButton, Modal } from 'react-bootstrap';
 import MessageView from './MessageView.js';
-import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import ItemContext from '../context/item/ItemContext';
 import ChatContext from '../context/chat/ChatContext';
 import AuthContext from '../context/auth/AuthContext';
-import io from "socket.io-client";
-const socket = io.connect("http://localhost:3200");
+import io from 'socket.io-client';
+const socket = io.connect('http://localhost:3200');
 
 const ItemView = ({ data, currentPage, revoke }) => {
   const { id, name, imageUrl, category, description, status, donorId } = data;
@@ -21,27 +21,27 @@ const ItemView = ({ data, currentPage, revoke }) => {
   const [histClaim, setHistClaim] = useState(true);
   const [histList, setHistList] = useState(true);
   const [page, setPage] = useState(currentPage);
-  const [address, setAddress] = useState('')
+  const [address, setAddress] = useState('');
 
   const handleHistClaim = (e) => {
     axios.put(`http://localhost:3001/history/claims?itemId=${id}`)
-        .then(res => {
-          setHistClaim(false)
-        })
-        .catch(err => {
-          console.log('unclaim err', err)
-        })
-  }
+      .then(res => {
+        setHistClaim(false);
+      })
+      .catch(err => {
+        console.log('unclaim err', err);
+      });
+  };
 
   const handleHistList = (e) => {
     axios.delete(`http://localhost:3001/history/donations?itemId=${id}`)
-    .then(res => {
-      setHistList(false)
-    })
-    .catch(err => {
-      console.log('delist err', err)
-    })
-  }
+      .then(res => {
+        setHistList(false);
+      })
+      .catch(err => {
+        console.log('delist err', err);
+      });
+  };
 
   const handleClaimClick = () => {
 
@@ -49,17 +49,17 @@ const ItemView = ({ data, currentPage, revoke }) => {
       claimantId: user.id,
       itemId: data.id,
     })
-    .then(() => console.log('claim success'))
-    .catch(err => console.log('claim err', err));
+      .then(() => console.log('claim success'))
+      .catch(err => console.log('claim err', err));
 
-    setIsClaim(!isClaim)
-  }
+    setIsClaim(!isClaim);
+  };
 
-    const joinRoom = () => {
+  const joinRoom = () => {
 
 
-      socket.emit("join_chat", conversationId)
-    }
+    socket.emit('join_chat', conversationId);
+  };
 
 
   /*
@@ -74,17 +74,18 @@ const ItemView = ({ data, currentPage, revoke }) => {
       lat: data.latitude,
       lng: data.longitude
     }})
-    .then( response => {
-      console.log(response)
-      if (response.results[1]) {
-       setAddress(response.results[1].formatted_address)
-      }
-    })}, [data])
+      .then( response => {
+        console.log(response);
+        if (response.results[1]) {
+          setAddress(response.results[1].formatted_address);
+        }
+      });
+  }, [data]);
 
-    const imageVerification  = (e) => {
-      e.target.onerror = null;
-      e.target.src = '/alt.png';
-    };
+  const imageVerification = (e) => {
+    e.target.onerror = null;
+    e.target.src = '/alt.png';
+  };
 
   return (
     <>
@@ -93,50 +94,50 @@ const ItemView = ({ data, currentPage, revoke }) => {
         <Card.Body>
 
           <div className="card-button-row">
-          {
-            page !== 'history' &&
-            <Button style={{ marginRight: '10px'}} variant={isClaim? "secondary":"primary"} onClick={handleClaimClick}>{isClaim? "Unclaim":"Claim"}</Button>}
-          {
-            page !== 'history' &&
+            {
+              page !== 'history' &&
+            <Button style={{ marginRight: '10px'}} variant={isClaim ? 'secondary' : 'primary'} onClick={handleClaimClick}>{isClaim ? 'Unclaim' : 'Claim'}</Button>}
+            {
+              page !== 'history' &&
             <Button onClick={() => {
               showMessage();
               joinRoom();
               getMessages(user.id, donorId, id);
-              }} variant="primary">Message</Button>
-          }
+            }} variant="primary">Message</Button>
+            }
           </div>
 
           <div className="card-modal-description">
-          <Card.Title>{name}</Card.Title>
+            <Card.Title>{name}</Card.Title>
             {/* <Card.Text>Value</Card.Text> */}
             {/* <Card.Text>Location</Card.Text> */}
-          {
-            (revoke === 'Unclaim' && histClaim) &&
+            {
+              (revoke === 'Unclaim' && histClaim) &&
             <Button variant="primary" onClick={handleHistClaim}>Unclaim</Button>
-          }
+            }
 
-          {
-            !histClaim &&
+            {
+              !histClaim &&
             <Button variant="secondary" disabled>
               Unclaim
             </Button>
-          }
+            }
 
-          {
-            (revoke === 'Delist' && histList) &&
+            {
+              (revoke === 'Delist' && histList) &&
             <Button variant="primary" onClick={handleHistList}>Delist</Button>
-          }
+            }
 
-          {
-            !histList &&
+            {
+              !histList &&
             <Button variant="secondary" disabled>Delist</Button>
-          }
-          <Card.Text style={{ color: 'darkgrey'}}>
-            {address}
-          </Card.Text>
-          <Card.Text>
-            {description}
-          </Card.Text>
+            }
+            <Card.Text style={{ color: 'darkgrey'}}>
+              {address}
+            </Card.Text>
+            <Card.Text>
+              {description}
+            </Card.Text>
           </div>
         </Card.Body>
       </Card>
@@ -146,7 +147,7 @@ const ItemView = ({ data, currentPage, revoke }) => {
         {!user ? null : <MessageView sender={user.id} receiver={donorId} id={conversationId} socket={socket}/> }
       </Modal>
     </>
-  )
-}
+  );
+};
 
 export default ItemView;

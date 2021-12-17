@@ -14,7 +14,7 @@ const getItemsInRadius = async (req, res) => {
     let minLat = searchLatitude - radiusInDegrees;
     let maxLong = searchLongitude + radiusInDegrees;
     let minLong = searchLongitude - radiusInDegrees;
-    let allCategory =['Apparel', 'Electronics', 'Entertainment','Garden and Outdoor', 'Hobbies', 'Home Goods','Musical Instruments', 'Office Supplies','Pet Supplies', 'Sporting Goods']
+    let allCategory = ['Apparel', 'Electronics', 'Entertainment', 'Garden and Outdoor', 'Hobbies', 'Home Goods', 'Musical Instruments', 'Office Supplies', 'Pet Supplies', 'Sporting Goods'];
 
     let searchCategory = req.query.category || allCategory;
     let items = await Item.findAll({
@@ -61,11 +61,11 @@ const sortItemsByNearest = (arrItems, latUser, longUser) => {
     disObj[d] = arrItems[i];
   }
   // return disObj's values
-  return Object.entries(disObj).sort((a,b) => { return a[0] - b[0] } );
-}
+  return Object.entries(disObj).sort((a, b) => { return a[0] - b[0]; } );
+};
 
 const createItem = (req, res) => {
-  console.log(req.body)
+  console.log(req.body);
   const { donorId, itemName, category, description, images, coordinates } = req.body;
 
   Item.create({
@@ -78,14 +78,14 @@ const createItem = (req, res) => {
     latitude: coordinates.lat,
     status: 'unclaimed'
   })
-  .then((result) => {
-    res.status(201).json(result.dataValues)
-  })
-  .catch((err) => {
-    res.status(401).json({ message: 'Item could not be created' })
-  })
+    .then((result) => {
+      res.status(201).json(result.dataValues);
+    })
+    .catch((err) => {
+      res.status(401).json({ message: 'Item could not be created' });
+    });
 
-}
+};
 
 module.exports = {
   getItemsInRadius,

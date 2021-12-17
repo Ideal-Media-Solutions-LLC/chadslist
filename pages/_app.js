@@ -5,8 +5,8 @@ import { useState } from 'react';
 import { Button, Offcanvas, Container, Col, Row } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/signup.css';
-import '../styles/mapView.css'
-import '../styles/Chat.css'
+import '../styles/mapView.css';
+import '../styles/Chat.css';
 import '../styles/history.css';
 import '../styles/Header.css';
 import '../styles/homePage.css';
@@ -22,12 +22,12 @@ function MyApp({ Component, pageProps }) {
   return (
     <AuthState>
       <ItemState>
-      <ChatState>
-      <Component {...pageProps} />
-      </ChatState>
+        <ChatState>
+          <Component {...pageProps} />
+        </ChatState>
       </ItemState>
     </AuthState>
-  )
+  );
 }
 
-export default MyApp
+export default MyApp;

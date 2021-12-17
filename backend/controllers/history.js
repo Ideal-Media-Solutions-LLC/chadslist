@@ -12,14 +12,14 @@ const getDonateHis = async (req, res) => {
       donorId
     }
   })
-  .then(data => {
-    res.status(200).json(data)
-  })
-  .catch(err => {
-    console.log('error getting user donations history:', err);
-    res.status(500).json(err);
-  })
-}
+    .then(data => {
+      res.status(200).json(data);
+    })
+    .catch(err => {
+      console.log('error getting user donations history:', err);
+      res.status(500).json(err);
+    });
+};
 
 const getClaimHis = async (req, res) => {
   const claimerId = req.query.userId;
@@ -28,32 +28,32 @@ const getClaimHis = async (req, res) => {
       claimerId
     }
   })
-  .then(claims => {
-    if (claims) {
-      let items = claims.map(claim => claim.dataValues.itemId);
+    .then(claims => {
+      if (claims) {
+        let items = claims.map(claim => claim.dataValues.itemId);
 
-      // console.log('items:', items);
-      Item.findAll({
-        where: {
-          id: items
-        }
-      }, {
-        order: [
-          ['updatedAt', 'DESC']
-        ]
-      })
-      .then(items => {
-        res.status(200).json(items)
-      })
-    } else {
-      res.status(200).json([]);
-    }
-  })
-  .catch(err => {
-    console.log('error getting user claims history:', err);
-    res.status(500).json(err);
-  })
-}
+        // console.log('items:', items);
+        Item.findAll({
+          where: {
+            id: items
+          }
+        }, {
+          order: [
+            ['updatedAt', 'DESC']
+          ]
+        })
+          .then(items => {
+            res.status(200).json(items);
+          });
+      } else {
+        res.status(200).json([]);
+      }
+    })
+    .catch(err => {
+      console.log('error getting user claims history:', err);
+      res.status(500).json(err);
+    });
+};
 
 const getReceiptHis = async (req, res) => {
   const donorId = req.query.donorId;
@@ -69,25 +69,25 @@ const getReceiptHis = async (req, res) => {
     on a."itemId" = b."id"
     where a."donorId" = ${donorId}
   `)
-   .then((data) => {
-     res.status(200).send(data[0]);
-   })
-   .catch((err) => {
-     console.log(err);
-     res.status(500).end();
-   });
+    .then((data) => {
+      res.status(200).send(data[0]);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).end();
+    });
 };
 const postReceiptHis = async (req, res) => {
   const { claimId, donorId, condition, value, itemId, userId } = req.body;
-  debugger;
+  
   await Receipt.create({ claimId, donorId, condition, value, itemId, userId })
-  .then(() => {
-    res.status(201).end();
-  })
-  .catch((err) => {
-    console.log(err);
-    res.status(500).end();
-  });
+    .then(() => {
+      res.status(201).end();
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).end();
+    });
 };
 
 const delist = async (req, res) => {
@@ -97,13 +97,13 @@ const delist = async (req, res) => {
       id: itemId
     }
   })
-  .then(data => {
-    res.status(204).json(`Succesfully deleted item ${itemId}`)
-  })
-  .catch(err => {
-    res.status(500).json('Error delist the item', err)
-  })
-}
+    .then(data => {
+      res.status(204).json(`Succesfully deleted item ${itemId}`);
+    })
+    .catch(err => {
+      res.status(500).json('Error delist the item', err);
+    });
+};
 
 const unclaim = async (req, res) => {
   const itemId = req.query.itemId;
@@ -113,23 +113,23 @@ const unclaim = async (req, res) => {
       itemId: itemId
     }
   })
-  .then(data => {
-    Item.update({
-      status: 'unclaimed',
-      claimed: 'f'
-    }, {
-      where: {
-        id: itemId
-      }
+    .then(data => {
+      Item.update({
+        status: 'unclaimed',
+        claimed: 'f'
+      }, {
+        where: {
+          id: itemId
+        }
+      });
     })
-  })
-  .then(data => {
-    res.json(data).sendStatus(200)
-  })
-  .catch(err => {
-    res.json(err).sendStatus(500)
-  })
-}
+    .then(data => {
+      res.json(data).sendStatus(200);
+    })
+    .catch(err => {
+      res.json(err).sendStatus(500);
+    });
+};
 
 module.exports = {
   getDonateHis,

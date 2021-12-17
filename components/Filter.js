@@ -1,6 +1,6 @@
 import { Nav, InputGroup } from 'react-bootstrap';
 import Image from 'next/image';
-import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { useState, useContext } from 'react';
 import ItemContext from '../context/item/ItemContext';
 
@@ -14,11 +14,11 @@ const Filter = ({filter, categoryFilter, close, setFilterTag}) => {
           categoryFilter(filter.category);
           setFilterTag(filter.category);
           close();
-          }}>{filter.category}</Nav.Link>
+        }}>{filter.category}</Nav.Link>
       </InputGroup>
     </>
-  )
-}
+  );
+};
 
 export default Filter;
 

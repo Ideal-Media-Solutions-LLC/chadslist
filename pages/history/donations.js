@@ -12,18 +12,18 @@ const Donations = (props) => {
 
   return (
     <Container>
-     <Row className="header">
-            <Col>
-              <img className="home-page-logo" src='/Chads_list_2.svg' width='300' height='100' />
-            </Col>
-            <Col className="home-page-buttons">
-              <img id="hamburger-menu-home-page" onClick={naviShow} src='/dropdown_menu.svg' width='50' height='50' />
-              <Offcanvas placement='end' show={showNavi} onHide={closeNavi} >
-                <Offcanvas.Header closeButton></Offcanvas.Header>
-                <NaviBar close={closeNavi}/>
-              </Offcanvas>
-            </Col>
-        </Row>
+      <Row className="header">
+        <Col>
+          <img className="home-page-logo" src='/Chads_list_2.svg' width='300' height='100' />
+        </Col>
+        <Col className="home-page-buttons">
+          <img id="hamburger-menu-home-page" onClick={naviShow} src='/dropdown_menu.svg' width='50' height='50' />
+          <Offcanvas placement='end' show={showNavi} onHide={closeNavi} >
+            <Offcanvas.Header closeButton></Offcanvas.Header>
+            <NaviBar close={closeNavi}/>
+          </Offcanvas>
+        </Col>
+      </Row>
       {/* <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
         <Navbar.Brand href="/history/donations">
           My Donations
@@ -44,7 +44,7 @@ const Donations = (props) => {
       <h2 className='page-title'>My Donations</h2>
       <HistoryList histType='donations'/>
     </Container>
-  )
-}
+  );
+};
 
 export default Donations;

@@ -25,11 +25,11 @@ const seedUser = async () => {
         users[i].status = 'individual';
       }
 
-      if (i < total/3) {
+      if (i < total / 3) {
         // NY
         users[i].latitude = 40.72557420158411;
         users[i].longitude = -74.01148541130824;
-      } else if (i >= total/3 && i < total - (total/3)) {
+      } else if (i >= total / 3 && i < total - (total / 3)) {
         // SF
         users[i].latitude = 37.962882809573145;
         users[i].longitude = -122.57822275079111;
@@ -44,7 +44,7 @@ const seedUser = async () => {
   } catch (error) {
     console.log('error adding data for users', error);
   }
-}
+};
 
 // New York: 40.72557420158411, -74.01148541130824
 // San Francisco: 37.962882809573145, -122.57822275079111
@@ -94,12 +94,12 @@ const seedItem = async () => {
       items[i].category = categories[Math.floor(Math.random() * 10)];
       items[i].status = itemStatus[Math.floor(Math.random() * 4)];
 
-      if (i < total/3) {
+      if (i < total / 3) {
         // NY
         items[i].latitude = (coordinates.ny.latitude - 0.5 + Math.random()).toFixed(12);
         items[i].longitude = (coordinates.ny.longitude - 0.5 + Math.random()).toFixed(12);
         items[i].donorId = Math.floor(Math.random() * 40) + 1;
-      } else if (i >= total/3 & i < total - (total/3)) {
+      } else if (i >= total / 3 & i < total - (total / 3)) {
         // SF
         items[i].latitude = (coordinates.sf.latitude - 0.5 + Math.random()).toFixed(12);
         items[i].longitude = (coordinates.sf.longitude - 0.5 + Math.random()).toFixed(12);
@@ -115,7 +115,7 @@ const seedItem = async () => {
   } catch (error) {
     console.log('error adding data for items', error);
   }
-}
+};
 
 // <40 newYork
 // 40 -> 69 sf
@@ -126,7 +126,7 @@ const seedConversation = async () => {
     let total = 30;
     let conversations = [];
     for (let i = 0; i < total; i++) {
-      ny = {};
+      let ny = {};
       // User from 0 to 20
       ny.smallerId = Math.floor(Math.random() * 20) + 1;
       // User from 21 to 39 (So we don't accidently get a use messaging themselves)
@@ -134,10 +134,8 @@ const seedConversation = async () => {
       ny.itemId = Math.floor(Math.random() * (40) + 1);
       conversations.push(ny);
     }
-    // await Conversation.bulkCreate(newYork);
-    // let sf = [];
     for (let i = 0; i < total; i++) {
-      sf = {};
+      let sf = {};
       // User from 0 to 20
       sf.smallerId = Math.floor(Math.random() * (55 - 40 + 1) + 40);
       // User from 21 to 39 (So we don't accidently get a use messaging themselves)
@@ -145,10 +143,8 @@ const seedConversation = async () => {
       sf.itemId = Math.floor(Math.random() * (70 - 41 + 1) + 41);
       conversations.push(sf);
     }
-    // await Conversation.bulkCreate(sf);
-    let seattle = [];
     for (let i = 0; i < total; i++) {
-      seattle = {};
+      let seattle = {};
       // User from 0 to 20
       seattle.smallerId = Math.floor(Math.random() * (85 - 70 + 1) + 70);
       // User from 21 to 39 (So we don't accidently get a use messaging themselves)
@@ -161,7 +157,7 @@ const seedConversation = async () => {
   } catch (error) {
     console.log(error);
   }
-}
+};
 
 const seedMessage = async () => {
   let messages = [];
@@ -171,22 +167,22 @@ const seedMessage = async () => {
     // A random number from 1 to 20 that will determine how many messages this conversation has
     let messageCount = Math.floor(Math.random() * (20 - 1) + 1);
     // Variables that will allow us to toggle between donor and claimant for each message
-    let sender = {true: 'smallerId', false: 'largerId'}
-    let toggle = false
+    let sender = {true: 'smallerId', false: 'largerId'};
+    let toggle = false;
     for (let j = 0; j < messageCount; j++) {
       let message = {
         message: faker.lorem.sentence(),
         userId: conversation[sender[toggle]],
         conversationId: i
-      }
+      };
       messages.push(message);
       toggle = !toggle;
     }
   }
   await Message.bulkCreate(messages);
-}
+};
 
-const conditions = ['new', 'great','good', 'okay'];
+const conditions = ['new', 'great', 'good', 'okay'];
 const seedReceipt = async () => {
   try {
     let receipts = [];
@@ -203,15 +199,15 @@ const seedReceipt = async () => {
     }
     await Receipt.bulkCreate(receipts);
   } catch (error) {
-    console.log('error adding data for receipts', error)
+    console.log('error adding data for receipts', error);
   }
-}
+};
 
 const seedClaim = async () => {
   try {
     let claims = [];
     let index = 0;
-    let total = 250000
+    let total = 250000;
     for (var i = 0; i < total; i++) {
       if (items[i].status !== 'unclaimed') {
         claims[index] = {};
@@ -220,13 +216,13 @@ const seedClaim = async () => {
 
         // generate claimerId that belongs to the same area
         // created slightly different situations for the three areas so that we can testing different situations
-        if (i < total/3) {
+        if (i < total / 3) {
           // for NY, all items claimed by userId = 1
           claims[index].claimerId = 1;
-        } else if (i >= total/3 && i < total - (total/3)) {
+        } else if (i >= total / 3 && i < total - (total / 3)) {
           // for SF, items claimed by two users, with userId = 40 or 50
           if (i % 2 === 1) {
-            claims[index].claimerId = 40
+            claims[index].claimerId = 40;
           } else {
             claims[index].claimerId = 50;
           }
@@ -246,14 +242,14 @@ const seedClaim = async () => {
   } catch (error) {
     console.log('error adding data for claims', error);
   }
-}
+};
 
 
 const seedAll = async() => {
   try {
     await resetDB();
     await User.sync({force: true});
-    await Conversation.sync({force: true})
+    await Conversation.sync({force: true});
     await Item.sync({force: true});
     await Claim.sync({force: true});
     await Message.sync({force: true});
@@ -265,8 +261,8 @@ const seedAll = async() => {
     await seedMessage();
     await seedReceipt();
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};
 
 seedAll();

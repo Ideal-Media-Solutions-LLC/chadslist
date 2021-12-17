@@ -8,7 +8,7 @@ router.get('/donations', getDonateHis);
 
 router.get('/claims', getClaimHis);
 // router.get('/claims', getClaimHis);
-router.get('/receipts', getReceiptHis)
+router.get('/receipts', getReceiptHis);
 router.post('/receipts', postReceiptHis);
 
 router.delete('/donations', delist);

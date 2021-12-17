@@ -14,4 +14,4 @@ module.exports.resetDB = async () => {
   } catch (error) {
     console.error('Unable to sync to the database:', error);
   }
-}
+};

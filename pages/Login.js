@@ -7,19 +7,19 @@ const Login = (props) => {
   const [form, setForm] = useState({
     email: '',
     password: ''
-  })
+  });
 
   const { loginUser } = useContext(AuthContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    loginUser(form)
-  }
+    loginUser(form);
+  };
 
   const handleChange = ({ target: { name, value } }) => {
-    setForm({ ...form, [name]: value})
-  }
+    setForm({ ...form, [name]: value});
+  };
   return (
     <>
       <br></br>
@@ -51,7 +51,7 @@ const Login = (props) => {
         </Col>
       </Container>
     </>
-  )
-}
+  );
+};
 
 export default Login;

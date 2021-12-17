@@ -16,7 +16,7 @@ const claim = async (req, res) => {
       res.status(201).end();
     })
     .catch(err => console.log(err));
-  res.status(500).end()
+  res.status(500).end();
 };
 
 const unclaim = async (req, res) => {
@@ -31,7 +31,7 @@ const unclaim = async (req, res) => {
         where: {
           id: itemId
         }
-      })
+      });
       res.status(200).end();
     })
     .catch(err => console.log(err));
