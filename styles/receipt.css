@@ -1,0 +1,10 @@
+#receipt {
+  width: 100%;
+  display: flex;
+
+}
+
+#download {
+  display: flex;
+  justify-content: center;
+}

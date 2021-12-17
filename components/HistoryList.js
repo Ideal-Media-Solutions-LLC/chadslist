@@ -68,10 +68,15 @@ const HistListEntry = ( {item, histType, toggleModal} ) => {
 
   }
 
+  const imageVerification  = (e) => {
+    e.target.onerror = null;
+    e.target.src = '/alt.png';
+  };
+
 
   return (
     <div className='hist-list-item' id={item.id}>
-      <img src={item.imageUrl} className='hist-list-item-img'/>
+      <img src={item.imageUrl} onError={imageVerification} className='hist-list-item-img'/>
       <div className='hist-list-item-info'>
         <div className='hist-list-item-name' onClick={handleClick}>{item.name}</div>
         <div className='hist-list-item-status'>{(item.status).charAt(0).toUpperCase() + (item.status).slice(1)}</div>
