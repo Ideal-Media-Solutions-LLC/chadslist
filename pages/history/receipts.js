@@ -66,10 +66,11 @@ const Receipts = (props) => {
         </Row>
       <Button onClick={downloadClick}>download</Button>
       <div id='receipt'>
-        <h2 className='page-title'>My Receipts</h2>
+        <div id='receipt-container'>
+        <p className='page-title'>Donation Receipts</p>
         <div><p>Username: {user.userName}</p></div>
         {receipt.map((item, index) =>
-          <div key={index}>
+          <div id='item' key={index}>
             <p>ItemId: {item.itemId}</p>
             <p>Item: {item.name}</p>
             <p>Date: {item.createdAt}</p>
@@ -77,6 +78,7 @@ const Receipts = (props) => {
           </div>
         )}
         <div><p>Total Donation Value: ${total()}</p></div>
+        </div>
       </div>
     </Container>
   )
