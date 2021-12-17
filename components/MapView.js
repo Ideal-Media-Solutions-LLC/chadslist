@@ -21,8 +21,8 @@ function MapView({viewableItems, currentLocation}) {
 
   const infoWindowStyle = {
     'objectFit': 'contain',
-    width: '10vh',
-    height: '10vh',
+    width: '12vh',
+    height: '12vh',
   }
 
   const onLoad = (newMarker, index) => {
