@@ -1,4 +1,4 @@
-import { Button, Offcanvas, Nav, Navbar, Row, Col } from 'react-bootstrap';
+import { Button, Offcanvas, Nav, Navbar, Row, Col, Container } from 'react-bootstrap';
 import NaviBar from '../../components/NaviBar.js';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { useState } from 'react';
@@ -11,7 +11,7 @@ const Claims = (props) => {
   const closeNavi = () => setNavi(false);
 
   return (
-    <>
+    <Container>
     <Row className="header">
             <Col>
               <img className="home-page-logo" src='/Chads_list_2.svg' width='300' height='100' />
@@ -43,7 +43,7 @@ const Claims = (props) => {
       </Navbar> */}
       <h2 className='page-title'>My Claims</h2>
       <HistoryList histType='claims' />
-    </>
+    </Container>
   )
 }
 

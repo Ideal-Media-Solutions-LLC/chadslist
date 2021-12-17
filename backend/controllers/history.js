@@ -2,6 +2,7 @@ const Claim = require('../db/models/Claim.js');
 const Item = require('../db/models/Item.js');
 const User = require('../db/models/User.js');
 const Receipt = require('../db/models/Receipt.js');
+const sequelize = require('../db/db.js');
 
 const getDonateHis = async (req, res) => {
   const donorId = req.query.userId;
@@ -53,15 +54,23 @@ const getClaimHis = async (req, res) => {
     res.status(500).json(err);
   })
 }
+
 const getReceiptHis = async (req, res) => {
   const donorId = req.query.donorId;
-  await Receipt.findAll({
-    where: {
-      donorId
-    },
-   })
+  // await Receipt.findAll({
+  //   where: {
+  //     donorId
+  //   },
+  //   include: [{model: Item, as:'item', where:{donorId}, required:false}]
+  //  })
+  await sequelize.query(`
+    select a.*, b."name"
+    from "receipts" a left join "items" b
+    on a."itemId" = b."id"
+    where a."donorId" = ${donorId}
+  `)
    .then((data) => {
-     res.status(200).send(data);
+     res.status(200).send(data[0]);
    })
    .catch((err) => {
      console.log(err);

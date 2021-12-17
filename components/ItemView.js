@@ -81,20 +81,21 @@ const ItemView = ({ data, currentPage, revoke }) => {
       }
     })}, [data])
 
+    const imageVerification  = (e) => {
+      e.target.onerror = null;
+      e.target.src = '/alt.png';
+    };
 
-  console.log(data);
   return (
     <>
-      <Card style={{ width: '24.9rem' }}>
-        <Card.Img variant="top" src={imageUrl} />
+      <Card style={{ width: '100%' }}>
+        <Card.Img variant="top" onError={imageVerification} src={imageUrl} style={{ objectFit: 'cover', height: '40vh'}}/>
         <Card.Body>
-          <Card.Title>{name}</Card.Title>
-          <Card.Text>Value</Card.Text>
-          <Card.Text>{address}</Card.Text>
 
+          <div className="card-button-row">
           {
             page !== 'history' &&
-            <Button variant={isClaim? "secondary":"primary"} onClick={handleClaimClick}>{isClaim? "Unclaim":"Claim"}</Button>}
+            <Button style={{ marginRight: '10px'}} variant={isClaim? "secondary":"primary"} onClick={handleClaimClick}>{isClaim? "Unclaim":"Claim"}</Button>}
           {
             page !== 'history' &&
             <Button onClick={() => {
@@ -103,7 +104,12 @@ const ItemView = ({ data, currentPage, revoke }) => {
               getMessages(user.id, donorId, id);
               }} variant="primary">Message</Button>
           }
+          </div>
 
+          <div className="card-modal-description">
+          <Card.Title>{name}</Card.Title>
+            {/* <Card.Text>Value</Card.Text> */}
+            {/* <Card.Text>Location</Card.Text> */}
           {
             (revoke === 'Unclaim' && histClaim) &&
             <Button variant="primary" onClick={handleHistClaim}>Unclaim</Button>
@@ -125,10 +131,13 @@ const ItemView = ({ data, currentPage, revoke }) => {
             !histList &&
             <Button variant="secondary" disabled>Delist</Button>
           }
-
+          <Card.Text style={{ color: 'darkgrey'}}>
+            {address}
+          </Card.Text>
           <Card.Text>
             {description}
           </Card.Text>
+          </div>
         </Card.Body>
       </Card>
 
