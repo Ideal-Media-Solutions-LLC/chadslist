@@ -7,6 +7,7 @@ import ItemView from './ItemView.js'
 function MapView({viewableItems, currentLocation}) {
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [isSelected, setIsSelected] = useState(false);
+  // const [map, setMap] = useState(null)
   const [markers, setMarkers] = useState({}) //objects to interact with GoogleMaps API
 
 
@@ -19,9 +20,9 @@ function MapView({viewableItems, currentLocation}) {
   };
 
   const infoWindowStyle = {
-    'object-fit': 'contain',
-    width: '10vh',
-    height: '10vh',
+    'objectFit': 'contain',
+    width: '14vh',
+    height: '15vh',
   }
 
   const onLoad = (newMarker, index) => {
@@ -40,7 +41,20 @@ function MapView({viewableItems, currentLocation}) {
   }
 
   useEffect( () => {
+    //Dismisses InfoWindow
     setSelectedMarker(null)
+
+    //TODO:
+    //Allows the map to zoom out to fit all the markers
+    // let bounds = new google.maps.LatLngBounds();
+    // for (let i = 0; i < Object.entries(markers).length; i++) {
+    //   bounds.extend(markers[i].getPosition());
+    // }
+    // if(map){
+    //   map.fitBounds(bounds)
+    //   map.setCenter(currentLocation)
+    // }
+
     }, [viewableItems]
   )
 
@@ -51,9 +65,12 @@ function MapView({viewableItems, currentLocation}) {
         mapContainerStyle={mapContainerStyle}
         center={currentLocation}
         zoom={13}
+        onLoad={(map) => setMap(map)}
         options={{
           disableDefaultUI: true,
           zoomControl: true,
+          gestureHandling: 'greedy'
+          //"greedy": All touch gestures and scroll events pan or zoom the map.
         }}
         onClick={(e) => {
           setSelectedMarker(null)}}
@@ -67,8 +84,8 @@ function MapView({viewableItems, currentLocation}) {
               position={{lat: item.latitude, lng: item.longitude}}
               label= {{
                 color: 'white',
-                'fontSize': '14px',
-                'fontWeight': '600',
+                'fontSize': '16px',
+                'fontWeight': '700',
                 text: (index + 1).toString()
               }}
               onMouseDown={() => handleMouseDown(index)}
@@ -85,7 +102,7 @@ function MapView({viewableItems, currentLocation}) {
 
             <div style={infoWindowStyle} onClick={() => setIsSelected(true)} >
               <img style={{width: '100%', height: '100'}} src={selectedMarker.imageUrl} />
-              <div style={{'fontSize': 'x-small'}}>{selectedMarker.name} </div>
+              <div style={{'fontSize': 'small', 'fontWeight' : 'bold'}}>{selectedMarker.name} </div>
             </div>
 
           </InfoWindow>
