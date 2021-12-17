@@ -81,12 +81,15 @@ const ItemView = ({ data, currentPage, revoke }) => {
       }
     })}, [data])
 
+    const imageVerification  = (e) => {
+      e.target.onerror = null;
+      e.target.src = '/alt.png';
+    };
 
-  console.log(data);
   return (
     <>
       <Card style={{ width: '100%' }}>
-        <Card.Img variant="top" src={imageUrl} style={{ objectFit: 'cover', height: '40vh'}}/>
+        <Card.Img variant="top" onError={imageVerification} src={imageUrl} style={{ objectFit: 'cover', height: '40vh'}}/>
         <Card.Body>
 
           <div className="card-button-row">

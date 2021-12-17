@@ -32,7 +32,10 @@ const Receipts = (props) => {
   const downloadClick = () => {
     const element = document.getElementById('receipt')
     doc.html(element)
-    .then(() => doc.save('receipt.pdf'));
+    .then(() => {
+      doc.setFontSize(16);
+      doc.save('receipt.pdf')
+    });
   }
 
   const total = () => {
@@ -60,13 +63,14 @@ const Receipts = (props) => {
         <h2 className='page-title'>My Receipts</h2>
         <div><p>Username: {user.userName}</p></div>
         {receipt.map((item, index) =>
-          <div>
+          <div key={index}>
             <p>ItemId: {item.itemId}</p>
-            <p>Item: Item Name</p>
+            <p>Item: {item.name}</p>
+            <p>Date: {item.createdAt}</p>
             <p>Value: ${item.value}</p>
           </div>
         )}
-        <div><p>Total Donation: ${total()}</p></div>
+        <div><p>Total Donation Value: ${total()}</p></div>
       </div>
     </Container>
   )
