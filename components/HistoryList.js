@@ -142,7 +142,7 @@ const HistoryList = ( { histType } ) => {
           <FaSearch />
         </Button>
       </InputGroup>
-      {histType === 'donations' && <Button className='btn' id='donation-receipt-btn' variant="primary">Print Receipt for Donations</Button>}
+      {/* {histType === 'donations' && <Button className='btn' id='donation-receipt-btn' variant="primary">Print Receipt for Donations</Button>} */}
       <div id='hist-list'>
         {
           displayedItems &&

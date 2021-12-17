@@ -1,23 +1,23 @@
 .page-title {
-  padding: 3% 5% 0 5%;
+  padding: 3% 0 0 0;
 }
 
 #hist-search {
-  padding: 4% 5% 0 5%;
+  padding: 4% 0 0 0;
 }
 
-#donation-receipt-btn {
+/* #donation-receipt-btn {
   margin: 2% 5% 3% 5%;
   background-color: #1282A2;
   border-color: #1282A2;
-}
+} */
 
 #donation-receipt-btn:hover {
   text-decoration: underline;
 }
 
 #hist-list {
-  padding: 0 5% 5% 5%;
+  padding: 0 0 5% 0;
 }
 .hist-list-item {
   display: flex;
@@ -38,6 +38,7 @@
   width: max-content;
   justify-content: flex-start;
   position: relative;
+  min-height: 15vh;
 }
 
 .hist-list-item-name {
