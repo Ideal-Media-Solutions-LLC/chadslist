@@ -1,7 +1,7 @@
 import { Form, Row, Col, Button, InputGroup, FormControl, DropdownButton, Dropdown } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { FaSearch, FaMapMarkerAlt } from "react-icons/fa";
-import {useState, useContext} from 'react';
+import {useState, useContext, useEffect } from 'react';
 import ItemContext from '../context/item/ItemContext';
 import { FaMapMarkedAlt } from "react-icons/fa";
 import { RiLayoutGridFill } from "react-icons/ri";
@@ -14,7 +14,7 @@ const Search = ({ ChangeView, setCurrentLocation, handleClick, wordFilter}) => {
   let [distance, setDistance] = useState('')
   let [mapToggle, setMapToggle] = useState('list')
 
-  const { getItemsInRadius, itemList } = useContext(ItemContext)
+  const { getItemsInRadius, itemList, filterItems } = useContext(ItemContext)
 
   const getLocationFromAddress = (address, callback) => {
     address = address || 'San Francisco'; //Defaults to SF
@@ -33,13 +33,17 @@ const Search = ({ ChangeView, setCurrentLocation, handleClick, wordFilter}) => {
   }
 
 
+  // useEffect(() => {
+  //   filterItems(searchItem)
+  // }, [itemList])
+
   const handleSubmit = (e) => {
     e.preventDefault()
     console.log('Submited:', searchItem, searchAddress, distance)
     getLocationFromAddress(searchAddress, (async (lat, lng) => {
-      await getItemsInRadius(lat, lng, distance)
+      await getItemsInRadius(lat, lng, distance, searchItem)
       setCurrentLocation({lat: lat, lng: lng})
-      wordFilter(searchItem)
+      // filterItems(searchItem)
     })
     )
   }
