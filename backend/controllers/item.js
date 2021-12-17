@@ -4,7 +4,7 @@ const Item = require('../db/models/Item.js');
 const getItemsInRadius = async (req, res) => {
   try {
     let userId = parseInt(req.query.userId) || 0;
-    let radiusInMiles = parseInt(req.query.radius) || 10;
+    let radiusInMiles = parseInt(req.query.radius) || 25;
     let radiusInDegrees = radiusInMiles / 69;
     // Location the search is centered around
     let searchLatitude = parseFloat(req.query.latitude);
@@ -15,7 +15,6 @@ const getItemsInRadius = async (req, res) => {
     let maxLong = searchLongitude + radiusInDegrees;
     let minLong = searchLongitude - radiusInDegrees;
     let allCategory =['Apparel', 'Electronics', 'Entertainment','Garden and Outdoor', 'Hobbies', 'Home Goods','Musical Instruments', 'Office Supplies','Pet Supplies', 'Sporting Goods']
-
     let searchCategory = req.query.category || allCategory;
     let items = await Item.findAll({
       where: {

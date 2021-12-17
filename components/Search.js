@@ -24,7 +24,7 @@ const Search = ({ ChangeView, setCurrentLocation, handleClick, wordFilter}) => {
       const lat = result[0].geometry.location.lat()
       const lng = result[0].geometry.location.lng()
       if (status === 'OK') {
-        console.log(`'${address}' geocoded to \nlat: ${lat} \nlng: ${lng}`)
+        // console.log(`'${address}' geocoded to \nlat: ${lat} \nlng: ${lng}`)
         callback(lat, lng)
       } else {
         console.log(status, `Was not able to retrieve geocode from '${address}`)
@@ -32,18 +32,20 @@ const Search = ({ ChangeView, setCurrentLocation, handleClick, wordFilter}) => {
     })
   }
 
-
-  // useEffect(() => {
-  //   filterItems(searchItem)
-  // }, [itemList])
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    console.log('Submited:', searchItem, searchAddress, distance)
+  useEffect(() => {
     getLocationFromAddress(searchAddress, (async (lat, lng) => {
       await getItemsInRadius(lat, lng, distance, searchItem)
       setCurrentLocation({lat: lat, lng: lng})
-      // filterItems(searchItem)
+    })
+    )
+  },[])
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    // console.log('Submited:', searchItem, searchAddress, distance)
+    getLocationFromAddress(searchAddress, (async (lat, lng) => {
+      await getItemsInRadius(lat, lng, distance, searchItem)
+      setCurrentLocation({lat: lat, lng: lng})
     })
     )
   }
