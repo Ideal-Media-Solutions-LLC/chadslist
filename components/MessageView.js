@@ -26,7 +26,7 @@ const MessageView = ({socket, sender, receiver, id, photoUrl }) => {
   }, [socket]);
 
   useEffect(() => {
-    if(messageEl) {
+    if(messageEl.current) {
       messageEl.current.addEventListener('DOMNodeInserted', e => {
         const { currentTarget: target } = e;
         target.scroll({ top: target.scrollHeight, behavior: 'smooth'})
