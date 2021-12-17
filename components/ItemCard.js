@@ -1,7 +1,7 @@
-import { Card, Container, Row, Col, Modal, Image } from 'react-bootstrap';
+import React from 'react';
+import { Card, Col } from 'react-bootstrap';
 import { useState } from 'react';
 import ItemModal from './ItemModal';
-import ItemView from './ItemView';
 
 const ItemCard = ({ data }) => {
   const { name, imageUrl } = data;
@@ -19,7 +19,7 @@ const ItemCard = ({ data }) => {
       </Col>
       {!show ? null : <ItemModal data={data} page='main'/>}
     </>
-  )
-}
+  );
+};
 
 export default ItemCard;

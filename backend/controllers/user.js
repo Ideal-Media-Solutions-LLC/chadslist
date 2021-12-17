@@ -8,13 +8,13 @@ const user = async (req, res) => {
       userName,
     }
   })
-    .then( async (data) => {
+    .then((data) => {
       if (data.length !== 0) {
         res.status(400).send('Username Taken');
         return;
       } else {
         // otherwise, create user
-        const user = await User.create({ userName, email, photoUrl, accType, location, password })
+        User.create({ userName, email, photoUrl, accType, location, password })
           .then(() => {
             res.status(201).end();
           })
@@ -26,7 +26,7 @@ const user = async (req, res) => {
       console.log(err);
       res.status(500).end();
     });
-}
+};
 
 module.exports = {
   user,

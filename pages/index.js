@@ -1,63 +1,59 @@
+import React from 'react';
 import ListView from '../components/ListView.js';
 import MapView from '../components/MapView.js';
 import NaviBar from '../components/NaviBar.js';
-import { Button, Offcanvas, Container, Col, Row } from 'react-bootstrap';
-import Image from 'next/image';
+import { Offcanvas, Container, Col, Row } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import FilterList from '../components/FilterList.js';
 import Search from '../components/Search.js';
 import { useState, useEffect, useContext } from 'react';
-import { FaMapMarkedAlt } from "react-icons/fa";
-import { RiLayoutGridFill } from "react-icons/ri";
 import {LoadScript} from '@react-google-maps/api';
-import { getItemsInRadius } from '../context/item/ItemContext';
-import ItemContext from '../context/item/ItemContext'
+import ItemContext from '../context/item/ItemContext';
 import PageSelector from '../components/PageSelector.js';
 import Avatar from '@mui/material/Avatar';
 import AuthContext from '../context/auth/AuthContext';
-import { FaSearch} from "react-icons/fa";
 
-const HomePage = (props) => {
+const HomePage = () => {
   const [view, setView] = useState('list');
   const [showFilter, setFilter] = useState(false);
   const { user } = useContext(AuthContext);
-  const { getItemsInRadius, itemList } = useContext(ItemContext)
-  const SF_LOCATION = { lat: 37.962882809573145, lng: -122.57822275079111}
-  const [currentLocation, setCurrentLocation] = useState(SF_LOCATION)  //Supplies Map component, is updated from Search
-  const [filterItems, setFilterItems] = useState([])
+  const { getItemsInRadius, itemList } = useContext(ItemContext);
+  const SF_LOCATION = { lat: 37.962882809573145, lng: -122.57822275079111};
+  const [currentLocation, setCurrentLocation] = useState(SF_LOCATION); //Supplies Map component, is updated from Search
+  const [filterItems, setFilterItems] = useState([]);
 
   const updateList = () => {
-    if(itemList.length > 0){
-      setFilterItems(itemList)
+    if (itemList.length > 0) {
+      setFilterItems(itemList);
     }
-  }
+  };
 
-  useEffect(updateList,[itemList]);
+  useEffect(updateList, [itemList]);
 
   const ChangeView = (input) => {
     setView(input);
-  }
+  };
 
-  const handleClick = () => setFilter(!showFilter)
-  const closeFilter = () => setFilter(false)
+  const handleClick = () => setFilter(!showFilter);
+  const closeFilter = () => setFilter(false);
 
   const categoryFilter = (category) => {
-    let results = itemList.filter(item => item.category === category )
-    setFilterItems(results)
-  }
+    let results = itemList.filter(item => item.category === category );
+    setFilterItems(results);
+  };
 
   // handle filtering item by keyword via search bar
   const wordFilter = async (input) => {
-    if(input){
+    if (input) {
       let results = await itemList.filter(item =>item.name.toLowerCase().includes(input.toLowerCase()));
-      console.log('results',results)
-      setFilterItems(results)
-      console.log('filterItems',filterItems)
-    }else{
-      console.log('no input')
-      return
+      console.log('results', results);
+      setFilterItems(results);
+      console.log('filterItems', filterItems);
+    } else {
+      console.log('no input');
+      return;
     }
-  }
+  };
 
 
   useEffect(() => {
@@ -74,17 +70,17 @@ const HomePage = (props) => {
 
     //Acquire User Location
     navigator.geolocation.getCurrentPosition((result, error) => {
-      if (error){
-        console.log(error)
+      if (error) {
+        console.log(error);
       } else {
         setCurrentLocation({
           lat: result.coords.latitude,
           lng: result.coords.longitude,
-        })
-        getItemsInRadius(result.coords.latitude, result.coords.longitude)
+        });
+        getItemsInRadius(result.coords.latitude, result.coords.longitude);
       }
-    })
-  }, [])
+    });
+  }, []);
 
   // ~~~~~~~~~~~~~~~~ Pagination ~~~~~~~~~~~~~~~~~~~~~~
 
@@ -92,7 +88,7 @@ const HomePage = (props) => {
   const [page, setPage] = useState(1);
 
   // how many items per page being viewed, default 8
-  const [itemsPerPage, setItemsPerPage] = useState(8);
+  const [itemsPerPage] = useState(8); // setItemsPerPage deleted because it wasn't being used anywhere and linter was complaining
 
   // formula for determining which items should be viewable based on current page and number of itemsPerPage
 
@@ -114,7 +110,7 @@ const HomePage = (props) => {
     <div>
       <LoadScript googleMapsApiKey={process.env.mapAPI}>
         <Container>
-        <Row className="header">
+          <Row className="header">
             <Col>
               <img className="home-page-logo" src='/Chads_list_2.svg' width='230' height='100' />
             </Col>
@@ -122,31 +118,31 @@ const HomePage = (props) => {
               {user ? <div className="avatar-header-row" onClick={naviShow}>
                 <Avatar alt="Travis Howard" src={user.photoUrl} style={{ height: '35px', width: '35px', marginRight: '8px' }}/>
                 <div style={{ marginTop: '12px', fontWeight: 'bold', display: 'flex', flexWrap: 'wrap' }}>
-                <p>{user.userName}</p>
+                  <p>{user.userName}</p>
                 </div>
-              </div> :   <img id="hamburger-menu-home-page" onClick={naviShow} src='/dropdown_menu.svg' width='50' height='50' /> }
+              </div> : <img id="hamburger-menu-home-page" onClick={naviShow} src='/dropdown_menu.svg' width='50' height='50' /> }
 
               <Offcanvas placement='end' show={showNavi} onHide={closeNavi} >
                 <Offcanvas.Header closeButton></Offcanvas.Header>
                 <NaviBar close={closeNavi}/>
               </Offcanvas>
             </Col>
-        </Row>
-              <Offcanvas show={showFilter} onHide={closeFilter} >
-                <Offcanvas.Header closeButton></Offcanvas.Header>
-                <FilterList setFilterTag={setFilterTag} close={closeFilter} categoryFilter={categoryFilter}/>
-              </Offcanvas>
+          </Row>
+          <Offcanvas show={showFilter} onHide={closeFilter} >
+            <Offcanvas.Header closeButton></Offcanvas.Header>
+            <FilterList setFilterTag={setFilterTag} close={closeFilter} categoryFilter={categoryFilter}/>
+          </Offcanvas>
 
-              <Search ChangeView={ChangeView} setCurrentLocation={setCurrentLocation} handleClick={handleClick} wordFilter={wordFilter}/>
+          <Search ChangeView={ChangeView} setCurrentLocation={setCurrentLocation} handleClick={handleClick} wordFilter={wordFilter}/>
 
           {filterTag && <Row>
             <div>
               Filter: {filterTag} < span onClick={() => {
                 setFilterItems(itemList);
                 setFilterTag(null);
-                }}> x</span>
-              </div>
-              </Row>}
+              }}> x</span>
+            </div>
+          </Row>}
           <Col>
             {view === 'map' && <MapView viewableItems={viewableItems} currentLocation={currentLocation}/>}
             <ListView viewableItems={viewableItems}/>
@@ -155,7 +151,7 @@ const HomePage = (props) => {
         </Container>
       </LoadScript>
     </div>
-  )
-}
+  );
+};
 
 export default HomePage;

@@ -6,9 +6,9 @@ const claim = async (req, res) => {
   console.log(claimerId);
   const itemId = req.body.itemId;
   const status = 'claimed';
-  const claim = await Claim.create({ claimerId, itemId, status })
+  await Claim.create({ claimerId, itemId, status })
     .then(async () => {
-      const item = await Item.update({ claimed: true, status: 'claimed' }, {
+      await Item.update({ claimed: true, status: 'claimed' }, {
         where: {
           id: itemId
         }
@@ -16,12 +16,12 @@ const claim = async (req, res) => {
       res.status(201).end();
     })
     .catch(err => console.log(err));
-  res.status(500).end()
+  res.status(500).end();
 };
 
 const unclaim = async (req, res) => {
   const { claimantId, itemId } = req.query;
-  item = await Claim.destroy({
+  await Claim.destroy({
     where: {
       [Op.and]: [{claimerId: claimantId}, { status: 'claimed' }]
     }
@@ -31,7 +31,7 @@ const unclaim = async (req, res) => {
         where: {
           id: itemId
         }
-      })
+      });
       res.status(200).end();
     })
     .catch(err => console.log(err));

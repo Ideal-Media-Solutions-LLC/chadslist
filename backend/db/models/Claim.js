@@ -4,30 +4,30 @@ const User = require('./User.js');
 const Item = require('./Item.js');
 
 const Claim = sequelize.define('claim', {
-    id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true
-    },
-    claimerId: DataTypes.INTEGER,
-    itemId: DataTypes.INTEGER,
-    status: DataTypes.STRING,
-    // I don't think we need to do a date or anything because sequelize will automatically put a created_at date
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true
   },
-  {
-    indexes: [
-      {
-        name: 'claimClaimerIndex',
-        using: 'HASH',
-        fields: ['claimerId']
-      },
-      {
-        name: 'claimItemIndex',
-        using: 'HASH',
-        fields: ['itemId']
-      },
-    ]
-  }
+  claimerId: DataTypes.INTEGER,
+  itemId: DataTypes.INTEGER,
+  status: DataTypes.STRING,
+  // I don't think we need to do a date or anything because sequelize will automatically put a created_at date
+},
+{
+  indexes: [
+    {
+      name: 'claimClaimerIndex',
+      using: 'HASH',
+      fields: ['claimerId']
+    },
+    {
+      name: 'claimItemIndex',
+      using: 'HASH',
+      fields: ['itemId']
+    },
+  ]
+}
 );
 
 

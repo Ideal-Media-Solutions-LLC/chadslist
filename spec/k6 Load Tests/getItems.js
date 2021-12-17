@@ -16,11 +16,11 @@ export const options = {
     { duration: '30s', target: 5625 },
     { duration: '30s', target: 0 }
   ]
-}
+};
 
 export default function () {
   let rand = randomIntBetween(0, 100);
   const res = http.get(`http://localhost:3001/items?userId=${rand}&latitude=${37.711790817051}&longitude=${-122.632440542671}`);
-  check(res, {'status was 200': (r) => r.status == 200});
+  check(res, {'status was 200': (r) => r.status === 200});
   sleep(1);
 }

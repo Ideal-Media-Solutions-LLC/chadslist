@@ -1,6 +1,7 @@
+import React from 'react';
 import { Nav, Navbar} from 'react-bootstrap';
 import Image from 'next/image';
-import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
 import Filter from './Filter';
 
 
@@ -47,19 +48,19 @@ const FilterList = ({categoryFilter, close, setFilterTag}) => {
       category: 'Sporting Goods',
       src: '/sports.svg',
     },
-  ]
+  ];
 
-  return(
+  return (
     <>
-    <Image src='/Chads_list_2.svg' width='150' height='60' />
-    <Nav defaultActiveKey="/" className="flex-column">
-      <Navbar.Brand >Select Category</Navbar.Brand>
+      <Image src='/Chads_list_2.svg' width='150' height='60' />
+      <Nav defaultActiveKey="/" className="flex-column">
+        <Navbar.Brand >Select Category</Navbar.Brand>
         {filterList.map((filter, index) => {
-          return  <Filter setFilterTag={setFilterTag} close={close} key={index} filter={filter} categoryFilter={categoryFilter}/>
+          return <Filter setFilterTag={setFilterTag} close={close} key={index} filter={filter} categoryFilter={categoryFilter}/>;
         })}
-    </Nav>
+      </Nav>
     </>
-  )
-}
+  );
+};
 
 export default FilterList;

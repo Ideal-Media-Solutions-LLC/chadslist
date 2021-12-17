@@ -8,9 +8,9 @@ const { Op } = require('sequelize');
 const startChat = (req, res) => {
   const { senderId, receiverId, id } = req.body;
   //query for conversation based on IDs
-  console.log(senderId, receiverId)
-  const smallerId = senderId > receiverId ? receiverId : senderId
-  const largerId = senderId > receiverId ? senderId: receiverId
+  console.log(senderId, receiverId);
+  const smallerId = senderId > receiverId ? receiverId : senderId;
+  const largerId = senderId > receiverId ? senderId : receiverId;
 
   let conversationID;
 
@@ -22,47 +22,47 @@ const startChat = (req, res) => {
       ]
     }
   })
-  .then((conversation) => {
-    if (conversation) {
-      conversationID = conversation.dataValues.id
-      Message.findAll({
-        where: {
-          conversationId: conversation.dataValues.id
-        }
-      }, {
-        order: [
-          ['createdAt', 'DESC']
-        ]
-      })
-      .then((messages) => {
-        console.log(messages)
-        const data = messages.map((message) => {
-          return message
+    .then((conversation) => {
+      if (conversation) {
+        conversationID = conversation.dataValues.id;
+        Message.findAll({
+          where: {
+            conversationId: conversation.dataValues.id
+          }
+        }, {
+          order: [
+            ['createdAt', 'DESC']
+          ]
         })
-        res.send({ conversationId: conversationID, data })
-      })
-    } else {
-      Conversation.create({
-        smallerId,
-        largerId,
-        itemId: id
-      }).then((result) => {
-        return res.json({ conversationId: result.dataValues.id, data: [] });
-      })
-      .catch((err) => {
-        res.sendStatus(401).json({ message: 'Error'})
-      })
-    }
-  })
-  .catch((err) => {
-    res.sendStatus(401).json({ message: 'Error has occured'})
-  })
-}
+          .then((messages) => {
+            console.log(messages);
+            const data = messages.map((message) => {
+              return message;
+            });
+            res.send({ conversationId: conversationID, data });
+          });
+      } else {
+        Conversation.create({
+          smallerId,
+          largerId,
+          itemId: id
+        }).then((result) => {
+          return res.json({ conversationId: result.dataValues.id, data: [] });
+        })
+          .catch(() => {
+            res.sendStatus(401).json({ message: 'Error'});
+          });
+      }
+    })
+    .catch(() => {
+      res.sendStatus(401).json({ message: 'Error has occured'});
+    });
+};
 
 const createMessage = (req, res) => {
   const { message, senderId, receiverId } = req.body;
-  const smallerId = senderId > receiverId ? receiverId : senderId
-  const largerId = senderId > receiverId ? senderId: receiverId
+  const smallerId = senderId > receiverId ? receiverId : senderId;
+  const largerId = senderId > receiverId ? senderId : receiverId;
 
   Conversation.findOne({
     where: {
@@ -72,23 +72,23 @@ const createMessage = (req, res) => {
       ]
     }
   })
-  .then((conversation) => {
-    if(conversation) {
-      Message.create({
-        message,
-        userId: senderId,
-        conversationId: conversation.dataValues.id
-      }).then((data) => {
-        res.json(data);
-      })
-    } else {
-      res.sendStatus(403).json({ message: 'Conversation does not exist'});
-    }
-  })
-  .catch((err) => {
-    console.log(err)
-  })
-}
+    .then((conversation) => {
+      if (conversation) {
+        Message.create({
+          message,
+          userId: senderId,
+          conversationId: conversation.dataValues.id
+        }).then((data) => {
+          res.json(data);
+        });
+      } else {
+        res.sendStatus(403).json({ message: 'Conversation does not exist'});
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
 
 const getAllMessages = (req, res) => {
   Conversation.findAll({
@@ -120,21 +120,21 @@ const getAllMessages = (req, res) => {
       model: Item
     }]
   })
-  .then((result) => {
-    for (var conversation of result) {
-      conversation.dataValues.user = conversation.Smaller || conversation.Larger;
-      delete conversation.dataValues.Larger;
-      delete conversation.dataValues.Smaller;
-    }
-    res.json(result)
-  })
-  .catch((err) => {
-    res.sendStatus(401)
-  })
-}
+    .then((result) => {
+      for (var conversation of result) {
+        conversation.dataValues.user = conversation.Smaller || conversation.Larger;
+        delete conversation.dataValues.Larger;
+        delete conversation.dataValues.Smaller;
+      }
+      res.json(result);
+    })
+    .catch(() => {
+      res.sendStatus(401);
+    });
+};
 
 module.exports = {
   startChat,
   createMessage,
   getAllMessages
-}
+};

@@ -1,17 +1,14 @@
-import {useState, useEffect} from 'react'
+import React, {useState, useEffect} from 'react';
 import { GoogleMap, Marker, InfoWindow} from '@react-google-maps/api';
 import {Card, Container, Row, Col, Modal} from 'react-bootstrap';
-import ItemView from './ItemView.js'
+import ItemView from './ItemView.js';
 
 
-function MapView({viewableItems, currentLocation}) {
+const MapView = ({viewableItems, currentLocation}) => {
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [isSelected, setIsSelected] = useState(false);
-  const [markers, setMarkers] = useState({}) //objects to interact with GoogleMaps API
+  const [markers, setMarkers] = useState({}); //objects to interact with GoogleMaps API
 
-
-  const viewItem = () => setIsSelected(true);
-  const closeItem = () => setIsSelected(false);
 
   const mapContainerStyle = {
     width: '100%',
@@ -22,27 +19,27 @@ function MapView({viewableItems, currentLocation}) {
     'object-fit': 'contain',
     width: '10vh',
     height: '10vh',
-  }
+  };
 
   const onLoad = (newMarker, index) => {
-    let newMarkers = markers
-    newMarkers[index] = newMarker
-    setMarkers(newMarkers)
-  }
+    let newMarkers = markers;
+    newMarkers[index] = newMarker;
+    setMarkers(newMarkers);
+  };
 
   const handleMouseDown = (index) => {
-    markers[index].setLabel({color: 'black', text: (index + 1).toString()})
-  }
+    markers[index].setLabel({color: 'black', text: (index + 1).toString()});
+  };
 
   const handleMouseUp = (index, item) => {
-    setSelectedMarker(item)
-    markers[index].setLabel({color: 'white', text: (index + 1).toString()})
-  }
+    setSelectedMarker(item);
+    markers[index].setLabel({color: 'white', text: (index + 1).toString()});
+  };
 
   useEffect( () => {
-    setSelectedMarker(null)
-    }, [viewableItems]
-  )
+    setSelectedMarker(null);
+  }, [viewableItems]
+  );
 
 
   return (
@@ -56,7 +53,8 @@ function MapView({viewableItems, currentLocation}) {
           zoomControl: true,
         }}
         onClick={(e) => {
-          setSelectedMarker(null)}}
+          setSelectedMarker(null);
+        }}
       >
 
         {viewableItems.map( (item, index) => {
@@ -74,7 +72,8 @@ function MapView({viewableItems, currentLocation}) {
               onMouseDown={() => handleMouseDown(index)}
               onMouseUp={()=> handleMouseUp(index, item)}
             />
-          )}
+          );
+        }
         )}
 
         {selectedMarker ? (
@@ -93,12 +92,12 @@ function MapView({viewableItems, currentLocation}) {
 
       </GoogleMap>
 
-   <Modal centered show={isSelected} size='md' onHide={() => setIsSelected(false)}>
-     <Modal.Header closeButton></Modal.Header>
-     <ItemView data={selectedMarker}/>
-   </Modal>
-   </>
-  )
+      <Modal centered show={isSelected} size='md' onHide={() => setIsSelected(false)}>
+        <Modal.Header closeButton></Modal.Header>
+        <ItemView data={selectedMarker}/>
+      </Modal>
+    </>
+  );
 }
 
-export default MapView
+export default MapView;

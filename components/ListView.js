@@ -1,26 +1,22 @@
-import { useState, useContext } from 'react';
-import Image from 'next/image';
-import ItemView from './ItemView.js';
-import { Card, Container, Row, Col, Modal } from 'react-bootstrap';
-import ItemContext from '../context/item/ItemContext';
+import React from 'react';
+import { Container, Row } from 'react-bootstrap';
 import ItemCard from './ItemCard.js';
 
 const ListView = ({viewableItems}) => {
-  const { itemList } = useContext(ItemContext);
-  
+
   return (
     <div>
       <Container className="list-container">
-      <Row sm={4} md={4}>
-          {viewableItems.map((item, index) =>
-          (
-            <ItemCard key={item.id} data={item}/>
-          )
+        <Row sm={4} md={4}>
+          {viewableItems.map((item) =>
+            (
+              <ItemCard key={item.id} data={item}/>
+            )
           )}
-          </Row>
+        </Row>
       </Container>
     </div>
-  )
-}
+  );
+};
 
 export default ListView;
