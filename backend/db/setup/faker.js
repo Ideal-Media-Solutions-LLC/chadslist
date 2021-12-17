@@ -90,7 +90,7 @@ const seedItem = async () => {
       items[i] = {};
       items[i].name = faker.commerce.productName();
       items[i].description = faker.commerce.productDescription();
-      items[i].imageUrl = faker.image.fashion();
+      items[i].imageUrl = faker.image.image();
       items[i].category = categories[Math.floor(Math.random() * 10)];
       items[i].status = itemStatus[Math.floor(Math.random() * 4)];
 
