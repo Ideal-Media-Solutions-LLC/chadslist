@@ -101,7 +101,7 @@ const HomePage = (props) => {
               {user ? <div className="avatar-header-row" onClick={naviShow}>
                 <Avatar alt="Travis Howard" src={user.photoUrl} style={{ height: '35px', width: '35px', marginRight: '8px' }}/>
                 <div style={{ marginTop: '12px', fontWeight: 'bold', display: 'flex', flexWrap: 'wrap' }}>
-                <p>{user.userName}</p>
+                {/* <p>{user.userName}</p> */}
                 </div>
               </div> :   <img id="hamburger-menu-home-page" onClick={naviShow} src='/dropdown_menu.svg' width='50' height='50' /> }
 

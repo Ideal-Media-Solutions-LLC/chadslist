@@ -92,7 +92,7 @@ const ItemView = ({ data, currentPage, revoke }) => {
         <Card.Img variant="top" onError={imageVerification} src={imageUrl} style={{ objectFit: 'cover', height: '40vh'}}/>
         <Card.Body>
 
-          <div className="card-button-row">
+         { !user ? null : <div className="card-button-row">
           {
             page !== 'history' &&
             <Button style={{ marginRight: '10px'}} variant={isClaim? "secondary":"primary"} onClick={handleClaimClick}>{isClaim? "Unclaim":"Claim"}</Button>}
@@ -104,7 +104,7 @@ const ItemView = ({ data, currentPage, revoke }) => {
               getMessages(user.id, donorId, id);
               }} variant="primary">Message</Button>
           }
-          </div>
+          </div> }
 
           <div className="card-modal-description">
           <Card.Title>{name}</Card.Title>

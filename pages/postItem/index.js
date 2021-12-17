@@ -6,10 +6,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import ItemContext from '../../context/item/ItemContext';
 import NaviBar from '../../components/NaviBar.js';
+import Avatar from '@mui/material/Avatar';
+import AuthContext from '../../context/auth/AuthContext';
 
 const PostItem = (props) => {
   const { currentLocation, createItem, isPosted } = useContext(ItemContext);
-
+  const { user } = useContext(AuthContext);
   const [form, setForm] = useState({
     itemName: '',
     category: '',
@@ -60,10 +62,16 @@ const PostItem = (props) => {
       <Container>
       <Row className="header">
             <Col>
-              <img className="home-page-logo" src='/Chads_list_2.svg' width='300' height='100' />
+              <img className="home-page-logo" src='/Chads_list_2.svg' width='230' height='100' />
             </Col>
             <Col className="home-page-buttons">
-              <img id="hamburger-menu-home-page" onClick={naviShow} src='/dropdown_menu.svg' width='50' height='50' />
+              {user ? <div className="avatar-header-row" onClick={naviShow}>
+                <Avatar alt="Travis Howard" src={user.photoUrl} style={{ height: '35px', width: '35px', marginRight: '8px' }}/>
+                <div style={{ marginTop: '12px', fontWeight: 'bold', display: 'flex', flexWrap: 'wrap' }}>
+                {/* <p>{user.userName}</p> */}
+                </div>
+              </div> :   <img id="hamburger-menu-home-page" onClick={naviShow} src='/dropdown_menu.svg' width='50' height='50' /> }
+
               <Offcanvas placement='end' show={showNavi} onHide={closeNavi} >
                 <Offcanvas.Header closeButton></Offcanvas.Header>
                 <NaviBar close={closeNavi}/>
