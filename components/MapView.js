@@ -21,8 +21,8 @@ function MapView({viewableItems, currentLocation}) {
 
   const infoWindowStyle = {
     'objectFit': 'contain',
-    width: '12vh',
-    height: '12vh',
+    width: '14vh',
+    height: '15vh',
   }
 
   const onLoad = (newMarker, index) => {
@@ -41,9 +41,9 @@ function MapView({viewableItems, currentLocation}) {
   }
 
   useEffect( () => {
-    setSelectedMarker(null)
-    console.log('MAP', map)
+    //Dismisses InfoWindow
 
+    setSelectedMarker(null)
     //Allows the map to zoom out to fit all the markers
     let bounds = new google.maps.LatLngBounds();
     for (let i = 0; i < Object.entries(markers).length; i++) {
@@ -52,6 +52,7 @@ function MapView({viewableItems, currentLocation}) {
 
     if(map){
       map.fitBounds(bounds)
+      map.setCenter(currentLocation)
     }
     }, [viewableItems]
   )
@@ -82,8 +83,8 @@ function MapView({viewableItems, currentLocation}) {
               position={{lat: item.latitude, lng: item.longitude}}
               label= {{
                 color: 'white',
-                'fontSize': '14px',
-                'fontWeight': '600',
+                'fontSize': '16px',
+                'fontWeight': '700',
                 text: (index + 1).toString()
               }}
               onMouseDown={() => handleMouseDown(index)}
@@ -100,7 +101,7 @@ function MapView({viewableItems, currentLocation}) {
 
             <div style={infoWindowStyle} onClick={() => setIsSelected(true)} >
               <img style={{width: '100%', height: '100'}} src={selectedMarker.imageUrl} />
-              <div style={{'fontSize': 'x-small', 'fontWeight' : 'bold'}}>{selectedMarker.name} </div>
+              <div style={{'fontSize': 'small', 'fontWeight' : 'bold'}}>{selectedMarker.name} </div>
             </div>
 
           </InfoWindow>
