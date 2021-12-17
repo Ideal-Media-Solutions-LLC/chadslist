@@ -44,21 +44,17 @@ function MapView({viewableItems, currentLocation}) {
     setSelectedMarker(null)
     console.log('MAP', map)
 
+    //Allows the map to zoom out to fit all the markers
     let bounds = new google.maps.LatLngBounds();
     for (let i = 0; i < Object.entries(markers).length; i++) {
-      console.log('MARKER', markers)
       bounds.extend(markers[i].getPosition());
     }
 
     if(map){
       map.fitBounds(bounds)
-
     }
     }, [viewableItems]
-
-
   )
-
 
 
   return (
@@ -71,6 +67,8 @@ function MapView({viewableItems, currentLocation}) {
         options={{
           disableDefaultUI: true,
           zoomControl: true,
+          gestureHandling: 'greedy'
+          //"greedy": All touch gestures and scroll events pan or zoom the map.
         }}
         onClick={(e) => {
           setSelectedMarker(null)}}
