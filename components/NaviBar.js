@@ -15,10 +15,10 @@ const NaviBar = (props) => {
     <Container>
       {/* <Image src='/Chads_list_2.svg' width='150' height='60' /> */}
       <Nav defaultActiveKey="/" className="flex-column">
-        <div style={{ marginLeft: '10px'}}className="navbar-avatar-row">
+       {!user ? null : <div style={{ marginLeft: '10px'}}className="navbar-avatar-row">
           <Avatar alt="Travis Howard" src={user.photoUrl} style={{ height: '40px', width: '40px' }}/>
           <p style={{ marginLeft: '10px', marginTop: '10px'}}>{user.userName}</p>
-        </div>
+        </div> }
         <Nav.Link className="text-decoration-none" onClick={props.close}><Link href='/' style={{textDecoration:"none"}}>Home</Link></Nav.Link>
         {user && <Nav.Link onClick={props.close}><Link href="/history/donations">My Donations</Link></Nav.Link>}
         {user && <Nav.Link onClick={props.close}><Link href="/history/claims">My Claims</Link></Nav.Link>}
