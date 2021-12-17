@@ -1,9 +1,10 @@
+import React from 'react';
 import { useState, useContext } from 'react';
 import { Container, Col, Form, Button, Image } from 'react-bootstrap';
-import AuthContext from '../context/auth/AuthContext'
+import AuthContext from '../context/auth/AuthContext';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const SignUp = (props) => {
+const SignUp = () => {
   const [form, setForm] = useState({
     userName: '',
     email: '',
@@ -11,7 +12,7 @@ const SignUp = (props) => {
     password2: '',
     accType: 'Individual',
     photoUrl: '/profile_placeholder_2.svg'
-  })
+  });
 
   const { registerUser } = useContext(AuthContext);
 
@@ -19,19 +20,19 @@ const SignUp = (props) => {
     e.preventDefault();
 
     if (form.password !== form.password2) {
-      alert('Passwords are not matching. Try again')
+      alert('Passwords are not matching. Try again');
     } else {
-      registerUser(form)
+      registerUser(form);
     }
-  }
+  };
 
   const handleChange = ({ target: { name, value } }) => {
-    setForm({ ...form, [name]: value})
-  }
+    setForm({ ...form, [name]: value});
+  };
 
   const handleFileChange = (e) => {
     setForm({...form, photoUrl: URL.createObjectURL(e.target.files[0])});
-  }
+  };
 
   return (
     <>
@@ -48,7 +49,7 @@ const SignUp = (props) => {
               <Form.Control type="email" placeholder="Enter email" name="email" value={form.email} onChange={handleChange} required/>
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicName">
-              <Form.Control  placeholder="Your username" name="userName" value={form.userName} onChange={handleChange} required/>
+              <Form.Control placeholder="Your username" name="userName" value={form.userName} onChange={handleChange} required/>
             </Form.Group>
             <Form.Group className="mb-3" controlId="formGroupPassword">
               <Form.Control type="password" placeholder="Password" name="password" value={form.password} onChange={handleChange} required/>
@@ -79,7 +80,7 @@ const SignUp = (props) => {
         </Col>
       </Container>
     </>
-  )
-}
+  );
+};
 
 export default SignUp;

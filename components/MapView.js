@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from 'react';
-import { GoogleMap, Marker, InfoWindow} from '@react-google-maps/api';
-import {Card, Container, Row, Col, Modal} from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import { GoogleMap, Marker, InfoWindow } from '@react-google-maps/api';
+import { Modal } from 'react-bootstrap';
 import ItemView from './ItemView.js';
 
 
@@ -8,7 +8,6 @@ const MapView = ({viewableItems, currentLocation}) => {
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [isSelected, setIsSelected] = useState(false);
   const [markers, setMarkers] = useState({}); //objects to interact with GoogleMaps API
-
 
   const mapContainerStyle = {
     width: '100%',
@@ -52,7 +51,7 @@ const MapView = ({viewableItems, currentLocation}) => {
           disableDefaultUI: true,
           zoomControl: true,
         }}
-        onClick={(e) => {
+        onClick={() => {
           setSelectedMarker(null);
         }}
       >
@@ -98,6 +97,6 @@ const MapView = ({viewableItems, currentLocation}) => {
       </Modal>
     </>
   );
-}
+};
 
 export default MapView;

@@ -1,11 +1,9 @@
-import React from 'react';
-import { useState, useEffect, useContext, useCallback } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import AuthContext from '../context/auth/AuthContext';
-import { Card, Container, Row, Col, Modal, Button, CloseButton, InputGroup, FormControl } from 'react-bootstrap';
+import { Button, InputGroup, FormControl } from 'react-bootstrap';
 import axios from 'axios';
 import { FaSearch } from 'react-icons/fa';
 import moment from 'moment';
-import ItemView from './ItemView.js';
 import ItemModal from './ItemModal.js';
 
 const getHistory = (userId, histType) => {

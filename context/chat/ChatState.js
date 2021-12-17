@@ -1,19 +1,18 @@
 import ChatContext from './ChatContext.js';
 import ChatReducer from './ChatReducer.js';
-import { useReducer, useEffect, useContext } from 'react';
+import React, { useReducer, useContext } from 'react';
 import axios from 'axios';
 import AuthContext from '../auth/AuthContext.js';
 
 import {
   GET_MESSAGES,
-  UPDATE_MESSAGES,
   SET_MESSAGE_PAGE_LIST,
   CLEAR_SAVED_MESSAGES,
   SET_LOADING,
   ADD_MESSAGE
 } from '../types.js';
 
-const API_URL = 'http://localhost:3001/chat'
+const API_URL = 'http://localhost:3001/chat';
 
 const ChatState = (props) => {
   const initialState = {
@@ -21,11 +20,11 @@ const ChatState = (props) => {
     conversationId: null,
     messagePageList: [],
     loading: true
-  }
+  };
 
   const { user } = useContext(AuthContext);
 
-  const [state, dispatch] = useReducer(ChatReducer, initialState)
+  const [state, dispatch] = useReducer(ChatReducer, initialState);
 
   const getMessages = (senderId, receiverId, id) => {
     axios.post(API_URL, {
@@ -33,16 +32,16 @@ const ChatState = (props) => {
       receiverId,
       id
     })
-    .then((result) => {
+      .then((result) => {
         dispatch({
           type: GET_MESSAGES,
           payload: result.data
-        })
-    })
-    .catch((err) => {
-      console.log(err)
-    })
-  }
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const createMessage = (senderId, receiverId, message) => {
     axios.post(`${API_URL}/message`, {
@@ -50,59 +49,52 @@ const ChatState = (props) => {
       senderId,
       receiverId
     })
-    .then((result) => {
-      // console.log(result)
-      // dispatch({
-      //   type: UPDATE_MESSAGES,
-      //   payload: result.data
-      // })
-    })
-    .catch((err) => {
-      console.log(err)
-    })
-  }
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const getAllMessages = () => {
     axios.get(`${API_URL}/message/${user.id}`)
-    .then((result) => {
-      console.log(result.data)
-      dispatch({
-        type: SET_MESSAGE_PAGE_LIST,
-        payload: result.data
+      .then((result) => {
+        console.log(result.data);
+        dispatch({
+          type: SET_MESSAGE_PAGE_LIST,
+          payload: result.data
+        });
       })
-    })
-    .catch((err) => {
-      console.log(err)
-    })
-  }
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const clearSavedMessages = () => {
 
     dispatch({
       type: CLEAR_SAVED_MESSAGES,
       payload: null
-    })
-  }
+    });
+  };
 
   const addMessage = (message) => {
-    console.log(message)
+    console.log(message);
     dispatch({
       type: ADD_MESSAGE,
       payload: message
-    })
-  }
+    });
+  };
   const setLoading = () => {
     // console.log('test')
     dispatch({
       type: SET_LOADING,
-    })
-  }
+    });
+  };
 
   return (
     <ChatContext.Provider value={{ savedMessages: state.savedMessages, conversationId: state.conversationId, messagePageList: state.messagePageList, loading: state.loading, getMessages, createMessage, getAllMessages, clearSavedMessages, setLoading, addMessage }}>
       {props.children}
     </ChatContext.Provider>
-  )
-}
+  );
+};
 
 export default ChatState;

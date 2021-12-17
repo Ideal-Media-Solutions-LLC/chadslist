@@ -1,25 +1,25 @@
-import { useState, useContext } from 'react';
-import { Container, Col, Form, Button, Image } from 'react-bootstrap';
+import React, { useState, useContext } from 'react';
+import { Container, Col, Form, Button } from 'react-bootstrap';
 import AuthContext from '../context/auth/AuthContext';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const Login = (props) => {
+const Login = () => {
   const [form, setForm] = useState({
     email: '',
     password: ''
-  })
+  });
 
   const { loginUser } = useContext(AuthContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    loginUser(form)
-  }
+    loginUser(form);
+  };
 
   const handleChange = ({ target: { name, value } }) => {
-    setForm({ ...form, [name]: value})
-  }
+    setForm({ ...form, [name]: value});
+  };
   return (
     <>
       <br></br>
@@ -42,7 +42,7 @@ const Login = (props) => {
               </Button>
             </Form.Group>
             <Form.Group className="login-signup-redirect">
-              <Form.Label>Don't have an account?</Form.Label>
+              <Form.Label>Don`&apos;`t have an account?</Form.Label>
               <Button id="signup-button-redirect" variant="primary" href='/SignUp'>
                 Signup
               </Button>
@@ -51,7 +51,7 @@ const Login = (props) => {
         </Col>
       </Container>
     </>
-  )
-}
+  );
+};
 
 export default Login;
