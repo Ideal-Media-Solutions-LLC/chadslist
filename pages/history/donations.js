@@ -1,23 +1,31 @@
 import { Button, Offcanvas, Nav, Navbar, Row, Col, Container } from 'react-bootstrap';
 import NaviBar from '../../components/NaviBar.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {useState} from 'react';
+import {useState, useContext} from 'react';
 import HistoryList from '../../components/HistoryList.js';
+import AuthContext from '../../context/auth/AuthContext';
+import Avatar from '@mui/material/Avatar';
 
 const Donations = (props) => {
-
+  const { user } = useContext(AuthContext)
   const [showNavi, setNavi] = useState(false);
   const naviShow = () => setNavi(!showNavi);
   const closeNavi = () => setNavi(false);
 
   return (
     <Container>
-     <Row className="header">
+    <Row className="header">
             <Col>
-              <img className="home-page-logo" src='/Chads_list_2.svg' width='300' height='100' />
+              <img className="home-page-logo" src='/Chads_list_2.svg' width='230' height='100' />
             </Col>
             <Col className="home-page-buttons">
-              <img id="hamburger-menu-home-page" onClick={naviShow} src='/dropdown_menu.svg' width='50' height='50' />
+              {user ? <div className="avatar-header-row" onClick={naviShow}>
+                <Avatar alt="Travis Howard" src={user.photoUrl} style={{ height: '35px', width: '35px', marginRight: '8px' }}/>
+                <div style={{ marginTop: '12px', fontWeight: 'bold', display: 'flex', flexWrap: 'wrap' }}>
+                {/* <p>{user.userName}</p> */}
+                </div>
+              </div> :   <img id="hamburger-menu-home-page" onClick={naviShow} src='/dropdown_menu.svg' width='50' height='50' /> }
+
               <Offcanvas placement='end' show={showNavi} onHide={closeNavi} >
                 <Offcanvas.Header closeButton></Offcanvas.Header>
                 <NaviBar close={closeNavi}/>
