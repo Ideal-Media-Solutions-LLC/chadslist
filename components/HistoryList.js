@@ -6,6 +6,7 @@ import { FaSearch } from "react-icons/fa";
 import moment from 'moment';
 import ItemView from './ItemView.js';
 import ItemModal from './ItemModal.js';
+import {LoadScript} from '@react-google-maps/api';
 
 const getHistory = (userId, histType) => {
   let urlStr;
@@ -138,6 +139,7 @@ const HistoryList = ( { histType } ) => {
   // console.log(displayedItems);
   return (
     <>
+    <LoadScript googleMapsApiKey={process.env.mapAPI}>
       <InputGroup id='hist-search'>
         <FormControl
           placeholder={`Search my ${histType}...`}
@@ -156,6 +158,7 @@ const HistoryList = ( { histType } ) => {
           })
         }
       </div>
+      </LoadScript>
     </>
   )
 }

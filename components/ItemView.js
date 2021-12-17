@@ -9,7 +9,7 @@ import AuthContext from '../context/auth/AuthContext';
 import io from "socket.io-client";
 const socket = io.connect("http://localhost:3200");
 
-const ItemView = ({ data, currentPage, revoke }) => {
+const ItemView = ({ data, currentPage, revoke, address}) => {
   const { id, name, imageUrl, category, description, status, donorId } = data;
   const { getMessages, conversationId } = useContext(ChatContext);
   const { user } = useContext(AuthContext);
@@ -21,7 +21,7 @@ const ItemView = ({ data, currentPage, revoke }) => {
   const [histClaim, setHistClaim] = useState(true);
   const [histList, setHistList] = useState(true);
   const [page, setPage] = useState(currentPage);
-  const [address, setAddress] = useState('')
+  // const [address, setAddress] = useState('')
 
   const handleHistClaim = (e) => {
     axios.put(`http://localhost:3001/history/claims?itemId=${id}`)
@@ -62,24 +62,24 @@ const ItemView = ({ data, currentPage, revoke }) => {
     }
 
 
-  /*
-  Converts location coordinates to Human Readable address string
-  Results may include a Google 'Plus Code' due to the mock data point
-  locations of items being in places that have no proper address.
-  */
-  const geocoder = new google.maps.Geocoder();
+  // /*
+  // Converts location coordinates to Human Readable address string
+  // Results may include a Google 'Plus Code' due to the mock data point
+  // locations of items being in places that have no proper address.
+  // */
+  // const geocoder = new google.maps.Geocoder();
 
-  useEffect( () => {
-    geocoder.geocode({location: {
-      lat: data.latitude,
-      lng: data.longitude
-    }})
-    .then( response => {
-      console.log(response)
-      if (response.results[1]) {
-       setAddress(response.results[1].formatted_address)
-      }
-    })}, [data])
+  // useEffect( () => {
+  //   geocoder.geocode({location: {
+  //     lat: data.latitude,
+  //     lng: data.longitude
+  //   }})
+  //   .then( response => {
+  //     console.log(response)
+  //     if (response.results[1]) {
+  //      setAddress(response.results[1].formatted_address)
+  //     }
+  //   })}, [data])
 
     const imageVerification  = (e) => {
       e.target.onerror = null;
