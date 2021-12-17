@@ -44,13 +44,6 @@ const Search = ({ ChangeView, setCurrentLocation, handleClick, wordFilter}) => {
     )
   }
 
-
-
-
-  const handleSelector = (e) =>{
-    console.log('DropDown: ', e.target.value)
-  }
-
   return (
     <>
       <Form onSubmit={handleSubmit}>
@@ -80,7 +73,7 @@ const Search = ({ ChangeView, setCurrentLocation, handleClick, wordFilter}) => {
             </div>
             <div className="search-row-radius">
             <Form.Select value={distance} onChange={(e) => setDistance(e.target.value)}>
-              <option value="" disabled selected>Radius</option>
+              <option value="" disabled defaultValue>Radius</option>
               <option value={1}>1</option>
               <option value={5}>5</option>
               <option value={10}>10</option>

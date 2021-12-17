@@ -1,7 +1,7 @@
 import ListView from '../components/ListView.js';
 import MapView from '../components/MapView.js';
 import NaviBar from '../components/NaviBar.js';
-import { Button, Offcanvas, Container, Col, Row } from 'react-bootstrap';
+import { Button, Offcanvas, Container, Col, Row, CloseButton, InputGroup} from 'react-bootstrap';
 import Image from 'next/image';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import FilterList from '../components/FilterList.js';
@@ -24,12 +24,15 @@ const HomePage = (props) => {
   const { getItemsInRadius, itemList } = useContext(ItemContext)
   const SF_LOCATION = { lat: 37.962882809573145, lng: -122.57822275079111}
   const [currentLocation, setCurrentLocation] = useState(SF_LOCATION)  //Supplies Map component, is updated from Search
-  const [filterItems, setFilterItems] = useState([])
+  const [filterItems, setFilterItems] = useState(itemList)
 
+  let test = true
   const updateList = () => {
-    if(itemList.length > 0){
+    if(itemList.length > 0 && test){
       setFilterItems(itemList)
     }
+    test = false
+    console.log('filteriTEM 2',filterItems)
   }
 
   useEffect(updateList,[itemList]);
@@ -49,10 +52,9 @@ const HomePage = (props) => {
   // handle filtering item by keyword via search bar
   const wordFilter = async (input) => {
     if(input){
-      let results = await itemList.filter(item =>item.name.toLowerCase().includes(input.toLowerCase()));
-      console.log('results',results)
-      setFilterItems(results)
-      console.log('filterItems',filterItems)
+      let results = itemList.filter(item =>item.name.toLowerCase().includes(input.toLowerCase()));
+      await setFilterItems(results)
+      console.log('filteriTEM 1',filterItems)
     }else{
       console.log('no input')
       return
@@ -60,7 +62,7 @@ const HomePage = (props) => {
   }
 
 
-  useEffect(() => {
+  useEffect(async () => {
 
     /*TODO:
       Some devs are experiencing issues with this function but works for those who have allowed
@@ -71,7 +73,9 @@ const HomePage = (props) => {
     //Note
     //setCurrentLocation({ lat: <latitude>, lng: <longitude> })  //For center of Map
     //getItemsInRadius( lat: <latitude>, lng: <longitude> )     //For List of items in area
-    //Acquire User Location
+    //Acquire User Locations
+    await getItemsInRadius( 37.7749295 ,  -122.4194155)
+    // setFilterItems(itemList)
     navigator.geolocation.getCurrentPosition((result, error) => {
       if (error){
         console.log(error)
@@ -80,7 +84,7 @@ const HomePage = (props) => {
           lat: result.coords.latitude,
           lng: result.coords.longitude,
         })
-        getItemsInRadius(result.coords.latitude, result.coords.longitude)
+       getItemsInRadius(result.coords.latitude, result.coords.longitude)
       }
     })
   }, [])
@@ -138,12 +142,13 @@ const HomePage = (props) => {
 
           {filterTag && <Row>
             <div>
-              Filter: {filterTag} < span onClick={() => {
-                setFilterItems(itemList);
-                setFilterTag(null);
-                }}> x</span>
-              </div>
-              </Row>}
+              <Button variant="primary" size="sm" onClick={() => {
+                setFilterItems(itemList)
+                setFilterTag(null)}}>
+                Filter: {filterTag}  X
+              </Button>
+            </div>
+          </Row>}
           <Col>
             {view === 'map' && <MapView viewableItems={viewableItems} currentLocation={currentLocation}/>}
             <ListView viewableItems={viewableItems}/>
