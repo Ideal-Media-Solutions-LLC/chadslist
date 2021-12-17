@@ -7,7 +7,7 @@ import ItemView from './ItemView.js'
 function MapView({viewableItems, currentLocation}) {
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [isSelected, setIsSelected] = useState(false);
-  // const [map, setMap] = useState(null)
+  const [map, setMap] = useState(null)
   const [markers, setMarkers] = useState({}) //objects to interact with GoogleMaps API
 
 
