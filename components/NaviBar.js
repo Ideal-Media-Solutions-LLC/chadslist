@@ -20,11 +20,11 @@ const NaviBar = (props) => {
           <p>{user.userName}</p>
         </div> */}
         <Nav.Link className="text-decoration-none" onClick={props.close}><Link href='/' style={{textDecoration:"none"}}>Home</Link></Nav.Link>
-        <Nav.Link onClick={props.close}><Link href="/history/donations">My Donations</Link></Nav.Link>
-        <Nav.Link onClick={props.close}><Link href="/history/claims">My Claims</Link></Nav.Link>
+        {user && <Nav.Link onClick={props.close}><Link href="/history/donations">My Donations</Link></Nav.Link>}
+        {user && <Nav.Link onClick={props.close}><Link href="/history/claims">My Claims</Link></Nav.Link>}
         {user && <Nav.Link onClick={props.close}><Link href="/history/receipts">View Receipts</Link></Nav.Link>}
         {!user ? null : <Nav.Link onClick={props.close}><Link href="/chat">View Messages</Link></Nav.Link> }
-        <Nav.Link onClick={props.close}><Link href="/postItem">Post an item</Link></Nav.Link>
+        {user && <Nav.Link onClick={props.close}><Link href="/postItem">Post an item</Link></Nav.Link>}
         { user ?
         <Nav.Link onClick={async () => {
           await Router.push('/');
