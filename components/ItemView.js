@@ -128,7 +128,7 @@ const ItemView = ({ data, currentPage, revoke }) => {
             !histList &&
             <Button variant="secondary" disabled>Delist</Button>
           }
-          <Card.Text>
+          <Card.Text style={{ color: 'darkgrey'}}>
             {address}
           </Card.Text>
           <Card.Text>
