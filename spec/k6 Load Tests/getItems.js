@@ -10,13 +10,13 @@ export const options = {
   stages: [
     { duration: '10s', target: 50 },
     { duration: '30s', target: 50 },
-   // { duration: '20s', target: 1000 },
-   // { duration: '30s', target: 1000 },
-   // { duration: '30s', target: 5625 },
-   // { duration: '30s', target: 5625 },
+    // { duration: '20s', target: 1000 },
+    // { duration: '30s', target: 1000 },
+    // { duration: '30s', target: 5625 },
+    // { duration: '30s', target: 5625 },
     { duration: '30s', target: 0 }
   ]
-}
+};
 
 export default function () {
   let rand = randomIntBetween(0, 100);

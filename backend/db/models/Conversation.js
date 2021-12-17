@@ -18,8 +18,8 @@ const Conversation = sequelize.define('conversation', {
   itemId: {
     type: DataTypes.INTEGER
   }
-  },
-  {
+},
+{
   indexes: [
     {
       name: 'smallerIdIndex',
@@ -32,17 +32,17 @@ const Conversation = sequelize.define('conversation', {
       fields: ['largerId']
     }
   ]
-  }
+}
 );
 
-Item.hasMany(Conversation, {foreignKey: 'itemId'})
-Conversation.belongsTo(Item)
+Item.hasMany(Conversation, {foreignKey: 'itemId'});
+Conversation.belongsTo(Item);
 
-User.hasMany(Conversation, {as: 'Smaller', foreignKey: 'smallerId'})
-User.hasMany(Conversation, {as: 'Larger', foreignKey: 'largerId'})
+User.hasMany(Conversation, {as: 'Smaller', foreignKey: 'smallerId'});
+User.hasMany(Conversation, {as: 'Larger', foreignKey: 'largerId'});
 
-Conversation.belongsTo(User, { as: 'Smaller', targetKey: 'id', foreignKey: 'smallerId'})
-Conversation.belongsTo(User, { as: 'Larger', targetKey: 'id', foreignKey: 'largerId'})
+Conversation.belongsTo(User, { as: 'Smaller', targetKey: 'id', foreignKey: 'smallerId'});
+Conversation.belongsTo(User, { as: 'Larger', targetKey: 'id', foreignKey: 'largerId'});
 
 
 module.exports = Conversation;

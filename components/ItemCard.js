@@ -9,7 +9,7 @@ const ItemCard = ({ data }) => {
   const { name, imageUrl } = data;
   const [show, setShow] = useState(false);
 
-  const imageVerification  = (e) => {
+  const imageVerification = (e) => {
     e.target.onerror = null;
     e.target.src = '/alt.png';
   };
@@ -18,8 +18,8 @@ const ItemCard = ({ data }) => {
     <>
       <div className="card-tile-container" >
         <Card className="card-tile" onClick={() => setShow(!show)} style={{ width: '20rem' }}>
-        <Card.Img src={imageUrl} onError={imageVerification} variant="top" />
-         {/* { imageUrl ? <Card.Img variant="top" src={imageUrl} /> : <Card.Img variant="top" src="/heart.svg"/> } */}
+          <Card.Img src={imageUrl} onError={imageVerification} variant="top" />
+          {/* { imageUrl ? <Card.Img variant="top" src={imageUrl} /> : <Card.Img variant="top" src="/heart.svg"/> } */}
           <Card.Body>
             <Card.Title>{name}</Card.Title>
           </Card.Body>
@@ -27,7 +27,7 @@ const ItemCard = ({ data }) => {
       </div>
       {!show ? null : <ItemModal data={data} page='main'/>}
     </>
-  )
-}
+  );
+};
 
 export default ItemCard;

@@ -1,6 +1,6 @@
 import { Button, Offcanvas, Nav, Navbar, Row, Col, Container } from 'react-bootstrap';
 import NaviBar from '../../components/NaviBar.js';
-import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { useState } from 'react';
 import HistoryList from '../../components/HistoryList.js';
 
@@ -12,18 +12,18 @@ const Claims = (props) => {
 
   return (
     <Container>
-    <Row className="header">
-            <Col>
-              <img className="home-page-logo" src='/Chads_list_2.svg' width='300' height='100' />
-            </Col>
-            <Col className="home-page-buttons">
-              <img id="hamburger-menu-home-page" onClick={naviShow} src='/dropdown_menu.svg' width='50' height='50' />
-              <Offcanvas placement='end' show={showNavi} onHide={closeNavi} >
-                <Offcanvas.Header closeButton></Offcanvas.Header>
-                <NaviBar close={closeNavi}/>
-              </Offcanvas>
-            </Col>
-        </Row>
+      <Row className="header">
+        <Col>
+          <img className="home-page-logo" src='/Chads_list_2.svg' width='300' height='100' />
+        </Col>
+        <Col className="home-page-buttons">
+          <img id="hamburger-menu-home-page" onClick={naviShow} src='/dropdown_menu.svg' width='50' height='50' />
+          <Offcanvas placement='end' show={showNavi} onHide={closeNavi} >
+            <Offcanvas.Header closeButton></Offcanvas.Header>
+            <NaviBar close={closeNavi}/>
+          </Offcanvas>
+        </Col>
+      </Row>
       {/* <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
         <Navbar.Brand href="/history/claims">
           My Claims
@@ -44,7 +44,7 @@ const Claims = (props) => {
       <h2 className='page-title'>My Claims</h2>
       <HistoryList histType='claims' />
     </Container>
-  )
-}
+  );
+};
 
 export default Claims;

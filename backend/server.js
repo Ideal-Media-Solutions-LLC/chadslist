@@ -6,7 +6,7 @@ const claimRoutes = require('./routes/claimRoutes.js');
 const chatRoutes = require('./routes/chatRoutes.js');
 const itemRoutes = require('./routes/itemRoutes.js');
 const historyRoutes = require('./routes/historyRoutes.js');
-require("dotenv").config();
+require('dotenv').config();
 const db = require ('./db/db.js');
 const app = express();
 
@@ -29,16 +29,16 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-io.on('connection', function(socket){
+io.on('connection', function(socket) {
   console.log('A user connected');
 
   //Whenever someone disconnects this piece of code executed
   socket.on('disconnect', function () {
-     console.log('A user disconnected');
+    console.log('A user disconnected');
   });
 });
 
-server.listen(3002)
+server.listen(3002);
 
 app.listen(port, () => {
   console.log(`Backend listening at http://localhost:${port}`);

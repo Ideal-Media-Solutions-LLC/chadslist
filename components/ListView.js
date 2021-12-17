@@ -7,20 +7,20 @@ import ItemCard from './ItemCard.js';
 
 const ListView = ({viewableItems}) => {
   const { itemList } = useContext(ItemContext);
-  
+
   return (
     <div>
       <Container className="list-container">
-      <Row sm={4} md={4}>
+        <Row sm={4} md={4}>
           {viewableItems.map((item, index) =>
-          (
-            <ItemCard key={item.id} data={item}/>
-          )
+            (
+              <ItemCard key={item.id} data={item}/>
+            )
           )}
-          </Row>
+        </Row>
       </Container>
     </div>
-  )
-}
+  );
+};
 
 export default ListView;

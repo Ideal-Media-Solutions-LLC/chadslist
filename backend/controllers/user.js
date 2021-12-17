@@ -26,7 +26,7 @@ const user = async (req, res) => {
       console.log(err);
       res.status(500).end();
     });
-}
+};
 
 module.exports = {
   user,

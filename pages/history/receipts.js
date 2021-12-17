@@ -1,10 +1,10 @@
 import { Button, Offcanvas, Nav, Navbar, Row, Col, Container } from 'react-bootstrap';
 import NaviBar from '../../components/NaviBar.js';
-import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import AuthContext from '../../context/auth/AuthContext';
-import { jsPDF } from "jspdf";
+import { jsPDF } from 'jspdf';
 // import HistoryList from '../../components/HistoryList.js';
 
 const Receipts = (props) => {
@@ -22,27 +22,27 @@ const Receipts = (props) => {
     axios.get(`http://localhost:3001/history/receipts?donorId=${user.id}`)
       .then((data) => {
         console.log(data.data);
-        setReceipt(data.data)
+        setReceipt(data.data);
       })
       .catch(err => console.log(err));
-  }
+  };
 
   useEffect(getReceipt, []);
 
   const downloadClick = () => {
-    const element = document.getElementById('receipt')
+    const element = document.getElementById('receipt');
     doc.html(element)
-    .then(() => {
-      doc.setFontSize(16);
-      doc.save('receipt.pdf')
-    });
-  }
+      .then(() => {
+        doc.setFontSize(16);
+        doc.save('receipt.pdf');
+      });
+  };
 
   const total = () => {
     const sum = 0;
     receipt.forEach((item) => sum += item.value);
     return sum;
-  }
+  };
 
   return (
     <Container>
@@ -73,7 +73,7 @@ const Receipts = (props) => {
         <div><p>Total Donation Value: ${total()}</p></div>
       </div>
     </Container>
-  )
-}
+  );
+};
 
 export default Receipts;

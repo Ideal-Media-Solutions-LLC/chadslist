@@ -33,7 +33,7 @@ const Message = sequelize.define('message', {
 User.hasMany(Message, { foreignKey: 'userId' });
 // Message.belongsTo(User);
 
-Conversation.hasMany(Message, { foreignKey: 'conversationId'})
+Conversation.hasMany(Message, { foreignKey: 'conversationId'});
 // Message.belongsTo(Conversation)
 
 
