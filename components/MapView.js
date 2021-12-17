@@ -100,7 +100,7 @@ function MapView({viewableItems, currentLocation}) {
 
             <div style={infoWindowStyle} onClick={() => setIsSelected(true)} >
               <img style={{width: '100%', height: '100'}} src={selectedMarker.imageUrl} />
-              <div style={{'fontSize': 'x-small'}}>{selectedMarker.name} </div>
+              <div style={{'fontSize': 'x-small', 'fontWeight' : 'bold'}}>{selectedMarker.name} </div>
             </div>
 
           </InfoWindow>
