@@ -19,7 +19,7 @@ const io = new Server (server, {
 });
 
 io.on('connection', (socket) => {
-  console.log('connected', socket.id);
+  // console.log('connected', socket.id);
   socket.on("join_chat", convoId => {
     socket.join(convoId);
     console.log(`User with ID: ${socket.id} joined convo: ${convoId}`);

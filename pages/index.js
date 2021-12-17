@@ -40,30 +40,30 @@ const HomePage = (props) => {
   }
 
 
-  useEffect(() => {
-    /*TODO:
-      Some devs are experiencing issues with this function but works for those who have allowed
-      permission to for sharing there location. If this this getCurrentLocation is not working,
-      use these two functions below without the geolocation API with your desired location for development
-    */
+  // useEffect(() => {
+  //   /*TODO:
+  //     Some devs are experiencing issues with this function but works for those who have allowed
+  //     permission to for sharing there location. If this this getCurrentLocation is not working,
+  //     use these two functions below without the geolocation API with your desired location for development
+  //   */
 
-    //Note
-    //setCurrentLocation({ lat: <latitude>, lng: <longitude> })  //For center of Map
-    //getItemsInRadius( lat: <latitude>, lng: <longitude> )     //For List of items in area
+  //   //Note
+  //   //setCurrentLocation({ lat: <latitude>, lng: <longitude> })  //For center of Map
+  //   //getItemsInRadius( lat: <latitude>, lng: <longitude> )     //For List of items in area
 
-    //Acquire User Locations
-    navigator.geolocation.getCurrentPosition((result, error) => {
-      if (error){
-        console.log(error)
-      } else {
-        setCurrentLocation({
-          lat: result.coords.latitude,
-          lng: result.coords.longitude,
-        })
-       getItemsInRadius(result.coords.latitude, result.coords.longitude)
-      }
-    })
-  }, [])
+  //   //Acquire User Locations
+  //   navigator.geolocation.getCurrentPosition((result, error) => {
+  //     if (error){
+  //       console.log(error)
+  //     } else {
+  //       setCurrentLocation({
+  //         lat: result.coords.latitude,
+  //         lng: result.coords.longitude,
+  //       })
+  //      getItemsInRadius(result.coords.latitude, result.coords.longitude)
+  //     }
+  //   })
+  // }, [])
 
   // ~~~~~~~~~~~~~~~~ Pagination ~~~~~~~~~~~~~~~~~~~~~~
 
