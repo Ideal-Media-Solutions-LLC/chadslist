@@ -51,7 +51,7 @@ const ChatState = (props) => {
       receiverId
     })
     .then((result) => {
-      console.log(result)
+      // console.log(result)
       // dispatch({
       //   type: UPDATE_MESSAGES,
       //   payload: result.data

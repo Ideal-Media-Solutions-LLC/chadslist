@@ -1,28 +1,14 @@
-import React, {useState} from 'react'
+import {useState, useEffect} from 'react'
 import { GoogleMap, Marker, InfoWindow} from '@react-google-maps/api';
 import {Card, Container, Row, Col, Modal} from 'react-bootstrap';
 import ItemView from './ItemView.js'
-
-//TODO: Remove after real/formatted data is provided
-//SampleTest data for showing markers
-// const items = [
-//   {
-//     name: 'Space Needle',
-//     img: 'https://cdn.pixabay.com/photo/2016/11/23/01/18/red-panda-1851661_1280.jpg',
-//     coordinates: { lat: 47.6205, lng: -122.3493 },
-//   },
-//   {
-//     name: "Cal Anderson Park",
-//     img: 'https://cdn.pixabay.com/photo/2016/11/23/01/15/red-panda-1851650_1280.jpg',
-//     coordinates: { lat: 47.6173, lng: -122.3195 },
-//   },
-// ]
 
 
 function MapView({viewableItems, currentLocation}) {
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [isSelected, setIsSelected] = useState(false);
-  const [markers, setMarkers] = useState({})
+  const [markers, setMarkers] = useState({}) //objects to interact with GoogleMaps API
+
 
   const viewItem = () => setIsSelected(true);
   const closeItem = () => setIsSelected(false);
@@ -53,6 +39,12 @@ function MapView({viewableItems, currentLocation}) {
     markers[index].setLabel({color: 'white', text: (index + 1).toString()})
   }
 
+  useEffect( () => {
+    setSelectedMarker(null)
+    }, [viewableItems]
+  )
+
+
   return (
     <>
       <GoogleMap
@@ -66,7 +58,6 @@ function MapView({viewableItems, currentLocation}) {
         onClick={(e) => {
           setSelectedMarker(null)}}
       >
-        { /* Child components, such as markers, info windows, etc. */ }
 
         {viewableItems.map( (item, index) => {
           return (
@@ -90,7 +81,6 @@ function MapView({viewableItems, currentLocation}) {
           <InfoWindow
             options={{pixelOffset: new window.google.maps.Size(0, -45)}}
             position={{lat: selectedMarker.latitude, lng: selectedMarker.longitude}}
-
           >
 
             <div style={infoWindowStyle} onClick={() => setIsSelected(true)} >

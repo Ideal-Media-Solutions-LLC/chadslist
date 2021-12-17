@@ -31,7 +31,9 @@ const getItemsInRadius = async (req, res) => {
         },
         category: searchCategory,
         status: 'unclaimed'
-      }
+      },
+      logging: false,
+      raw: true
     });
     let sortedItems = sortItemsByNearest(items, searchLatitude, searchLongitude);
     res.status(200).send(sortedItems);

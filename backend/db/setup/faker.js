@@ -13,7 +13,8 @@ const Claim = require('../models/Claim.js');
 const seedUser = async () => {
   try {
     let users = [];
-    for (let i = 0; i < 100; i++) {
+    let total = 100;
+    for (let i = 0; i < total; i++) {
       users[i] = {};
       users[i].userName = faker.internet.userName();
       users[i].email = faker.internet.email();
@@ -24,11 +25,11 @@ const seedUser = async () => {
         users[i].status = 'individual';
       }
 
-      if (i < 40) {
+      if (i < total/3) {
         // NY
         users[i].latitude = 40.72557420158411;
         users[i].longitude = -74.01148541130824;
-      } else if (i >= 40 && i < 70) {
+      } else if (i >= total/3 && i < total - (total/3)) {
         // SF
         users[i].latitude = 37.962882809573145;
         users[i].longitude = -122.57822275079111;
@@ -84,20 +85,21 @@ let items = [];
 const seedItem = async () => {
   // let items = [];
   try {
-    for (var i = 0; i < 100; i++) {
+    let total = 500000;
+    for (var i = 0; i < total; i++) {
       items[i] = {};
       items[i].name = faker.commerce.productName();
       items[i].description = faker.commerce.productDescription();
-      items[i].imageUrl = faker.image.fashion();
+      items[i].imageUrl = faker.image.image();
       items[i].category = categories[Math.floor(Math.random() * 10)];
       items[i].status = itemStatus[Math.floor(Math.random() * 4)];
 
-      if (i < 40) {
+      if (i < total/3) {
         // NY
         items[i].latitude = (coordinates.ny.latitude - 0.5 + Math.random()).toFixed(12);
         items[i].longitude = (coordinates.ny.longitude - 0.5 + Math.random()).toFixed(12);
         items[i].donorId = Math.floor(Math.random() * 40) + 1;
-      } else if (i >= 40 & i < 70) {
+      } else if (i >= total/3 & i < total - (total/3)) {
         // SF
         items[i].latitude = (coordinates.sf.latitude - 0.5 + Math.random()).toFixed(12);
         items[i].longitude = (coordinates.sf.longitude - 0.5 + Math.random()).toFixed(12);
@@ -121,8 +123,9 @@ const seedItem = async () => {
 
 const seedConversation = async () => {
   try {
+    let total = 30;
     let conversations = [];
-    for (let i = 0; i < 30; i++) {
+    for (let i = 0; i < total; i++) {
       ny = {};
       // User from 0 to 20
       ny.smallerId = Math.floor(Math.random() * 20) + 1;
@@ -133,7 +136,7 @@ const seedConversation = async () => {
     }
     // await Conversation.bulkCreate(newYork);
     // let sf = [];
-    for (let i = 0; i < 30; i++) {
+    for (let i = 0; i < total; i++) {
       sf = {};
       // User from 0 to 20
       sf.smallerId = Math.floor(Math.random() * (55 - 40 + 1) + 40);
@@ -144,7 +147,7 @@ const seedConversation = async () => {
     }
     // await Conversation.bulkCreate(sf);
     let seattle = [];
-    for (let i = 0; i < 30; i++) {
+    for (let i = 0; i < total; i++) {
       seattle = {};
       // User from 0 to 20
       seattle.smallerId = Math.floor(Math.random() * (85 - 70 + 1) + 70);
@@ -162,7 +165,8 @@ const seedConversation = async () => {
 
 const seedMessage = async () => {
   let messages = [];
-  for (let i = 1; i < 91; i++) {
+  total = 100;
+  for (let i = 1; i < total; i++) {
     let conversation = await Conversation.findByPk(i);
     // A random number from 1 to 20 that will determine how many messages this conversation has
     let messageCount = Math.floor(Math.random() * (20 - 1) + 1);
@@ -182,15 +186,33 @@ const seedMessage = async () => {
   await Message.bulkCreate(messages);
 }
 
-const seedReceipt = () => {
-
+const conditions = ['new', 'great','good', 'okay'];
+const seedReceipt = async () => {
+  try {
+    let receipts = [];
+    let index = 0;
+    for (var i = 0; i < 100; i++) {
+      if (items[i].status !== 'uncalimed') {
+        receipts[index] = {};
+        receipts[index].itemId = i + 1;
+        receipts[index].donorId = items[i].donorId;
+        receipts[index].condition = conditions[Math.floor(Math.random() * 4)];
+        receipts[index].value = Math.floor(Math.random() * 1000);
+      }
+      index ++;
+    }
+    await Receipt.bulkCreate(receipts);
+  } catch (error) {
+    console.log('error adding data for receipts', error)
+  }
 }
 
 const seedClaim = async () => {
   try {
     let claims = [];
     let index = 0;
-    for (var i = 0; i < 100; i++) {
+    let total = 250000
+    for (var i = 0; i < total; i++) {
       if (items[i].status !== 'unclaimed') {
         claims[index] = {};
         claims[index].itemId = i + 1;
@@ -198,10 +220,10 @@ const seedClaim = async () => {
 
         // generate claimerId that belongs to the same area
         // created slightly different situations for the three areas so that we can testing different situations
-        if (i < 40) {
+        if (i < total/3) {
           // for NY, all items claimed by userId = 1
           claims[index].claimerId = 1;
-        } else if (i >= 40 && i < 70) {
+        } else if (i >= total/3 && i < total - (total/3)) {
           // for SF, items claimed by two users, with userId = 40 or 50
           if (i % 2 === 1) {
             claims[index].claimerId = 40
@@ -235,11 +257,13 @@ const seedAll = async() => {
     await Item.sync({force: true});
     await Claim.sync({force: true});
     await Message.sync({force: true});
+    await Receipt.sync({force: true});
     await seedUser();
     await seedConversation();
     await seedItem();
     await seedClaim();
     await seedMessage();
+    await seedReceipt();
   } catch (error) {
     console.log(error)
   }

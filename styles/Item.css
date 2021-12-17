@@ -1,0 +1,17 @@
+.card-tile-container {
+  display: flex;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  margin-bottom: 15px;
+}
+
+.card-button-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.card-modal-description {
+  margin-left: 5px;
+  margin-top: 10px;
+}
