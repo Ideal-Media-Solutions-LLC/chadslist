@@ -7,7 +7,7 @@ import ItemView from './ItemView.js'
 function MapView({viewableItems, currentLocation}) {
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [isSelected, setIsSelected] = useState(false);
-  const [map, setMap] = useState(null)
+  // const [map, setMap] = useState(null)
   const [markers, setMarkers] = useState({}) //objects to interact with GoogleMaps API
 
 
@@ -42,18 +42,19 @@ function MapView({viewableItems, currentLocation}) {
 
   useEffect( () => {
     //Dismisses InfoWindow
-
     setSelectedMarker(null)
-    //Allows the map to zoom out to fit all the markers
-    let bounds = new google.maps.LatLngBounds();
-    for (let i = 0; i < Object.entries(markers).length; i++) {
-      bounds.extend(markers[i].getPosition());
-    }
 
-    if(map){
-      map.fitBounds(bounds)
-      map.setCenter(currentLocation)
-    }
+    //TODO:
+    //Allows the map to zoom out to fit all the markers
+    // let bounds = new google.maps.LatLngBounds();
+    // for (let i = 0; i < Object.entries(markers).length; i++) {
+    //   bounds.extend(markers[i].getPosition());
+    // }
+    // if(map){
+    //   map.fitBounds(bounds)
+    //   map.setCenter(currentLocation)
+    // }
+
     }, [viewableItems]
   )
 
