@@ -18,7 +18,6 @@ import { FaSearch} from "react-icons/fa";
 
 
 
-
 const HomePage = (props) => {
   const [view, setView] = useState('list');
   const [showFilter, setFilter] = useState(false);
