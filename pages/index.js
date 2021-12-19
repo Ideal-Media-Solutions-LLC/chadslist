@@ -16,12 +16,23 @@ import Avatar from '@mui/material/Avatar';
 import AuthContext from '../context/auth/AuthContext';
 import { FaSearch} from "react-icons/fa";
 
+import { autoLogin } from '../context/authHelper.js'
 
+// export const getServerSideProps = async function getServerSideProps(context) {
+//   const user = await autoLogin();
+//   return {
+//     props: {
+//       user,
+//       test: 'testing'
+//     }
+//   }
+// }
 
-const HomePage = (props) => {
+const HomePage = ({ user }) => {
   const [view, setView] = useState('list');
   const [showFilter, setFilter] = useState(false);
-  const { user } = useContext(AuthContext);
+  // const { user } = useContext(AuthContext);
+  console.log(user)
   const { getItemsInRadius, itemList, filterItems } = useContext(ItemContext)
   const SF_LOCATION = { lat: 37.962882809573145, lng: -122.57822275079111}
   const [currentLocation, setCurrentLocation] = useState(SF_LOCATION)  //Supplies Map component, is updated from Search
