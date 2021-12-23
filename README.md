@@ -30,40 +30,44 @@
 ## *See [Project Board](https://trello.com/b/yY2RbvWd/agile-sprint-board) for current project status.*
 
 ## About The Project
-### [Login and Register](components/login)
+
+### Project Summary
+Chad's List is a platform to allow users to give unwanted items to the community utilizing a mobile-first design.
+
+### [Login and Register](components/)
 - Developed by [Anthony Psyk]
 - Users will be able to login or register for the application, they will be able to add a profile photo, email address, and say if they represent a charity origanization or not. Upon clicking the signup button, they will be redirected to the Item View
 
-### [Explore & Search](components/Search)
+### [Explore & Search](components/)
 - Developed by [Vinh Le, Devon Li]
-- User can search items with any of the following inputs: item name/keyword, location, distance
+- User can search items with any of the following inputs: item name, location, and distance.
 
-### [Filter](components/Filter)
+### [Filter](components/)
 - Developed by [Devon Li, David Han]
-- User can filter out items by categories, and the filtered items will be shown on the home page & the map.
-- A sliding window will show up by clicking the filter button located at home page
+- Users can filter out items by categories, and the filtered items will be shown on the home page and the map.
+- Users can click on a filter button to reveal a sidebar, allowing users to filter by category.
 
-### [Map View](components/MapView)
+### [Map View](components/)
 - Developed by [Vinh Le]
 - Users can toggle a map that shows items in relation to their location, based on the search settings provided in the filter and the items listed in Item View.
 
-### [Create a Post](components/new-post)
+### [Create a Post](components/)
 - Developed by [Ximing Chen]
-- User can post an item in this page with the following inputs: item image, item name, and item descition.
+- Users can post an item with the following inputs: item image, item name, and item descition.
 
-### [Item View](components/new-post)
+### [Item View](components/)
 - Developed by [Ximing Chen, David Han, Devon Li]
-- User can access the item informaiton by clicking on the item card in the home page. A modal will pop up displaying the item images, name, locaiton, and description. The claim button allows users to claim the item in order to pick it up. The message button initiates the chat with the item dornor.
+- Users can access the item informaiton by clicking on the item card in the home page. A modal will pop up displaying the item images, name, location, and description. The claim button allows users to claim the item in order to pick it up. The message button initiates the chat with the item dornor.
 
-### [Receipts](pages/history/receipts)
+### [Receipts](pages/history/)
 - Developed by [Ximing Chen, Yina Xing]
 - Users can generate a receipt for their donations claimed by charities. The receipt will have informtion on each item's condition and value so that the user can use it for tax reduction purpose.
 
-### [Claim History](pages/history/claims)
+### [Claim History](pages/history/)
 - Developed by [Yina Xing, Ximing Chen]
 - Users can access their claims history, search a claim by name and check the status of the claim. Clicking the name of the item will take user to the item detail modal, where the user can unclaim an item if they do not want it anymore, or message the donor of the item.
 
-### [Donation History](pages/history/donations)
+### [Donation History](pages/history/)
 - Developed by [Yina Xing, Ximing Chen]
 - Users can access their donations history, search a donation by name and check the status of the donation. Clicking the name of the item will take user to the item detail modal, where the user can delist an item if it has not been claimed, or message the claimer of the item.
 
