@@ -35,48 +35,48 @@
 Chad's List is a platform to allow users to give unwanted items to the community utilizing a mobile-first design.
 
 ### [Login and Register](components/)
-- Developed by [Anthony Psyk]
+- Developed by Anthony Psyk
 - Users will be able to login or register for the application, they will be able to add a profile photo, email address, and say if they represent a charity origanization or not. Upon clicking the signup button, they will be redirected to the Item View
 
 ### [Explore & Search](components/)
-- Developed by [Vinh Le, Devon Li]
+- Developed by Vinh Le, Devon Li
 - User can search items with any of the following inputs: item name, location, and distance.
 
 ### [Filter](components/)
-- Developed by [Devon Li, David Han]
+- Developed by Devon Li, David Han
 - Users can filter out items by categories, and the filtered items will be shown on the home page and the map.
 - Users can click on a filter button to reveal a sidebar, allowing users to filter by category.
 
 ### [Map View](components/)
-- Developed by [Vinh Le]
+- Developed by Vinh Le
 - Users can toggle a map that shows items in relation to their location, based on the search settings provided in the filter and the items listed in Item View.
 
 ### [Create a Post](components/)
-- Developed by [Ximing Chen]
+- Developed by Ximing Chen
 - Users can post an item with the following inputs: item image, item name, and item descition.
 
 ### [Item View](components/)
-- Developed by [Ximing Chen, David Han, Devon Li]
+- Developed by Ximing Chen, David Han, Devon Li
 - Users can access the item informaiton by clicking on the item card in the home page. A modal will pop up displaying the item images, name, location, and description. The claim button allows users to claim the item in order to pick it up. The message button initiates the chat with the item dornor.
 
 ### [Receipts](pages/history/)
-- Developed by [Ximing Chen, Yina Xing]
+- Developed by Ximing Chen, Yina Xing
 - Users can generate a receipt for their donations claimed by charities. The receipt will have informtion on each item's condition and value so that the user can use it for tax reduction purpose.
 
 ### [Claim History](pages/history/)
-- Developed by [Yina Xing, Ximing Chen]
+- Developed by Yina Xing, Ximing Chen
 - Users can access their claims history, search a claim by name and check the status of the claim. Clicking the name of the item will take user to the item detail modal, where the user can unclaim an item if they do not want it anymore, or message the donor of the item.
 
 ### [Donation History](pages/history/)
-- Developed by [Yina Xing, Ximing Chen]
+- Developed by Yina Xing, Ximing Chen
 - Users can access their donations history, search a donation by name and check the status of the donation. Clicking the name of the item will take user to the item detail modal, where the user can delist an item if it has not been claimed, or message the claimer of the item.
 
 ### [Chat](pages/chat)
-- Developed by [David Han, Ximing Chen, Devon Li]
+- Developed by David Han, Ximing Chen, Devon Li
 - Users are able to message other users once claiming an item. User messages will persist by saving messages in Postgres. Chat conversations will be unique to users based on a unique conversation ID that is generated when user first messages the donor. Socket.io is used to create a real time chat functionality
 
 ### [Backend Architecture](backend/) and [Database](backend/)
-- Developed by [Mitch Rosenlund, Yina Xing, David Han, Jeffrey Stewart]
+- Developed by Mitch Rosenlund, Yina Xing, David Han, Jeffrey Stewart
 - Utilized faker.js library to create mock data for items and users
 - Implemented model, view and route folder structure
 - Sequelize was used to create and model data
