@@ -1,6 +1,7 @@
 //const newrelic = require('newrelic');
 const express = require('express');
 const cors = require('cors');
+const compression = require('compression');
 const authRoutes = require('./routes/authRoutes.js');
 const claimRoutes = require('./routes/claimRoutes.js');
 const chatRoutes = require('./routes/chatRoutes.js');
@@ -17,6 +18,8 @@ const port = 3001;
 
 app.use(cors());
 app.use(express.json());
+app.use(compression())
+
 
 app.use('/auth', authRoutes);
 app.use('/chat', chatRoutes);
