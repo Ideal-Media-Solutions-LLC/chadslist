@@ -21,7 +21,7 @@ const AuthState = (props) => {
   const router = useRouter();
 
   useEffect(() => {
-    autoLogin();
+    // autoLogin();
   }, [])
 
   const registerUser = async (form) => {
@@ -98,7 +98,7 @@ const AuthState = (props) => {
 
 
   return (
-    <AuthContext.Provider value={{ user: state.user, loading: state.loading, registerUser, loginUser, logoutUser }}>
+    <AuthContext.Provider value={{ user: state.user, loading: state.loading, registerUser, loginUser, logoutUser, autoLogin }}>
       {props.children}
     </AuthContext.Provider>
   )
