@@ -8,6 +8,8 @@ import ItemContext from '../../context/item/ItemContext';
 import NaviBar from '../../components/NaviBar.js';
 import Avatar from '@mui/material/Avatar';
 import AuthContext from '../../context/auth/AuthContext';
+import { storage } from '../../backend/db/firebase/firebase.js';
+import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 
 const PostItem = (props) => {
   const { currentLocation, createItem, isPosted } = useContext(ItemContext);
@@ -29,6 +31,8 @@ const PostItem = (props) => {
   const naviShow = () => setNavi(!showNavi);
   const closeNavi = () => setNavi(false);
 
+  console.log(ref(storage), 'look')
+
   const handlePost = (e) => {
     e.preventDefault();
     createItem(form, openModal);
@@ -41,12 +45,22 @@ const PostItem = (props) => {
 
   const imageChanger = (e) => {
     let images = e.target.files[0];
-    let url = URL.createObjectURL(images);
+    const imgRef = ref(storage, 'images');
+    const upload = uploadBytesResumable(imgRef, images);
+    upload.on('state_changed',
+    (snap) => console.log('succress'),
+    (err) => console.log(err),
+    () => getDownloadURL(upload.snapshot.ref)
+      .then((downloadURL) => {
+        console.log('File available at', downloadURL);
+        setForm({
+          ...form,
+          images: downloadURL
+        })
+      })
+      .catch(err => console.log(err))
+    )
 
-    setForm({
-      ...form,
-      images: url
-    })
   }
 
   const locationTracker = () => {
@@ -85,7 +99,7 @@ const PostItem = (props) => {
           <Form onSubmit={handlePost}>
             <Form.Group className="mb-3" controlId="itemName">
               <Form.Label>Item Images:</Form.Label>
-              <Form.Control onChange={imageChanger} accept='images/*' type='file' required />
+              <Form.Control onChange={imageChanger} accept='image/*' type='file' required />
             </Form.Group>
             {form.images && <img style={{ height: '70px', margin: '5px' }} src={form.images} alt=''/>}
             <Form.Group className="mb-3" controlId="itemName">
