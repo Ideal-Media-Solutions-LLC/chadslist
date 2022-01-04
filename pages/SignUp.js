@@ -2,6 +2,8 @@ import { useState, useContext } from 'react';
 import { Container, Col, Form, Button, Image } from 'react-bootstrap';
 import AuthContext from '../context/auth/AuthContext'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { storage } from '../backend/db/firebase/firebase.js';
+import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 
 const SignUp = (props) => {
   const [form, setForm] = useState({
@@ -30,7 +32,20 @@ const SignUp = (props) => {
   }
 
   const handleFileChange = (e) => {
-    setForm({...form, photoUrl: URL.createObjectURL(e.target.files[0])});
+    let profile = e.target.files[0];
+    const profileRef = ref(storage, 'profile/' + profile.name);
+    const upload = uploadBytesResumable(profileRef, profile);
+    upload.on('state_changed',
+    (snap) => console.log('success'),
+    (err) => console.log('err'),
+    () => getDownloadURL(upload.snapshot.ref)
+      .then(downloadURL => {
+        console.log(`profile available at ${downloadURL}`);
+        setForm({...form, photoUrl: downloadURL})
+      })
+      .catch(err => console.log(err))
+    )
+    // setForm({...form, photoUrl: URL.createObjectURL(e.target.files[0])});
   }
 
   return (
@@ -42,7 +57,7 @@ const SignUp = (props) => {
               <Image className="login-logo" src="/Chads_List_2.svg" alt="chadslist_logo" width={425}/>
               <Image className="default-profile-pic" src={form.photoUrl} width={300} roundedCircle/>
               <Form.Label>Upload Photo</Form.Label>
-              <Form.Control placeholder="Upload profile picture" type="file" name="photoUrl" onChange={handleFileChange}/>
+              <Form.Control placeholder="Upload profile picture" type="file" name="photoUrl" onChange={handleFileChange} accept='image/*' />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Control type="email" placeholder="Enter email" name="email" value={form.email} onChange={handleChange} required/>

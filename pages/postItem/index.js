@@ -45,7 +45,7 @@ const PostItem = (props) => {
 
   const imageChanger = (e) => {
     let images = e.target.files[0];
-    const imgRef = ref(storage, 'images');
+    const imgRef = ref(storage, 'images/' + images.name);
     const upload = uploadBytesResumable(imgRef, images);
     upload.on('state_changed',
     (snap) => console.log('succress'),
